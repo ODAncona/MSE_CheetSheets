@@ -1,0 +1,358 @@
+%
+% Packages
+%
+\documentclass{article}
+\usepackage[landscape]{geometry}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{esint}
+\usepackage{bigints}
+\usepackage{amsfonts}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathmorphing}
+\usepackage{amsmath,amssymb}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{xhfill}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+\usepackage[T1]{fontenc}
+\usepackage{mathrsfs}
+\makeatletter
+
+%
+% Math
+%
+\newcommand{\Real}{\mathbb R}
+\newcommand{\RPlus}{\Real^{+}}
+\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
+\newcommand{\abs}[1]{\left\vert#1\right\vert}
+\newcommand{\setn}[1]{\left\{#1\right\}_{\scriptscriptstyle n \ge 1}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\seq}[1]{\left<#1\right>}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\To}{\longrightarrow}
+\newcommand{\Prob}{\rm{P}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\h}{\mathcal{H}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\E}{{\rm E}}
+\newcommand{\Hnull}{{\rm H}_{0}}
+\newcommand{\Hone}{{\rm H}_{1}}
+\newcommand{\Var}{{\rm Var}}
+\newcommand{\Cov}{{\rm Cov}}
+\newcommand{\sign}{{\rm sign}}
+\newcommand{\med}{{\rm med}}
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\T}{{\text{\tiny \rm T}}}
+\newcommand{\minf}{- \, \infty}
+\newcommand{\intervalle}[4]{\mathopen{#1}#2\mathpunct{},#3\mathclose{#4}}
+\newcommand{\intervalleff}[2]{\intervalle{[}{#1}{#2}{]}}
+\newcommand{\intervalleof}[2]{\intervalle{]}{#1}{#2}{]}}
+\newcommand{\intervallefo}[2]{\intervalle{[}{#1}{#2}{[}}
+\newcommand{\intervalleoo}[2]{\intervalle{]}{#1}{#2}{[}}
+\newcommand*\conj[1]{\overline{#1}}
+\newcommand*\mean[1]{\overline{#1}}
+
+%
+% Setup
+%
+\title{MachLe Résumé Olivier D'Ancona}
+\advance\topmargin-.8in
+\advance\textheight3in
+\advance\textwidth3in
+\advance\oddsidemargin-1.5in
+\advance\evensidemargin-1.5in
+\parindent0pt
+\parskip2pt
+
+%
+% Commands
+%
+\newcommand*\bigcdot{\mathpalette\bigcdot@{.5}}
+\newcommand*\bigcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+\makeatother
+\newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
+%\colorbox[HTML]{e4e4e4}{\makebox[\textwidth-2\fboxsep][l]{texto}
+\newcommand{\nc}[2][]{%
+\vspace{-.1cm}
+\tikz \draw [draw=black, ultra thick, #1]
+    ($(current page.center)-(0.5\linewidth,0)$) --
+    ($(current page.center)+(0.5\linewidth,0)$)
+    node [midway, fill=white] {#2};
+}% tomado de https://tex.stackexchange.com/questions/179425/a-new-command-of-the-form-tex
+
+
+%
+% Styles
+%
+\tikzstyle{mybox} = [draw=black, fill=white, very thick,
+rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
+\tikzstyle{fancytitle} =[fill=black, text=white, font=\bfseries]
+
+\newlength{\boxsize}
+\setlength{\boxsize}{0.24\textwidth}
+
+%###############################################################################################
+%
+%                                         Document
+%
+%###############################################################################################
+
+\begin{document}
+
+%---------------------------------
+% Title
+%---------------------------------
+\begin{center}
+    {\huge{\textbf{MachLe - Résumé Olivier D'Ancona}}}\\
+\end{center}
+
+\begin{multicols*}{4}
+
+    %---------------------------------
+    % Evaluation Metrics
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.31\textwidth}
+            $Accuracy = \dfrac{TP + TN}{ TP + TN + FP + FN}$\\
+            $Precision = \dfrac{TP}{ TP + FP}$\\
+            $Recall = \dfrac{TP}{ TP + FN}$\\
+            $Specificity = \dfrac{TP}{TN + FP}$\\
+            $Fscore = \dfrac{2\cdot Precision \cdot Recall}{ Precision + Recall}$\\
+           \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Evaluation Metrics};
+    \end{tikzpicture}
+    %---------------------------------
+
+
+    %---------------------------------
+    % Activation Functions
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.31\textwidth}
+                \textbf{Sigmoid}: $\dfrac{1}{1 + e^{-x}}$\\
+                \textbf{Hyperbolic tangent}: $\frac {e^{x} - e^{-x}}{e^{x} + e^{-x}}$\\
+                \textbf{Relu}: $\begin{cases}0 & \text{si $x < 0$ } \\x & \text{si $x \ge 0$} \\\end{cases}$\\
+                \textbf{Gaussian}: $e^{-x^{2}}$\\
+                \textbf{Softmax}: $\dfrac{e^{z_j}}{\displaystyle \sum_{k=1}^{K}{e^{z_k}}}$\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Activation Functions};
+    \end{tikzpicture}
+    %---------------------------------
+
+
+    %---------------------------------
+    % Neural Network
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.31\textwidth}
+                \nc{Structure}\\
+                \textbf{Biais}: $b$, An extra weight that can be learned using a learning algorithm. The purpose is to replace threshold.\\
+                \textbf{Input}: $I$, Input vector
+                \textbf{Weights}: $W$, Vector of weights
+                \nc{Learning algorithm}\\
+                \vspace{-0.8cm}
+                \begin{enumerate}
+                \item Randomly initialize weights
+                \item Compute the neuron's output for a fiven input vector X
+                \item Update weights: $W_j(t+1) = W_j(t) + \eta\left(\hat{y_i}-y\right)x$ with $\eta$ the learning rate and $\hat{y_i}$ the desired output.
+                \item Repeat steps 2 and 3 for the number of epochs you need or until the error is smaller than a threshold.
+                \end{enumerate}
+           \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Neural Network};
+    \end{tikzpicture}
+    %---------------------------------
+
+
+    %---------------------------------
+    % KNN for classification and regression
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.31\textwidth}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {KNN for classification and regression};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
+    % Bayesian approaches / GMMs / System evaluation
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.31\textwidth}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Bayesian approaches / GMMs / System evaluation};
+    \end{tikzpicture}
+    %---------------------------------
+
+
+    %---------------------------------
+    % Linear Regression
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                Soit un tableau de données: 
+
+                $x$ = Soap(g) , $y$ = Height(cm) , $x \cdot y$ , $x^2$	  
+
+                $$ X = [1, Soap] $$
+                $$ X^TX = \begin{bmatrix} n & \sum{x_i} \\ \sum{x_i} & \sum{x_i^2} \end{bmatrix} = \begin{bmatrix} 7 & 38.5 \\ 38.5 & 218.95 \end{bmatrix} $$
+                $$ X^Ty = \begin{bmatrix} \sum{y_i} \\ \sum{x_iy_i} \end{bmatrix} = \begin{bmatrix} 348 \\ 1975 \end{bmatrix} $$
+                $$ \hat{\theta} = (X^TX)^{-1}X^Ty = \begin{bmatrix} -2.67 \\ 9.51 \end{bmatrix} $$
+                Inverse d'une matrice 2x2 :
+
+                $$ \begin{bmatrix} a & b \\ c & d \end{bmatrix}^{-1} = \dfrac{1}{ad-bc} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix} $$
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Linear Regression};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
+    % System engineering / Data preparation / Tuning
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.31\textwidth}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {System engineering / Data preparation / Tuning};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
+    % Logistic regression / Overfitting
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.31\textwidth}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Logistic regression / Overfitting};
+    \end{tikzpicture}
+    %---------------------------------
+
+
+    %---------------------------------
+    % SVM
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.31\textwidth}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {SVM};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
+    % Clustering
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.31\textwidth}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Clustering};
+    \end{tikzpicture}
+    %---------------------------------
+
+
+    %---------------------------------
+    % Decision Trees
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.31\textwidth}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Decision Trees};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
+    % Convolutional Neural Networks
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.31\textwidth}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Convolutional Neural Networks};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
+    % Recurrent Neural Networks
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.31\textwidth}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Recurrent Neural Networks};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
+    % Dimensionality Reduction
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.31\textwidth}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Dimensionality Reduction};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
+    % Reinforcement Learning
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.31\textwidth}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Reinforcement Learning};
+    \end{tikzpicture}
+    %---------------------------------
+
+
+
+
+
+
+
+
+
+
+    
+%###############################################################################################
+%                                         Deuxième Page
+%###############################################################################################
+
+
+\end{multicols*}
+    
+\end{document}
