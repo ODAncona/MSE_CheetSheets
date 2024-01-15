@@ -183,7 +183,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
 
 
     %---------------------------------
-    % KNN for classification and regression
+    % KNN
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
@@ -200,7 +200,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                 (-) No locality, heavier
             \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {KNN for classification and regression};
+        \node[fancytitle, right=10pt] at (box.north west) {KNN};
     \end{tikzpicture}
     %---------------------------------
 
@@ -241,9 +241,6 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \end{tikzpicture}
     %---------------------------------
 
-
-
-
     %---------------------------------
     % Linear Regression
     %---------------------------------
@@ -269,28 +266,49 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
 
     %---------------------------------
-    % System engineering / Data preparation / Tuning
+    % Normalization
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.24\textwidth}
-            \end{minipage}
+         \begin{minipage}{0.31\textwidth}
+            \nc{Normalization}
+            \textbf{Min-max [0,1]}: $x' = \dfrac{\left(x-x_{min}\right)}{\left(x_{max}-x_{min}\right)}$\\
+            \textbf{Min-max [-1,1]}: $x' = 2 \cdot min\_max(x) -1$ \\
+            min-max doesn't handle outliers.\\
+            \textbf{Z-norm}: $x' = \dfrac{\left(x-\mu\right)}{\sigma}$\\
+            \nc{transformations}
+            \textbf{log}: $x' = log(x)$\\
+         \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {System engineering / Data preparation / Tuning};
+        \node[fancytitle, right=10pt] at (box.north west) {Normalization};
     \end{tikzpicture}
     %---------------------------------
 
     %---------------------------------
-    % Logistic regression / Overfitting
+    % Logistic Regression
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.24\textwidth}
+                  \textbf{Formule}: 
+                $$ P(Y=1|X) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X)}} $$
+                où
+                \begin{itemize}[noitemsep]
+                    \item $P(Y=1|X)$ : Probabilité de la classe positive
+                    \item $\beta_0, \beta_1$ : Paramètres du modèle
+                    \item $X$ : Variable explicative
+                \end{itemize}
+
+                \textbf{But}: Trouver les $\beta$ qui maximisent la vraisemblance du modèle. Utilise la méthode de descente de gradient pour l'optimisation.
+
+                \textbf{Fonction de coût}:
+                $$ J(\beta) = -\frac{1}{n} \sum_{i=1}^{n} \left[ y_i \log(P(y_i|X_i)) + (1 - y_i) \log(1 - P(y_i|X_i)) \right] $$
             \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {Logistic regression / Overfitting};
+        \node[fancytitle, right=10pt] at (box.north west) {Logistic Regression};
     \end{tikzpicture}
     %---------------------------------
+
 
 
     %---------------------------------
