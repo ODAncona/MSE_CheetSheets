@@ -100,8 +100,8 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
 \tikzstyle{fancytitle} =[fill=black, text=white, font=\bfseries]
 
 \newlength{\boxsize}
-\setlength{\boxsize}{0.24\textwidth}
-
+\setlength{\boxsize}{0.197\textwidth}
+\raggedcolumns
 %###############################################################################################
 %
 %                                         Document
@@ -117,14 +117,14 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     {\huge{\textbf{MachLe - Résumé Olivier D'Ancona}}}\\
 \end{center}
 
-\begin{multicols*}{4}
+\begin{multicols*}{5}
 
     %---------------------------------
     % Evaluation Metrics
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.24\textwidth}
+            \begin{minipage}{0.197\textwidth}
             $Accuracy = \dfrac{TP + TN}{ TP + TN + FP + FN}$\\
             $Precision = \dfrac{TP}{ TP + FP}$\\
             $Recall = \dfrac{TP}{ TP + FN}$ \\
@@ -143,7 +143,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.24\textwidth}
+            \begin{minipage}{0.197\textwidth}
                 \textbf{Sigmoid}: $\sigma(x)=\dfrac{1}{1 + e^{-x}}$\\
                 \textbf{Hyperbolic tangent}: $\frac {e^{x} - e^{-x}}{e^{x} + e^{-x}}$\\
                 \textbf{Relu}: $\begin{cases}0 & \text{si $x < 0$ } \\x & \text{si $x \ge 0$} \\\end{cases}$\\
@@ -161,7 +161,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.24\textwidth}
+            \begin{minipage}{0.197\textwidth}
                 \nc{Structure}\\
                 \textbf{Biais}: $b$, An extra weight that can be learned using a learning algorithm. The purpose is to replace threshold.\\
                 \textbf{Input}: $I$, Input vector
@@ -187,7 +187,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.24\textwidth}
+            \begin{minipage}{0.197\textwidth}
                 Hyperparameters:\\
                 \begin{itemize}[noitemsep]
                     \item Number of neighbours $k$
@@ -209,10 +209,9 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.24\textwidth}
+            \begin{minipage}{0.197\textwidth}
                 Théorème de Bayes:
-                $$ P(C_k|x) = \frac{P(x|C_k) \cdot P(C_k)}{P(x)} $$
-                où
+                $$ P(C_k|x) = \frac{P(x|C_k) \cdot P(C_k)}{P(x)} $$                où
                 \begin{itemize}[noitemsep]
                     \item $C_k$: Classe ciblée
                     \item $x$: Évidence
@@ -270,10 +269,10 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.24\textwidth}
-                $$ P(Y=1|X) = \sigma(x \theta^T) $$
+            \begin{minipage}{0.197\textwidth}
+                $$ h_\theta(x_n) = \sigma(x \theta^T) $$
                 \begin{itemize}[noitemsep]
-                    \item $P(Y=1|X)$ : Probability of $Y=1$ given $X$
+                    \item $h_\theta(x_n)$ : predicted value
                     \item $\theta$ : model's parameters
                     \item $X$ : input vector
                 \end{itemize}
@@ -282,11 +281,10 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                 \textbf{Loss}:
                 $$
                 \begin{aligned}
-                J(\beta) &= -\frac{1}{n} \sum_{i=1}^{n} y_i \log(P(y_i|X_i)) +\\
-                &\qquad \qquad(1 - y_i) \log(1 - P(y_i|X_i))
+                J(\beta) &= -\frac{1}{n} \sum_{i=1}^{n} y_i \log(h_\theta(x_n)) +\\
+                &\qquad \qquad(1 - y_i) \log(1 - h_\theta(x_n))
                 \end{aligned}
                 $$
-                blablabalbal
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Logistic Regression};
@@ -298,7 +296,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-         \begin{minipage}{0.24\textwidth}
+         \begin{minipage}{0.197\textwidth}
             \nc{Normalization}
             \textbf{Min-max [0,1]}: $x' = \dfrac{\left(x-x_{min}\right)}{\left(x_{max}-x_{min}\right)}$\\
             \textbf{Min-max [-1,1]}: $x' = 2 \cdot min\_max(x) -1$ \\
@@ -313,23 +311,67 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
 
     %---------------------------------
-    % SVM
+    % Support Vector Machine (SVM)
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.24\textwidth}
+            \begin{minipage}{0.197\textwidth}
+                \textbf{Concept}: 
+                SVM finds the hyperplane that best separates different classes by maximizing the margin between the closest points of different classes (support vectors).\\
+
+                hw(x) = sign(b + wx)
+
+                \textbf{Formulation}: 
+                $$ \max_{\omega, b} \frac{1}{\|\omega\|} \quad \text{s.t.} \quad y_i(\omega \cdot x_i + b) \geq 1 \, \forall i $$
+                where
+                \begin{itemize}[noitemsep]
+                    \item $\omega$ : Normal vector to the hyperplane
+                    \item $b$ : Bias term
+                    \item $x_i, y_i$ : Training data points and labels
+                \end{itemize}
+
+                \textbf{Kernel Trick}: 
+                SVM can be extended to non-linearly separable data using kernel functions, which implicitly map input space to a higher-dimensional feature space.
+
+                \textbf{Common Kernels}:
+                \begin{itemize}[noitemsep]
+                    \item Linear: $\langle x, x'\rangle$
+                    \item Polynomial: $(\gamma \langle x, x'\rangle + r)^d$
+                    \item Gaussian (RBF): $e^{(-\gamma \|x - x'\|^2)}$
+                \end{itemize}
+
+                (+) Effective in high-dimensional spaces, Memory efficient, Versatile (different kernel functions)\\
+                
+                (-) Sensitive to the choice of kernel and regularization parameters, Not suitable for very large datasets
+
+                hinge loss: $max(0, 1-y_i(w \cdot x_i + b))$ (0 if correct classification)
+                (1 if falls on the hyperplane)
+                (>1 if misclassified)
+
+               objective function to minimize:
+            $$ \min_{\omega, b} \quad \frac{1}{2} \|\omega\|^2 + C \sum_{i=1}^{n} \max(0, 1 - y_i(\omega \cdot x_i + b)) $$
+            where $C$ nutch the hinge loss term (how far are we predicting from ground truth) and regularization term (impeach big value, min w => maximize margin)
             \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {SVM};
+        \node[fancytitle, right=10pt] at (box.north west) {Support Vector Machine (SVM)};
     \end{tikzpicture}
     %---------------------------------
+
+%###############################################################################################
+%                                         Deuxième Page
+%###############################################################################################
+
 
     %---------------------------------
     % Clustering
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.24\textwidth}
+            \begin{minipage}{0.197\textwidth}
+                blablbalba
+                blablbalbaabab
+                \\
+                bababa
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Clustering};
@@ -338,23 +380,60 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
 
 
     %---------------------------------
-    % Decision Trees
+    % Decision Tree
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.24\textwidth}
+         \begin{minipage}{0.197\textwidth}
+            \textbf{Concept}: 
+            Decision tree is a flowchart-like structure in which each internal node represents a test on a feature (e.g. whether a coin flip comes up heads or tails), each branch represents the outcome of the test, and each leaf node represents a class label (decision taken after computing all features).\\
+
+            \textbf{Entropy}: 
+            $$ H(X) = - \sum_{i=1}^{n} p(x_i) \log_2 p(x_i) $$
+            where
+            \begin{itemize}[noitemsep]
+                \item $p(x_i)$ : Probability of class $x_i$
+            \end{itemize}
+
+            \textbf{Information Gain}: 
+            $$ IG(X, Y) = H(X) - H(X|Y) $$
+            where
+            \begin{itemize}[noitemsep]
+                \item $H(X)$ : Entropy of the parent node
+                \item $H(X|Y)$ : Entropy of the child node
+            \end{itemize}
+
+            \textbf{Gini Impurity}: 
+            $$ G(X) = 1 - \sum_{i=1}^{n} p(x_i)^2 $$
+            where
+            \begin{itemize}[noitemsep]
+                \item $p(x_i)$ : Probability of class $x_i$
+            \end{itemize}
+
+            \textbf{CART Algorithm}: 
+            \begin{itemize}[noitemsep]
+                \item Select the best attribute using IG or Gini
+                \item Make that attribute a decision node and break the dataset into smaller subsets
+                \item Recursively repeat the process on each subset until you find leaf nodes in all the branches of the tree
+            \end{itemize}
+
+            \textbf{Pruning}: 
+            Pruning is a technique in machine learning and search algorithms that reduces the size of decision trees by removing sections of the tree that provide little power to classify instances.\\
+
+            (+) Easy to interpret and explain, Can handle both numerical and categorical data, Requires little data preparation, Able to handle multi-output problems, Uses a white box model, Can be used for feature selection, Performs well even if its assumptions are somewhat violated by the true model from which the data were generated\\
+            
+            (-) Overfitting, Can be unstable because small variations in the data might result in a completely different tree being generated, Not suitable for large datasets, Unbalanced datasets where one class is dominant, Biased trees if some classes dominate
             \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {Decision Trees};
+        \node[fancytitle, right=10pt] at (box.north west) {Decision Tree};
     \end{tikzpicture}
-    %---------------------------------
 
     %---------------------------------
     % Convolutional Neural Networks
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.24\textwidth}
+            \begin{minipage}{0.197\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Convolutional Neural Networks};
@@ -366,7 +445,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.24\textwidth}
+            \begin{minipage}{0.197\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Recurrent Neural Networks};
@@ -378,7 +457,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.24\textwidth}
+            \begin{minipage}{0.197\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Dimensionality Reduction};
@@ -390,7 +469,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.24\textwidth}
+            \begin{minipage}{0.197\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Reinforcement Learning};
@@ -407,11 +486,6 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
 
 
     
-%###############################################################################################
-%                                         Deuxième Page
-%###############################################################################################
-
-
 \end{multicols*}
 
 %---------------------------------
