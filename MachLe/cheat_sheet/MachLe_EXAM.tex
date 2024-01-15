@@ -127,9 +127,11 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
             \begin{minipage}{0.24\textwidth}
             $Accuracy = \dfrac{TP + TN}{ TP + TN + FP + FN}$\\
             $Precision = \dfrac{TP}{ TP + FP}$\\
-            $Recall = \dfrac{TP}{ TP + FN}$\\
+            $Recall = \dfrac{TP}{ TP + FN}$ \\
             $Specificity = \dfrac{TP}{TN + FP}$\\
             $Fscore = \dfrac{2\cdot Precision \cdot Recall}{ Precision + Recall}$\\
+            $error$ $rate$ $= 1 - accuracy$\\
+            $macro$ $average = \dfrac{1}{n} \sum_{i=1}^{n} avg_i$\\
            \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Evaluation Metrics};
@@ -186,9 +188,16 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.24\textwidth}
-                Complexity: $O(knd)$\\
-                Choose a value for $k$:\\
-
+                Hyperparameters:\\
+                \begin{itemize}[noitemsep]
+                    \item Number of neighbours $k$
+                    \item Distance metric
+                    \item normalization type
+                    \item strategy if no majority
+                \end{itemize}
+                Big $k$:\\
+                (+) More confidence, probabilistic
+                (-) No locality, heavier
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {KNN for classification and regression};
@@ -196,16 +205,43 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
 
     %---------------------------------
-    % Bayesian approaches / GMMs / System evaluation
+    % Bayes
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.24\textwidth}
+                Théorème de Bayes:
+                $$ P(C_k|x) = \frac{P(x|C_k) \cdot P(C_k)}{P(x)} $$
+                où
+                \begin{itemize}[noitemsep]
+                    \item $C_k$: Classe ciblée
+                    \item $x$: Évidence
+                    \item $P(C_k)$: Probabilité a priori de la classe $C_k$
+                    \item $P(x|C_k)$: probability of observing x given class j
+                    \item $P(C_k|x)$: Probabilité a posteriori de la classe $C_k$ après observation de $x$
+                    \item $P(x)$: Probabilité de l'évidence $x$
+                \end{itemize}
+                avec 
+                $$ P(x) = \sum_{\text{toutes classes } C_k} P(x|C_k) \cdot P(C_k) $$
+
+                Exemple Classificateur Fille/Garçon:
+                \begin{itemize}
+                    \item $P(C_f) = \frac{4}{70}, P(C_g) = \frac{66}{70}$
+                    \item $p(x|C_g) = 0.8, p(x|C_f) = 0.2$
+                    \item Calcul de $p(x)$: 
+                    $$ p(x) = 0.2 \times \frac{4}{70} + 0.8 \times \frac{66}{70} $$
+                    \item Calcul de $P(C_f|x)$ et $P(C_g|x)$:
+                    $$ P(C_f|x) = \frac{0.2 \times \frac{4}{70}}{p(x)}, \quad P(C_g|x) = \frac{0.8 \times \frac{66}{70}}{p(x)} $$
+                \end{itemize}
+
+                (+)Can deal with imbalanced dataset, prior can be changed
             \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {Bayesian approaches / GMMs / System evaluation};
+        \node[fancytitle, right=10pt] at (box.north west) {Bayes};
     \end{tikzpicture}
     %---------------------------------
+
+
 
 
     %---------------------------------
@@ -216,12 +252,13 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
             \begin{minipage}{\boxsize}
                 Soit un tableau de données: 
 
-                $x$ = Soap(g) , $y$ = Height(cm) , $x \cdot y$ , $x^2$	  
+                $x$ = Surface(g) , $y$ = Price(cm) , $x \cdot y$ , $x^2$	  
 
-                $$ X = [1, Soap] $$
+                $$ X = [1, Surface] $$
                 $$ X^TX = \begin{bmatrix} n & \sum{x_i} \\ \sum{x_i} & \sum{x_i^2} \end{bmatrix} = \begin{bmatrix} 7 & 38.5 \\ 38.5 & 218.95 \end{bmatrix} $$
                 $$ X^Ty = \begin{bmatrix} \sum{y_i} \\ \sum{x_iy_i} \end{bmatrix} = \begin{bmatrix} 348 \\ 1975 \end{bmatrix} $$
-                $$ \hat{\theta} = (X^TX)^{-1}X^Ty = \begin{bmatrix} -2.67 \\ 9.51 \end{bmatrix} $$
+                $$ \hat{\theta} = (X^TX)^{-1}X^Ty = \begin{bmatrix} \theta_0 \\ \theta_1 \end{bmatrix} = \begin{bmatrix} -2.67 \\ 9.51 \end{bmatrix} $$
+                $$ \hat{y} = \theta_0 + \theta_1x $$
                 Inverse d'une matrice 2x2 :
 
                 $$ \begin{bmatrix} a & b \\ c & d \end{bmatrix}^{-1} = \dfrac{1}{ad-bc} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix} $$
