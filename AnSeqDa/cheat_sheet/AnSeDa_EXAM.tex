@@ -1,0 +1,300 @@
+%
+% Packages
+%
+\documentclass{article}
+\usepackage[landscape]{geometry}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{esint}
+\usepackage{bigints}
+\usepackage{amsfonts}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathmorphing}
+\usepackage{amsmath,amssymb}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{xhfill}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+\usepackage[T1]{fontenc}
+\usepackage{mathrsfs}
+\makeatletter
+
+%
+% Math
+%
+\newcommand{\Real}{\mathbb R}
+\newcommand{\RPlus}{\Real^{+}}
+\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
+\newcommand{\abs}[1]{\left\vert#1\right\vert}
+\newcommand{\setn}[1]{\left\{#1\right\}_{\scriptscriptstyle n \ge 1}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\seq}[1]{\left<#1\right>}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\To}{\longrightarrow}
+\newcommand{\Prob}{\rm{P}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\h}{\mathcal{H}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\E}{{\rm E}}
+\newcommand{\Hnull}{{\rm H}_{0}}
+\newcommand{\Hone}{{\rm H}_{1}}
+\newcommand{\Var}{{\rm Var}}
+\newcommand{\Cov}{{\rm Cov}}
+\newcommand{\sign}{{\rm sign}}
+\newcommand{\med}{{\rm med}}
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\T}{{\text{\tiny \rm T}}}
+\newcommand{\minf}{- \, \infty}
+\newcommand{\intervalle}[4]{\mathopen{#1}#2\mathpunct{},#3\mathclose{#4}}
+\newcommand{\intervalleff}[2]{\intervalle{[}{#1}{#2}{]}}
+\newcommand{\intervalleof}[2]{\intervalle{]}{#1}{#2}{]}}
+\newcommand{\intervallefo}[2]{\intervalle{[}{#1}{#2}{[}}
+\newcommand{\intervalleoo}[2]{\intervalle{]}{#1}{#2}{[}}
+\newcommand*\conj[1]{\overline{#1}}
+\newcommand*\mean[1]{\overline{#1}}
+
+%
+% Setup
+%
+\title{APV Résumé Olivier D'Ancona}
+\advance\topmargin-.8in
+\advance\textheight3in
+\advance\textwidth3in
+\advance\oddsidemargin-1.5in
+\advance\evensidemargin-1.5in
+\parindent0pt
+\parskip2pt
+
+%
+% Commands
+%
+\newcommand*\bigcdot{\mathpalette\bigcdot@{.5}}
+\newcommand*\bigcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+\makeatother
+\newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
+%\colorbox[HTML]{e4e4e4}{\makebox[\textwidth-2\fboxsep][l]{texto}
+\newcommand{\nc}[2][]{%
+\vspace{-.1cm}
+\tikz \draw [draw=black, ultra thick, #1]
+    ($(current page.center)-(0.5\linewidth,0)$) --
+    ($(current page.center)+(0.5\linewidth,0)$)
+    node [midway, fill=white] {#2};
+}% tomado de https://tex.stackexchange.com/questions/179425/a-new-command-of-the-form-tex
+
+
+%
+% Styles
+%
+\tikzstyle{mybox} = [draw=black, fill=white, very thick,
+rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
+\tikzstyle{fancytitle} =[fill=black, text=white, font=\bfseries]
+
+\newlength{\boxsize}
+\setlength{\boxsize}{0.24\textwidth}
+
+%###############################################################################################
+%
+%                                         Document
+%
+%###############################################################################################
+
+\begin{document}
+
+%---------------------------------
+% Title
+%---------------------------------
+\begin{center}
+    {\huge{\textbf{APV - Résumé Olivier D'Ancona}}}\\
+\end{center}
+
+\begin{multicols*}{4}
+    %---------------------------------
+    % Espérance
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                Soit $X$ une variable aléatoire à valeurs dans $\Real$, on définit l'espérance de $X$ par: 
+
+                Cas discret: $\mathbb{E}[X] = \displaystyle\sum_{i=1}^{\infty}{x_i \cdot p_i}$
+
+                Cas continu: $\mathbb{E}[X] = \displaystyle\int_{-\infty}^{\infty} x \cdot f(x) \, dx $
+                où $f(x)$ est la densité de probabilité de $X$.
+                \nc{Propriétés}
+                \begin{itemize}
+                    \item $\mathbb{E}[X + Y] = \mathbb{E}[X] + \mathbb{E}[Y]$
+                    \item $\mathbb{E}[aX] = a \mathbb{E}[X]$
+                    \item $\mathbb{E}[X^2] = \mathbb{E}[X]^2 + \mathbb{V}[X]$
+                    \item $\mathbb{E}[XY] = \mathbb{E}[X]\cdot\mathbb{E}[Y]$ if $X$ and $Y$ are independent.
+                    \item $\mathbb{E}[c] = c$ \text{ if $c$ is a constant.}
+                \end{itemize}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Espérance};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Variance
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                Soit $X$ une variable aléatoire à valeurs dans $\Real$.Cas discret:
+                \vspace{-.2cm}
+                \begin{align*}
+                    \mathbb{V}[X] &= \sum_{i=1}^{\infty}{(x_i-\mathbb{E}[X])^2 \cdot p_i} \\
+                    &= \mathbb{E}[(X_i-\mu)^2]= \dfrac{1}{n} \sum_{i=1}^{n}(X_i-\bar{X})^2
+                \end{align*}
+                Cas continu:
+                Cas discret:\\
+                $$\mathbb{V}[X] = \displaystyle\int_{-\infty}^{\infty} (x-\mathbb{E}[X])^2 \cdot f(x) \, dx $$
+                Lien entre écart-type et variance: $\mathbb{V}[X] = \sigma^2$\\
+                \nc{Propriétés}
+                \begin{itemize}
+                    \item $\mathbb{V}[X] = \mathbb{E}[(X - \mathbb{E}[X])^2] = \mathbb{E}[X^2] - \mathbb{E}[X]^2$
+                    \item $\mathbb{V}[X + Y] = \mathbb{V}[X] + \mathbb{V}[Y]$ \text{ if $X$ and $Y$ are independent.}
+                    \item $\mathbb{V}[aX] = a^2 \mathbb{V}[X]$
+                    \item $\mathbb{V}[XY] = \mathbb{V}[X]\cdot\mathbb{V}[Y] + \mathbb{V}[X]\cdot\mathbb{E}[Y]^2 + \mathbb{V}[Y]\cdot\mathbb{E}[X]^2$ \text{ if $X$ and $Y$ are independent.}
+                    \item $\mathbb{V}[c] = 0$ \text{ if $c$ is a constant.}
+                \end{itemize}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Variance};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
+    % Loi de probabilité
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+        \begin{tabular}[width=0.4\boxsize]{|c|c|c|c|c|}
+            \hline
+            Loi & Param & $\mathbb{E}$ & $\mathbb{V}$ & Support \\
+            Bernoulli & $p$ & $p$ & $p(1-p)$ & ${0,1}$ \\
+            Binomiale & $n,p$ & $np$ & $np(1-p)$ & ${0,1}$ \\
+            Uniforme & $a,b$ & $\frac{a+b}{2}$ & $\frac{(b-a)^2}{12}$ & $[a,b]$ \\
+            Normale & $\mu,\sigma$ & $\mu$ & $\sigma^2$ & $R$ \\
+            Exponentielle & $\lambda$ & $\frac{1}{\lambda}$ & $\frac{1}{\lambda^2}$ & $[0,\infty)$ \\
+            Poisson & $\lambda$ & $\lambda$ & $\lambda$ & $[0,\infty)$ \\
+            Géométrique & $p$ & $\frac{1}{p}$ & $\frac{1}{p^2}$ & $[0,\infty)$ \\
+            \hline
+        \end{tabular}
+            \begin{minipage}{\boxsize}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Loi de probabilité};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Likelihood
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                Soit $X$ une variable aléatoire à valeurs dans $\mathbb{R}$, on définit la likelihood de $\theta$ par:
+                
+                $$L(\theta) = \prod_{i=1}^n f(x_i | \theta)$$
+                
+                où $f(x)$ est la densité de probabilité de $X$.
+                
+                Souvent, on utilise le logarithme de la likelihood:\\
+                
+                $$\log L(\theta) = \sum_{i=1}^n \log f(x_i | \theta)$$
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Likelihood};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
+    % MLE
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                $\hat{\theta}_{MLE}$ est de $\theta$ est le paramètre qui maximise la likelihood de $\theta$.
+                
+                Soit $\theta$ un paramètre d'une loi de probabilité, on définit le MLE de $\theta$ par:
+                
+                $$\hat{\theta} = \arg\max_{\theta} L(\theta)$$
+                
+                où $L(\theta)$ est la likelihood de $\theta$.
+                
+                \nc{Procédure}
+                1. Définir la likelihood de $\theta$ $L(\theta)$.
+    
+                2. On passe au logarithme de la likelihood. $l(\theta) = \log L(\theta)$
+
+                3. On dérive la log-likelihood par rapport à $\theta$
+
+                4. On cherche $\hat{\theta}$ tel que $\frac{\partial}{\partial \theta} l(\hat{\theta}) = 0$.
+
+                5. On vérifie que $\frac{\partial^2}{\partial \theta^2}l(\hat{\theta}) < 0$
+
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {MLE};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
+    % Régression Linéaire
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                Soit un tableau de données: 
+
+                $x$ = Soap(g) , $y$ = Height(cm) , $x \cdot y$ , $x^2$	  
+
+                $$ X = [1, Soap] $$
+                $$ X^TX = \begin{bmatrix} n & \sum{x_i} \\ \sum{x_i} & \sum{x_i^2} \end{bmatrix} = \begin{bmatrix} 7 & 38.5 \\ 38.5 & 218.95 \end{bmatrix} $$
+                $$ X^Ty = \begin{bmatrix} \sum{y_i} \\ \sum{x_iy_i} \end{bmatrix} = \begin{bmatrix} 348 \\ 1975 \end{bmatrix} $$
+                $$ \hat{\theta} = (X^TX)^{-1}X^Ty = \begin{bmatrix} -2.67 \\ 9.51 \end{bmatrix} $$
+                Inverse d'une matrice 2x2 :
+
+                $$ \begin{bmatrix} a & b \\ c & d \end{bmatrix}^{-1} = \dfrac{1}{ad-bc} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix} $$
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Régression Linéaire};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
+    % Normale
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                \begin{enumerate}
+                    \item $P(X \leq x) = \Phi(x) = \displaystyle\int_{-\infty}^{x} N(0,1)dx$
+                    \item $\Phi(x) = 1 - \Phi(-x)$
+                    \item $F_x(x) = \Phi\left(\dfrac{x-\mu}{\sigma}\right)$ est une loi normale centrée réduite
+                \end{enumerate}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Normale};
+    \end{tikzpicture}
+    %---------------------------------
+
+%###############################################################################################
+%                                         Deuxième Page
+%###############################################################################################
+
+
+\end{multicols*}
+    
+\end{document}
