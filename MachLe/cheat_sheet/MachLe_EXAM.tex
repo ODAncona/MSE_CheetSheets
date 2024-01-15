@@ -124,7 +124,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.31\textwidth}
+            \begin{minipage}{0.24\textwidth}
             $Accuracy = \dfrac{TP + TN}{ TP + TN + FP + FN}$\\
             $Precision = \dfrac{TP}{ TP + FP}$\\
             $Recall = \dfrac{TP}{ TP + FN}$\\
@@ -136,18 +136,17 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \end{tikzpicture}
     %---------------------------------
 
-
     %---------------------------------
     % Activation Functions
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.31\textwidth}
+            \begin{minipage}{0.24\textwidth}
                 \textbf{Sigmoid}: $\dfrac{1}{1 + e^{-x}}$\\
                 \textbf{Hyperbolic tangent}: $\frac {e^{x} - e^{-x}}{e^{x} + e^{-x}}$\\
                 \textbf{Relu}: $\begin{cases}0 & \text{si $x < 0$ } \\x & \text{si $x \ge 0$} \\\end{cases}$\\
                 \textbf{Gaussian}: $e^{-x^{2}}$\\
-                \textbf{Softmax}: $\dfrac{e^{z_j}}{\displaystyle \sum_{k=1}^{K}{e^{z_k}}}$\\
+                \textbf{Softmax}: $\dfrac{e^{z_j}}{ \sum_{k=1}^{K}{e^{z_k}}}$\\
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Activation Functions};
@@ -160,7 +159,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.31\textwidth}
+            \begin{minipage}{0.24\textwidth}
                 \nc{Structure}\\
                 \textbf{Biais}: $b$, An extra weight that can be learned using a learning algorithm. The purpose is to replace threshold.\\
                 \textbf{Input}: $I$, Input vector
@@ -180,12 +179,16 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
 
 
+
     %---------------------------------
     % KNN for classification and regression
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.31\textwidth}
+            \begin{minipage}{0.24\textwidth}
+                Complexity: $O(knd)$\\
+                Choose a value for $k$:\\
+
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {KNN for classification and regression};
@@ -197,7 +200,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.31\textwidth}
+            \begin{minipage}{0.24\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Bayesian approaches / GMMs / System evaluation};
@@ -233,7 +236,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.31\textwidth}
+            \begin{minipage}{0.24\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {System engineering / Data preparation / Tuning};
@@ -245,7 +248,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.31\textwidth}
+            \begin{minipage}{0.24\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Logistic regression / Overfitting};
@@ -258,7 +261,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.31\textwidth}
+            \begin{minipage}{0.24\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {SVM};
@@ -270,7 +273,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.31\textwidth}
+            \begin{minipage}{0.24\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Clustering};
@@ -283,7 +286,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.31\textwidth}
+            \begin{minipage}{0.24\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Decision Trees};
@@ -295,7 +298,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.31\textwidth}
+            \begin{minipage}{0.24\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Convolutional Neural Networks};
@@ -307,7 +310,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.31\textwidth}
+            \begin{minipage}{0.24\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Recurrent Neural Networks};
@@ -319,7 +322,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.31\textwidth}
+            \begin{minipage}{0.24\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Dimensionality Reduction};
@@ -331,7 +334,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.31\textwidth}
+            \begin{minipage}{0.24\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Reinforcement Learning};
@@ -354,5 +357,41 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
 
 
 \end{multicols*}
+
+%---------------------------------
+% Computational Complexity of ML Algorithms
+%---------------------------------
+\begin{tikzpicture}
+    \node [mybox] (box){%
+        \begin{minipage}{0.95\textwidth}
+            \begin{tabular}{|l|l|l|l|}
+                \hline
+                \textbf{Algorithm} & \textbf{Assumption} & \textbf{Train Time/Space} & \textbf{Inference Time/Space} \\
+                \hline
+                KNN (Brute Force) & Similar things exist in close proximity & \(O(knd)\) / \(O(nd)\) & \(O(knd)\) / \(O(nd)\) \\
+                \hline
+                KNN (KD Tree) & Similar things exist in close proximity & \(O(nd\log(n))\) / \(O(nd)\) & \(O(k\log(n)d)\) / \(O(nd)\) \\
+                \hline
+                Naive Bayes & Features are conditionally independent & \(O(ndc)\) / \(O(dc)\) & \(O(dc)\) / \(O(dc)\) \\
+                \hline
+                Logistic Regression & Classes are linearly separable & \(O(nd)\) / \(O(nd)\) & \(O(d)\) / \(O(d)\) \\
+                \hline
+                Linear Regression & Linear relationship between variables & \(O(nd)\) / \(O(nd)\) & \(O(d)\) / \(O(d)\) \\
+                \hline
+                SVM & Classes are linearly separable & \(O(n^2d^2)\) / \(O(nd)\) & \(O(kd)\) / \(O(kd)\) \\
+                \hline
+                Decision Tree & Feature selection by information gain & \(O(n\log(n)d)\) / \(O(\text{nodes})\) & \(O(\log(n))\) / \(O(\text{nodes})\) \\
+                \hline
+                Random Forest & Low bias and variance trees & \(O(kn\log(n)d)\) / \(O(\text{nodes} \times k)\) & \(O(k\log(n))\) / \(O(\text{nodes} \times k)\) \\
+                \hline
+                GBDT & High bias, low variance trees & \(O(Mn\log(n)d)\) / \(O(\text{nodes} \times M + \gamma_m)\) & \(O(M\log(n))\) / \(O(\text{nodes} \times M + \gamma_m)\) \\
+                \hline
+            \end{tabular}
+        \end{minipage}
+    };
+    \node[fancytitle, right=10pt] at (box.north west) {Computational Complexity of ML Algorithms};
+\end{tikzpicture}
+%---------------------------------
+
     
 \end{document}
