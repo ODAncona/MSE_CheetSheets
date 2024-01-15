@@ -1,0 +1,9 @@
+AnSeqDa/AnSeDa_ALL.pdf
+AnSeqDa/cheat_sheet/summary_apv
+CloudSys/CloudSys_ALL.pdf
+MachLe/MachLe_ALL.pdf
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
