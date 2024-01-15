@@ -144,7 +144,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.24\textwidth}
-                \textbf{Sigmoid}: $\dfrac{1}{1 + e^{-x}}$\\
+                \textbf{Sigmoid}: $\sigma(x)=\dfrac{1}{1 + e^{-x}}$\\
                 \textbf{Hyperbolic tangent}: $\frac {e^{x} - e^{-x}}{e^{x} + e^{-x}}$\\
                 \textbf{Relu}: $\begin{cases}0 & \text{si $x < 0$ } \\x & \text{si $x \ge 0$} \\\end{cases}$\\
                 \textbf{Gaussian}: $e^{-x^{2}}$\\
@@ -270,7 +270,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-         \begin{minipage}{0.31\textwidth}
+         \begin{minipage}{0.24\textwidth}
             \nc{Normalization}
             \textbf{Min-max [0,1]}: $x' = \dfrac{\left(x-x_{min}\right)}{\left(x_{max}-x_{min}\right)}$\\
             \textbf{Min-max [-1,1]}: $x' = 2 \cdot min\_max(x) -1$ \\
@@ -290,12 +290,10 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.24\textwidth}
-                  \textbf{Formule}: 
-                $$ P(Y=1|X) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X)}} $$
-                où
+                $$ P(Y=1|X) = \sigma(x \theta^T) $$
                 \begin{itemize}[noitemsep]
-                    \item $P(Y=1|X)$ : Probabilité de la classe positive
-                    \item $\beta_0, \beta_1$ : Paramètres du modèle
+                    \item $P(Y=1|X)$ : Probability of class $k$ given $x$
+                    \item $\theta$ : model's parameters
                     \item $X$ : Variable explicative
                 \end{itemize}
 
