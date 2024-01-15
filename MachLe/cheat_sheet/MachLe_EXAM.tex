@@ -266,6 +266,34 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
 
     %---------------------------------
+    % Logistic Regression
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.24\textwidth}
+                $$ P(Y=1|X) = \sigma(x \theta^T) $$
+                \begin{itemize}[noitemsep]
+                    \item $P(Y=1|X)$ : Probability of $Y=1$ given $X$
+                    \item $\theta$ : model's parameters
+                    \item $X$ : input vector
+                \end{itemize}
+
+                \textbf{Goal}: Find the $\theta$ that maximizes the likelihood of the data.\\
+                \textbf{Loss}:
+                $$
+                \begin{aligned}
+                J(\beta) &= -\frac{1}{n} \sum_{i=1}^{n} y_i \log(P(y_i|X_i)) +\\
+                &\qquad \qquad(1 - y_i) \log(1 - P(y_i|X_i))
+                \end{aligned}
+                $$
+                blablabalbal
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Logistic Regression};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
     % Normalization
     %---------------------------------
     \begin{tikzpicture}
@@ -283,31 +311,6 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node[fancytitle, right=10pt] at (box.north west) {Normalization};
     \end{tikzpicture}
     %---------------------------------
-
-    %---------------------------------
-    % Logistic Regression
-    %---------------------------------
-    \begin{tikzpicture}
-        \node [mybox] (box){%
-            \begin{minipage}{0.24\textwidth}
-                $$ P(Y=1|X) = \sigma(x \theta^T) $$
-                \begin{itemize}[noitemsep]
-                    \item $P(Y=1|X)$ : Probability of class $k$ given $x$
-                    \item $\theta$ : model's parameters
-                    \item $X$ : Variable explicative
-                \end{itemize}
-
-                \textbf{But}: Trouver les $\beta$ qui maximisent la vraisemblance du modèle. Utilise la méthode de descente de gradient pour l'optimisation.
-
-                \textbf{Fonction de coût}:
-                $$ J(\beta) = -\frac{1}{n} \sum_{i=1}^{n} \left[ y_i \log(P(y_i|X_i)) + (1 - y_i) \log(1 - P(y_i|X_i)) \right] $$
-            \end{minipage}
-        };
-        \node[fancytitle, right=10pt] at (box.north west) {Logistic Regression};
-    \end{tikzpicture}
-    %---------------------------------
-
-
 
     %---------------------------------
     % SVM
