@@ -66,7 +66,7 @@
 %
 % Setup
 %
-\title{MachLe Résumé Olivier D'Ancona}
+\title{MachLe - Olivier D'Ancona}
 \advance\topmargin-.8in
 \advance\textheight3in
 \advance\textwidth3in
@@ -74,6 +74,8 @@
 \advance\evensidemargin-1.5in
 \parindent0pt
 \parskip2pt
+\linespread{0.4}
+
 
 %
 % Commands
@@ -84,7 +86,7 @@
 \newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
 %\colorbox[HTML]{e4e4e4}{\makebox[\textwidth-2\fboxsep][l]{texto}
 \newcommand{\nc}[2][]{%
-\vspace{-.1cm}
+\vspace{-.16cm}
 \tikz \draw [draw=black, ultra thick, #1]
     ($(current page.center)-(0.5\linewidth,0)$) --
     ($(current page.center)+(0.5\linewidth,0)$)
@@ -114,8 +116,9 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
 % Title
 %---------------------------------
 \begin{center}
-    {\huge{\textbf{MachLe - Résumé Olivier D'Ancona}}}\\
+    {\huge{\textbf{MachLe - Olivier D'Ancona}}}\\
 \end{center}
+\vspace{-0.1cm}
 
 \begin{multicols*}{5}
 
@@ -167,7 +170,6 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                 \textbf{Input}: $I$, Input vector
                 \textbf{Weights}: $W$, Vector of weights
                 \nc{Learning algorithm}\\
-                \vspace{-0.8cm}
                 \begin{enumerate}
                 \item Randomly initialize weights
                 \item Compute the neuron's output for a fiven input vector X
@@ -210,7 +212,6 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.197\textwidth}
-                Théorème de Bayes:
                 $$ P(C_k|x) = \frac{P(x|C_k) \cdot P(C_k)}{P(x)} $$                où
                 \begin{itemize}[noitemsep]
                     \item $C_k$: Classe ciblée
@@ -223,7 +224,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                 avec 
                 $$ P(x) = \sum_{\text{toutes classes } C_k} P(x|C_k) \cdot P(C_k) $$
 
-                Exemple Classificateur Fille/Garçon:
+                \nc{Classifier H/F:}
                 \begin{itemize}
                     \item $P(C_f) = \frac{4}{70}, P(C_g) = \frac{66}{70}$
                     \item $p(x|C_g) = 0.8, p(x|C_f) = 0.2$
@@ -255,8 +256,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                 $$ X^Ty = \begin{bmatrix} \sum{y_i} \\ \sum{x_iy_i} \end{bmatrix} = \begin{bmatrix} 348 \\ 1975 \end{bmatrix} $$
                 $$ \hat{\theta} = (X^TX)^{-1}X^Ty = \begin{bmatrix} \theta_0 \\ \theta_1 \end{bmatrix} = \begin{bmatrix} -2.67 \\ 9.51 \end{bmatrix} $$
                 $$ \hat{y} = \theta_0 + \theta_1x $$
-                Inverse d'une matrice 2x2 :
-
+                \nc{Matrix Inversion (2x2)}
                 $$ \begin{bmatrix} a & b \\ c & d \end{bmatrix}^{-1} = \dfrac{1}{ad-bc} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix} $$
             \end{minipage}
         };
@@ -297,13 +297,10 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \begin{tikzpicture}
         \node [mybox] (box){%
          \begin{minipage}{0.197\textwidth}
-            \nc{Normalization}
             \textbf{Min-max [0,1]}: $x' = \dfrac{\left(x-x_{min}\right)}{\left(x_{max}-x_{min}\right)}$\\
             \textbf{Min-max [-1,1]}: $x' = 2 \cdot min\_max(x) -1$ \\
             min-max doesn't handle outliers.\\
             \textbf{Z-norm}: $x' = \dfrac{\left(x-\mu\right)}{\sigma}$\\
-            \nc{transformations}
-            \textbf{log}: $x' = log(x)$\\
          \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Normalization};
@@ -321,7 +318,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
 
                 hw(x) = sign(b + wx)
 
-                \textbf{Formulation}: 
+                \nc{Formulation}
                 $$ \max_{\omega, b} \frac{1}{\|\omega\|} \quad \text{s.t.} \quad y_i(\omega \cdot x_i + b) \geq 1 \, \forall i $$
                 where
                 \begin{itemize}[noitemsep]
@@ -330,10 +327,10 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                     \item $x_i, y_i$ : Training data points and labels
                 \end{itemize}
 
-                \textbf{Kernel Trick}: 
+                \nc{Kernel Trick}
                 SVM can be extended to non-linearly separable data using kernel functions, which implicitly map input space to a higher-dimensional feature space.
 
-                \textbf{Common Kernels}:
+                \nc{Common Kernels}
                 \begin{itemize}[noitemsep]
                     \item Linear: $\langle x, x'\rangle$
                     \item Polynomial: $(\gamma \langle x, x'\rangle + r)^d$
@@ -348,12 +345,12 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                 (1 if falls on the hyperplane)
                 (>1 if misclassified)
 
-               objective function to minimize:
+               \nc{Objective function to min}
             $$ \min_{\omega, b} \quad \frac{1}{2} \|\omega\|^2 + C \sum_{i=1}^{n} \max(0, 1 - y_i(\omega \cdot x_i + b)) $$
             where $C$ nutch the hinge loss term (how far are we predicting from ground truth) and regularization term (impeach big value, min w => maximize margin)
             \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {Support Vector Machine (SVM)};
+        \node[fancytitle, right=10pt] at (box.north west) {Support Vector Machine};
     \end{tikzpicture}
     %---------------------------------
 
@@ -361,6 +358,23 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
 %                                         Deuxième Page
 %###############################################################################################
 
+    %--------------------------
+    % Distance Measures
+    %--------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+        \begin{minipage}{0.31\textwidth}
+        $Pearson= R^{2} = 1 - \dfrac{\displaystyle\sum_{1}^{n}{\left(y_i - \hat{y_i}\right)^{2}}}{\displaystyle\sum_{1}^{n}{\left(y_i - \overline{y_i}\right)^{2}}}$\\
+        $Euclidian = \sqrt{\displaystyle\sum{\left(I_1 - I_2\right)^{2}}}$\\
+        $Manhattan = \displaystyle\sum{\abs{I_1 - I_2}}$\\
+        $MSE = \dfrac{1}{N}\displaystyle\sum_{1}^{n}{\left(y_i - \hat{y_i}\right)^{2}}$\\
+        $WSS = \displaystyle\sum{D^{2}\left(x_j,\mu_i\right)}$\\
+        $cosine$ $similarity = \dfrac{A \cdot B}{\norm{A} \cdot \norm{B}}$\\
+        \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Similarity Measures};
+    \end{tikzpicture}
+    %---------------------------------
 
     %---------------------------------
     % Clustering
@@ -368,16 +382,51 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.197\textwidth}
-                blablbalba
-                blablbalbaabab
-                \\
-                bababa
+                clustering partition data into cluster with high intra-class similarity and low inter-class similarity.\\
+                needs: (distance measure, criterion, algorithm)\\
+                \nc{Partitions}
+                \textbf{Distortion}: How close are we to a “centroid” defining the partition?\\
+                \textbf{Connectivity of points}: How close are points to each other?
+                \nc{Kmeans}
+                \textbf{centroid} is the center of a cluster\\
+                \textbf{codebook} is the ensemble of all centroids\\
+                \textbf{partition} is the ensemble of samples attributed to a centroid (to a cluster)\\
+                \nc{Mean Shift Clustering}
+                \nc{DBSCAN}
+                \nc{Hierarchical clustering}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Clustering};
     \end{tikzpicture}
     %---------------------------------
 
+    %---------------------------------
+    % PCA
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.197\textwidth}
+                \nc{Kmeans}
+                \nc{Hierarchical clustering}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Principal Component Analysis};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
+    % Autoencoders
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.197\textwidth}
+                \nc{Kmeans}
+                \nc{Hierarchical clustering}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Autoencoders};
+    \end{tikzpicture}
+    %---------------------------------
 
     %---------------------------------
     % Decision Tree
