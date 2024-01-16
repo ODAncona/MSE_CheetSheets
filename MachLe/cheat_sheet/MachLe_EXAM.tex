@@ -161,31 +161,28 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \end{tikzpicture}
     %---------------------------------
 
-
     %---------------------------------
-    % Neural Network
+    % Linear Regression
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.247\textwidth}
-                \nc{Structure}\\
-                \textbf{Biais}: $b$, An extra weight that can be learned using a learning algorithm. The purpose is to replace threshold.\\
-                \textbf{Input}: $I$, Input vector
-                \textbf{Weights}: $W$, Vector of weights
-                \nc{Learning algorithm}\\
-                \begin{enumerate}
-                \item Randomly initialize weights
-                \item Compute the neuron's output for a fiven input vector X
-                \item Update weights: $W_j(t+1) = W_j(t) + \eta\left(\hat{y_i}-y\right)x$ with $\eta$ the learning rate and $\hat{y_i}$ the desired output.
-                \item Repeat steps 2 and 3 for the number of epochs you need or until the error is smaller than a threshold.
-                \end{enumerate}
-           \end{minipage}
+            \begin{minipage}{\boxsize}
+                Soit un tableau de données: 
+
+                $x$ = Surface(g) , $y$ = Price(cm) , $x \cdot y$ , $x^2$	  
+
+                $$ X = [1, Surface] $$
+                $$ X^TX = \begin{bmatrix} n & \sum{x_i} \\ \sum{x_i} & \sum{x_i^2} \end{bmatrix} = \begin{bmatrix} 7 & 38.5 \\ 38.5 & 218.95 \end{bmatrix} $$
+                $$ X^Ty = \begin{bmatrix} \sum{y_i} \\ \sum{x_iy_i} \end{bmatrix} = \begin{bmatrix} 348 \\ 1975 \end{bmatrix} $$
+                $$ \hat{\theta} = (X^TX)^{-1}X^Ty = \begin{bmatrix} \theta_0 \\ \theta_1 \end{bmatrix} = \begin{bmatrix} -2.67 \\ 9.51 \end{bmatrix} $$
+                $$ \hat{y} = \theta_0 + \theta_1x $$
+                \nc{Matrix Inversion (2x2)}
+                $$ \begin{bmatrix} a & b \\ c & d \end{bmatrix}^{-1} = \dfrac{1}{ad-bc} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix} $$
+            \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {Neural Network};
+        \node[fancytitle, right=10pt] at (box.north west) {Linear Regression};
     \end{tikzpicture}
     %---------------------------------
-
-
 
     %---------------------------------
     % KNN
@@ -241,29 +238,6 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Bayes};
-    \end{tikzpicture}
-    %---------------------------------
-
-    %---------------------------------
-    % Linear Regression
-    %---------------------------------
-    \begin{tikzpicture}
-        \node [mybox] (box){%
-            \begin{minipage}{\boxsize}
-                Soit un tableau de données: 
-
-                $x$ = Surface(g) , $y$ = Price(cm) , $x \cdot y$ , $x^2$	  
-
-                $$ X = [1, Surface] $$
-                $$ X^TX = \begin{bmatrix} n & \sum{x_i} \\ \sum{x_i} & \sum{x_i^2} \end{bmatrix} = \begin{bmatrix} 7 & 38.5 \\ 38.5 & 218.95 \end{bmatrix} $$
-                $$ X^Ty = \begin{bmatrix} \sum{y_i} \\ \sum{x_iy_i} \end{bmatrix} = \begin{bmatrix} 348 \\ 1975 \end{bmatrix} $$
-                $$ \hat{\theta} = (X^TX)^{-1}X^Ty = \begin{bmatrix} \theta_0 \\ \theta_1 \end{bmatrix} = \begin{bmatrix} -2.67 \\ 9.51 \end{bmatrix} $$
-                $$ \hat{y} = \theta_0 + \theta_1x $$
-                \nc{Matrix Inversion (2x2)}
-                $$ \begin{bmatrix} a & b \\ c & d \end{bmatrix}^{-1} = \dfrac{1}{ad-bc} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix} $$
-            \end{minipage}
-        };
-        \node[fancytitle, right=10pt] at (box.north west) {Linear Regression};
     \end{tikzpicture}
     %---------------------------------
 
@@ -650,9 +624,38 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                 real-valued weights.\\
                 If $\sigma(w_i) > 0.5$ then output yes, else no\\
                 Use a loss function that considers the output errors and adapt the weights\\
+                New trees are built with the aim of incrementally reducing the error (boosting)\\
+                we use an iterative optimization approach: in every boosting iteration we choose a tree $f_k$ that will get us one step closer to the minimum cost.\\
+                XGBoost, in short, uses several trees that contribute in an additive manner to compute a nal weight value for each leaf by minimising a loss function that measures the difference between the true labels y and the ensemble's prediction
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {XG-Boost};
+    \end{tikzpicture}
+    %---------------------------------
+
+
+    %---------------------------------
+    % Neural Network
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \nc{Structure}\\
+                \textbf{Biais}: $b$, An extra weight that can be learned using a learning algorithm. The purpose is to replace threshold.\\
+                \textbf{Input}: $I$, Input vector
+                \textbf{Weights}: $W$, Vector of weights
+                \nc{Learning algorithm}\\
+                \begin{enumerate}
+                \item Randomly initialize weights
+                \item Compute the neuron's output for a fiven input vector X
+                \item Update weights: $W_j(t+1) = W_j(t) + \eta\left(\hat{y_i}-y\right)x$ with $\eta$ the learning rate and $\hat{y_i}$ the desired output.
+                \item Repeat steps 2 and 3 for the number of epochs you need or until the error is smaller than a threshold.
+                \end{enumerate}
+                \nc{Regularization}
+                Regularization means providing constraints to limit the values of the parameters we are learning.
+           \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Neural Network};
     \end{tikzpicture}
     %---------------------------------
 
