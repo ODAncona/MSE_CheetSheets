@@ -517,12 +517,20 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                 \item $H(X|Y)$ : Entropy of the child node
             \end{itemize}
 
-            \textbf{Gini Impurity}: 
-            $$ G(X) = 1 - \sum_{i=1}^{n} p(x_i)^2 $$
+            \textbf{Gini Impurity of a set}:\\
+            $ G(X) = 1 - \sum_{i=1}^{n} p(x_i)^2 $
             where
             \begin{itemize}[noitemsep]
-                \item $p(x_i)$ :  is the proportion of points in a set that belongs to a class $i$.
+                \item $p(x_i)$ :  is the proportion of points in a set that belongs to a class $i$: $\dfrac{N_i}{N}$.
             \end{itemize}
+
+            \textbf{G = 0.5} : maximum value of impurity, classes are balanced in the set.\\
+            \textbf{G = 0} : minimum value of impurity, all the values belong to a single class.\\
+
+            \textbf{Gini Impurity of a Split}:\\
+            $ Gini_{split} = \displaystyle\sum_{i=1}^{n} \dfrac{N_i}{N} G(X_i) $\\
+            $ Gini_{gain} = Gini_{set} - Gini_{split} $\\
+
             \begin{tikzpicture}[grow=down, level distance=40pt]
                 \tikzstyle{level 1}=[sibling distance=110pt]
                 \tikzstyle{level 2}=[sibling distance=50pt]
