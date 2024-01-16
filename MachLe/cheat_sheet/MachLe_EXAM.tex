@@ -102,7 +102,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
 \tikzstyle{fancytitle} =[fill=black, text=white, font=\bfseries]
 
 \newlength{\boxsize}
-\setlength{\boxsize}{0.197\textwidth}
+\setlength{\boxsize}{0.247\textwidth}
 \raggedcolumns
 %###############################################################################################
 %
@@ -120,14 +120,14 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
 \end{center}
 \vspace{-0.1cm}
 
-\begin{multicols*}{5}
+\begin{multicols*}{4}
 
     %---------------------------------
     % Evaluation Metrics
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.197\textwidth}
+            \begin{minipage}{0.247\textwidth}
             $Accuracy = \dfrac{TP + TN}{ TP + TN + FP + FN}$\\
             $Precision = \dfrac{TP}{ TP + FP}$\\
             $Recall = \dfrac{TP}{ TP + FN}$ \\
@@ -146,7 +146,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.197\textwidth}
+            \begin{minipage}{0.247\textwidth}
                 \textbf{Sigmoid}: $\sigma(x)=\dfrac{1}{1 + e^{-x}}$\\
                 \textbf{Hyperbolic tangent}: $\frac {e^{x} - e^{-x}}{e^{x} + e^{-x}}$\\
                 \textbf{Relu}: $\begin{cases}0 & \text{si $x < 0$ } \\x & \text{si $x \ge 0$} \\\end{cases}$\\
@@ -164,7 +164,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.197\textwidth}
+            \begin{minipage}{0.247\textwidth}
                 \nc{Structure}\\
                 \textbf{Biais}: $b$, An extra weight that can be learned using a learning algorithm. The purpose is to replace threshold.\\
                 \textbf{Input}: $I$, Input vector
@@ -189,7 +189,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.197\textwidth}
+            \begin{minipage}{0.247\textwidth}
                 Hyperparameters:\\
                 \begin{itemize}[noitemsep]
                     \item Number of neighbours $k$
@@ -211,7 +211,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.197\textwidth}
+            \begin{minipage}{0.247\textwidth}
                 $$ P(C_k|x) = \frac{P(x|C_k) \cdot P(C_k)}{P(x)} $$                où
                 \begin{itemize}[noitemsep]
                     \item $C_k$: Classe ciblée
@@ -269,7 +269,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.197\textwidth}
+            \begin{minipage}{0.247\textwidth}
                 $$ h_\theta(x_n) = \sigma(x \theta^T) $$
                 \begin{itemize}[noitemsep]
                     \item $h_\theta(x_n)$ : predicted value
@@ -296,7 +296,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-         \begin{minipage}{0.197\textwidth}
+         \begin{minipage}{0.247\textwidth}
             \textbf{Min-max [0,1]}: $x' = \dfrac{\left(x-x_{min}\right)}{\left(x_{max}-x_{min}\right)}$\\
             \textbf{Min-max [-1,1]}: $x' = 2 \cdot min\_max(x) -1$ \\
             min-max doesn't handle outliers.\\
@@ -312,7 +312,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.197\textwidth}
+            \begin{minipage}{0.247\textwidth}
                 \textbf{Concept}: 
                 SVM finds the hyperplane that best separates different classes by maximizing the margin between the closest points of different classes (support vectors).\\
 
@@ -363,13 +363,14 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %--------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-        \begin{minipage}{0.31\textwidth}
+        \begin{minipage}{0.247\textwidth}
         $Pearson= R^{2} = 1 - \dfrac{\displaystyle\sum_{1}^{n}{\left(y_i - \hat{y_i}\right)^{2}}}{\displaystyle\sum_{1}^{n}{\left(y_i - \overline{y_i}\right)^{2}}}$\\
         $Euclidian = \sqrt{\displaystyle\sum{\left(I_1 - I_2\right)^{2}}}$\\
         $Manhattan = \displaystyle\sum{\abs{I_1 - I_2}}$\\
         $MSE = \dfrac{1}{N}\displaystyle\sum_{1}^{n}{\left(y_i - \hat{y_i}\right)^{2}}$\\
-        $WSS = \displaystyle\sum{D^{2}\left(x_j,\mu_i\right)}$\\
         $cosine$ $similarity = \dfrac{A \cdot B}{\norm{A} \cdot \norm{B}}$\\
+        $WSS = \sum_{i=1}^k \sum_{x \in C_i} d(x, \mu_i)^2$
+        Within-cluster-sum (distortion) is the sum of the squared distances between each point in a cluster $x_j$ and its cluster center.
         \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Similarity Measures};
@@ -381,12 +382,10 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.197\textwidth}
+            \begin{minipage}{0.247\textwidth}
                 clustering partition data into cluster with high intra-class similarity and low inter-class similarity.\\
                 needs: (distance measure, criterion, algorithm)\\
-                \nc{Partitions}
-                \textbf{Distortion}: How close are we to a “centroid” defining the partition?\\
-                \textbf{Connectivity of points}: How close are points to each other?
+
                 \nc{Kmeans}
                 \textbf{centroid} is the center of a cluster\\
                 \textbf{codebook} is the ensemble of all centroids\\
@@ -400,12 +399,96 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \end{tikzpicture}
     %---------------------------------
 
+%---------------------------------
+% Clustering
+%---------------------------------
+\begin{tikzpicture}
+    \node [mybox] (box){%
+        \begin{minipage}{0.247\textwidth}
+            \textbf{Clustering} partitions data into clusters with high intra-class similarity and low inter-class similarity.\\
+            \textbf{Needs}: distance measure, criterion, algorithm.\\
+            \nc{Partitions}
+            \textbf{Distortion}: How close are we to a “centroid” defining the partition?\\
+            \textbf{Connectivity of points}: How close are points to each other?
+
+            \nc{K-Means}
+            \begin{enumerate}[noitemsep]
+                \item Initialize $k$ centroids randomly.
+                \item Assign each point to the nearest centroid.
+                \item Recompute centroids as the mean of assigned points.
+                \item Repeat steps 2-3 until convergence.
+            \end{enumerate}
+            minimize distortion: $J = \displaystyle\sum_{i=1}^{k}{d(x_n,\mu_c)}$\\
+            \textbf{(+)} Will converge\\
+            \textbf{(-)} Sensitive to initial conditions(size, density, distribution), Finds a local optimum\\
+
+            \nc{Mean Shift Clustering}
+            \begin{enumerate}[noitemsep]
+                \item Choose bandwidth and initialize centroids.
+                \item Shift each centroid to the mean of points within the bandwidth.
+                \item Repeat until centroids converge.
+            \end{enumerate}
+            \textbf{(+)} Can find clusters of arbitrary shape; robust to outliers.\\
+            \textbf{(-)} Computationally intensive; bandwidth parameter can be tricky to set.\\
+
+            \nc{DBSCAN}
+            \begin{enumerate}[noitemsep]
+                \item Classify points as core, border, or noise based on density.
+                \item Form clusters around core points.
+                \item Assign border points to clusters or mark as noise.
+            \end{enumerate}
+            \textbf{(+)} Identifies clusters of varying shapes; robust to noise.\\
+            \textbf{(-)} Sensitive to parameters; struggles with varying density clusters.\\
+
+            \nc{Hierarchical Clustering}
+            \textbf{Algorithm (Agglomerative)}:
+            \begin{enumerate}[noitemsep]
+                \item Start with each point as a separate cluster.
+                \item Merge the closest pair of clusters.
+                \item Repeat step 2 until desired number of clusters is reached.
+            \end{enumerate}
+            \textbf{(+)} No need to specify the number of clusters; intuitive dendrogram representation.\\
+            \textbf{(-)} Computationally expensive for large datasets; sensitive to outliers.\\
+
+            \nc{Silhouette Coefficient}
+            Measures how similar an object is to its own cluster compared to other clusters.\\
+
+            \nc{Davies-Bouldin Index}
+            Ratio of within-cluster distances to between-cluster distances.\\
+
+            \nc{CURSE OF DIMENSIONALITY}
+            High-dimensional spaces may obscure clustering due to sparsity and equidistance issues.\\
+
+            \nc{PARTITIONAL CLUSTERING}
+            Hierarchical (nested clusters) vs Partitional (disjoint clusters).\\
+
+            \nc{Cluster Evaluation}
+            Includes measures like Entropy, Purity, Rand Index, Mutual Information, and Conditional Entropy.\\
+    
+            \nc{Distance Measures}
+            Important for determining cluster membership: Euclidean, Manhattan, Minkowski, Chebyshev, Hamming, Cosine, Jaccard.\\
+    
+            \nc{Affinity Propagation}
+            \textbf{Algorithm}:
+            \begin{enumerate}[noitemsep]
+                \item Initialize similarity and availability matrices.
+                \item Update responsibility and availability matrices iteratively.
+                \item Identify exemplars and form clusters.
+            \end{enumerate}
+            \textbf{(+)} Automatically determines the number of clusters; can find exemplars.\\
+            \textbf{(-)} Computationally expensive; not suitable for very large datasets.\\
+        \end{minipage}
+    };
+    \node[fancytitle, right=10pt] at (box.north west) {Clustering};
+\end{tikzpicture}
+    
+
     %---------------------------------
     % PCA
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.197\textwidth}
+            \begin{minipage}{0.247\textwidth}
                 \nc{Kmeans}
                 \nc{Hierarchical clustering}
             \end{minipage}
@@ -419,7 +502,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.197\textwidth}
+            \begin{minipage}{0.247\textwidth}
                 \nc{Kmeans}
                 \nc{Hierarchical clustering}
             \end{minipage}
@@ -433,7 +516,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-         \begin{minipage}{0.197\textwidth}
+         \begin{minipage}{0.247\textwidth}
             \textbf{Concept}: 
             Decision tree is a flowchart-like structure in which each internal node represents a test on a feature (e.g. whether a coin flip comes up heads or tails), each branch represents the outcome of the test, and each leaf node represents a class label (decision taken after computing all features).\\
 
@@ -482,7 +565,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.197\textwidth}
+            \begin{minipage}{0.247\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Convolutional Neural Networks};
@@ -494,7 +577,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.197\textwidth}
+            \begin{minipage}{0.247\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Recurrent Neural Networks};
@@ -506,7 +589,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.197\textwidth}
+            \begin{minipage}{0.247\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Dimensionality Reduction};
@@ -518,7 +601,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.197\textwidth}
+            \begin{minipage}{0.247\textwidth}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Reinforcement Learning};
