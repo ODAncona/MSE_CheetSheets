@@ -378,110 +378,182 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
 
     %---------------------------------
+    % K-Means
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \begin{enumerate}[noitemsep]
+                    \item Initialize $k$ centroids randomly.
+                    \item Assign each point to the nearest centroid.
+                    \item Recompute centroids as the mean of assigned points.
+                    \item Repeat steps 2-3 until convergence.
+                \end{enumerate}
+                minimize distortion: $J = \displaystyle\sum_{i=1}^{k}{d(x_n,\mu_c)}$\\
+                \textbf{(+)} Will converge\\
+                \textbf{(-)} Sensitive to initial conditions(size, density, distribution), Finds a local optimum\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {K-Means};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
+    % Mean Shift Clustering
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \begin{enumerate}[noitemsep]
+                    \item Choose bandwidth and initialize centroids.
+                    \item Shift each centroid to the mean of points within the bandwidth.
+                    \item Repeat until centroids converge.
+                \end{enumerate}
+                \textbf{(+)} Can find clusters of arbitrary shape; robust to outliers.\\
+                \textbf{(-)} Computationally intensive; bandwidth parameter can be tricky to set.\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Mean Shift Clustering};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
+    % DB-Scan
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \begin{enumerate}[noitemsep]
+                    \item Classify points as core, border, or noise based on density.
+                    \item Form clusters around core points.
+                    \item Assign border points to clusters or mark as noise.
+                \end{enumerate}
+                \textbf{(+)} Identifies clusters of varying shapes; robust to noise.\\
+                \textbf{(-)} Sensitive to parameters; struggles with varying density clusters.\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {DB-Scan};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
+    % Hierarchical Clustering
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Algorithm (Agglomerative)}:
+                \begin{enumerate}[noitemsep]
+                    \item Start with each point as a separate cluster.
+                    \item Merge the closest pair of clusters.
+                    \item Repeat step 2 until desired number of clusters is reached.
+                \end{enumerate}
+                \textbf{(+)} No need to specify the number of clusters; intuitive dendrogram representation.\\
+                \textbf{(-)} Computationally expensive for large datasets; sensitive to outliers.\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Hierarchical Clustering};
+    \end{tikzpicture}
+    %---------------------------------
+
+    %---------------------------------
     % Clustering
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                clustering partition data into cluster with high intra-class similarity and low inter-class similarity.\\
-                needs: (distance measure, criterion, algorithm)\\
+                \textbf{Clustering} partitions data into clusters with high intra-class similarity and low inter-class similarity.\\
+                \textbf{Needs}: distance measure, criterion, algorithm.\\
+                \nc{Partitions}
+                \textbf{Distortion}: How close are we to a “centroid” defining the partition?\\
+                \textbf{Connectivity of points}: How close are points to each other?
+                \nc{Elbow Method}
+                Heuristic used in determining the number of clusters in a data set. It selects the value of $k$ that corresponds to the elbow of the curve (\#cluster, WSS).
 
-                \nc{Kmeans}
-                \textbf{centroid} is the center of a cluster\\
-                \textbf{codebook} is the ensemble of all centroids\\
-                \textbf{partition} is the ensemble of samples attributed to a centroid (to a cluster)\\
-                \nc{Mean Shift Clustering}
-                \nc{DBSCAN}
-                \nc{Hierarchical clustering}
+                \nc{Silhouette Coefficient}
+                $$ s = \frac{b-a}{\max(a,b)}$$
+                \begin{itemize}[noitemsep]
+                \item $a$ is the mean distance between a sample and all other points in the same class (cohesion)
+                \item $b$ is the mean distance between a sample and all other points in the next nearest cluster (isolation)
+                \end{itemize}
+                
+                $s$ range is $[-1,1]$ . A high value indicates that the object is well matched to its own cluster and poorly matched to neighboring clusters.\\
+
+                \nc{Davies-Bouldin Index}
+                $$ DB = \frac{1}{k} \sum_{i=1}^k \max_{j \neq i} \frac{R_i + R_j}{d(C_i, C_j)}$$
+                
+                \begin{itemize}[noitemsep]
+                    \item $R_i$ is the average distance between a point in cluster $C_i$ and all points in $C_i$ (cluster diameter))
+                    \item $d(C_i, C_j)$ is the distance between the centroids of $C_i$ and $C_j$
+                \end{itemize}
+                
+                zero is the lowest possible score. Values closer to zero indicate a better partition.
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Clustering};
     \end{tikzpicture}
     %---------------------------------
 
-%---------------------------------
-% Clustering
-%---------------------------------
-\begin{tikzpicture}
-    \node [mybox] (box){%
-        \begin{minipage}{0.247\textwidth}
-            \textbf{Clustering} partitions data into clusters with high intra-class similarity and low inter-class similarity.\\
-            \textbf{Needs}: distance measure, criterion, algorithm.\\
-            \nc{Partitions}
-            \textbf{Distortion}: How close are we to a “centroid” defining the partition?\\
-            \textbf{Connectivity of points}: How close are points to each other?
+    %---------------------------------
+    % Decision Tree
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+         \begin{minipage}{0.247\textwidth}
+            A flowchart-like structure in which each internal node represents a test on a feature. Each leaf node represents a class label(decision taken after computing all features).\\
 
-            \nc{K-Means}
-            \begin{enumerate}[noitemsep]
-                \item Initialize $k$ centroids randomly.
-                \item Assign each point to the nearest centroid.
-                \item Recompute centroids as the mean of assigned points.
-                \item Repeat steps 2-3 until convergence.
-            \end{enumerate}
-            minimize distortion: $J = \displaystyle\sum_{i=1}^{k}{d(x_n,\mu_c)}$\\
-            \textbf{(+)} Will converge\\
-            \textbf{(-)} Sensitive to initial conditions(size, density, distribution), Finds a local optimum\\
+            \textbf{Entropy}: 
+            $$ H(X) = - \sum_{i=1}^{n} p(x_i) \log_2 p(x_i) $$
+            where
+            \begin{itemize}[noitemsep]
+                \item $p(x_i)$ : Probability of class $x_i$
+            \end{itemize}
 
-            \nc{Mean Shift Clustering}
-            \begin{enumerate}[noitemsep]
-                \item Choose bandwidth and initialize centroids.
-                \item Shift each centroid to the mean of points within the bandwidth.
-                \item Repeat until centroids converge.
-            \end{enumerate}
-            \textbf{(+)} Can find clusters of arbitrary shape; robust to outliers.\\
-            \textbf{(-)} Computationally intensive; bandwidth parameter can be tricky to set.\\
+            \textbf{Information Gain}: 
+            $$ IG(X, Y) = H(X) - H(X|Y) $$
+            where
+            \begin{itemize}[noitemsep]
+                \item $H(X)$ : Entropy of the parent node
+                \item $H(X|Y)$ : Entropy of the child node
+            \end{itemize}
 
-            \nc{DBSCAN}
-            \begin{enumerate}[noitemsep]
-                \item Classify points as core, border, or noise based on density.
-                \item Form clusters around core points.
-                \item Assign border points to clusters or mark as noise.
-            \end{enumerate}
-            \textbf{(+)} Identifies clusters of varying shapes; robust to noise.\\
-            \textbf{(-)} Sensitive to parameters; struggles with varying density clusters.\\
+            \textbf{Gini Impurity}: 
+            $$ G(X) = 1 - \sum_{i=1}^{n} p(x_i)^2 $$
+            where
+            \begin{itemize}[noitemsep]
+                \item $p(x_i)$ :  is the proportion of points in a set that belongs to a class $i$.
+            \end{itemize}
+            \begin{tikzpicture}[grow=down, level distance=40pt]
+                \tikzstyle{level 1}=[sibling distance=110pt]
+                \tikzstyle{level 2}=[sibling distance=50pt]
+                
+                \node[rectangle,draw=black]{Pression > 91?}
+                  child{node[rectangle,draw=black]{C=3, I=2} edge from parent node[left, xshift=-0.5cm]{Oui}}
+                  child{node[rectangle,draw=black]{C=2, I=1} edge from parent node[right, xshift=0.5cm]{Non}};
+            \end{tikzpicture}
 
-            \nc{Hierarchical Clustering}
-            \textbf{Algorithm (Agglomerative)}:
-            \begin{enumerate}[noitemsep]
-                \item Start with each point as a separate cluster.
-                \item Merge the closest pair of clusters.
-                \item Repeat step 2 until desired number of clusters is reached.
-            \end{enumerate}
-            \textbf{(+)} No need to specify the number of clusters; intuitive dendrogram representation.\\
-            \textbf{(-)} Computationally expensive for large datasets; sensitive to outliers.\\
+            Première feuille:\\
+            $$ Gini = 1 - \left(\dfrac{3}{3+2}\right)^2 - \left(\dfrac{2}{3+2}\right)^2 = \dfrac{12}{25}$$
+            Deuxième feuille:\\
+            $$ Gini = 1 - \left(\dfrac{2}{2+1}\right)^2 - \left(\dfrac{1}{2+1}\right)^2 = \dfrac{4}{9}$$
 
-            \nc{Silhouette Coefficient}
-            Measures how similar an object is to its own cluster compared to other clusters.\\
+            \textbf{CART Algorithm}: 
+            \begin{itemize}[noitemsep]
+                \item Select the best attribute using IG or Gini
+                \item Make that attribute a decision node and break the dataset into smaller subsets
+                \item Recursively repeat the process on each subset until you find leaf nodes in all the branches of the tree
+            \end{itemize}
 
-            \nc{Davies-Bouldin Index}
-            Ratio of within-cluster distances to between-cluster distances.\\
+            \textbf{Pruning}: 
+            Pruning is a technique in machine learning and search algorithms that reduces the size of decision trees by removing sections of the tree that provide little power to classify instances.\\
 
-            \nc{CURSE OF DIMENSIONALITY}
-            High-dimensional spaces may obscure clustering due to sparsity and equidistance issues.\\
-
-            \nc{PARTITIONAL CLUSTERING}
-            Hierarchical (nested clusters) vs Partitional (disjoint clusters).\\
-
-            \nc{Cluster Evaluation}
-            Includes measures like Entropy, Purity, Rand Index, Mutual Information, and Conditional Entropy.\\
-    
-            \nc{Distance Measures}
-            Important for determining cluster membership: Euclidean, Manhattan, Minkowski, Chebyshev, Hamming, Cosine, Jaccard.\\
-    
-            \nc{Affinity Propagation}
-            \textbf{Algorithm}:
-            \begin{enumerate}[noitemsep]
-                \item Initialize similarity and availability matrices.
-                \item Update responsibility and availability matrices iteratively.
-                \item Identify exemplars and form clusters.
-            \end{enumerate}
-            \textbf{(+)} Automatically determines the number of clusters; can find exemplars.\\
-            \textbf{(-)} Computationally expensive; not suitable for very large datasets.\\
-        \end{minipage}
-    };
-    \node[fancytitle, right=10pt] at (box.north west) {Clustering};
-\end{tikzpicture}
-    
+            (+) Easy to interpret and explain, Can handle both numerical and categorical data, Requires little data preparation, Able to handle multi-output problems, Uses a white box model, Can be used for feature selection, Performs well even if its assumptions are somewhat violated by the true model from which the data were generated\\
+            
+            (-) Overfitting, Can be unstable because small variations in the data might result in a completely different tree being generated, Not suitable for large datasets, Unbalanced datasets where one class is dominant, Biased trees if some classes dominate
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Decision Tree};
+    \end{tikzpicture}
 
     %---------------------------------
     % PCA
@@ -510,55 +582,6 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node[fancytitle, right=10pt] at (box.north west) {Autoencoders};
     \end{tikzpicture}
     %---------------------------------
-
-    %---------------------------------
-    % Decision Tree
-    %---------------------------------
-    \begin{tikzpicture}
-        \node [mybox] (box){%
-         \begin{minipage}{0.247\textwidth}
-            \textbf{Concept}: 
-            Decision tree is a flowchart-like structure in which each internal node represents a test on a feature (e.g. whether a coin flip comes up heads or tails), each branch represents the outcome of the test, and each leaf node represents a class label (decision taken after computing all features).\\
-
-            \textbf{Entropy}: 
-            $$ H(X) = - \sum_{i=1}^{n} p(x_i) \log_2 p(x_i) $$
-            where
-            \begin{itemize}[noitemsep]
-                \item $p(x_i)$ : Probability of class $x_i$
-            \end{itemize}
-
-            \textbf{Information Gain}: 
-            $$ IG(X, Y) = H(X) - H(X|Y) $$
-            where
-            \begin{itemize}[noitemsep]
-                \item $H(X)$ : Entropy of the parent node
-                \item $H(X|Y)$ : Entropy of the child node
-            \end{itemize}
-
-            \textbf{Gini Impurity}: 
-            $$ G(X) = 1 - \sum_{i=1}^{n} p(x_i)^2 $$
-            where
-            \begin{itemize}[noitemsep]
-                \item $p(x_i)$ : Probability of class $x_i$
-            \end{itemize}
-
-            \textbf{CART Algorithm}: 
-            \begin{itemize}[noitemsep]
-                \item Select the best attribute using IG or Gini
-                \item Make that attribute a decision node and break the dataset into smaller subsets
-                \item Recursively repeat the process on each subset until you find leaf nodes in all the branches of the tree
-            \end{itemize}
-
-            \textbf{Pruning}: 
-            Pruning is a technique in machine learning and search algorithms that reduces the size of decision trees by removing sections of the tree that provide little power to classify instances.\\
-
-            (+) Easy to interpret and explain, Can handle both numerical and categorical data, Requires little data preparation, Able to handle multi-output problems, Uses a white box model, Can be used for feature selection, Performs well even if its assumptions are somewhat violated by the true model from which the data were generated\\
-            
-            (-) Overfitting, Can be unstable because small variations in the data might result in a completely different tree being generated, Not suitable for large datasets, Unbalanced datasets where one class is dominant, Biased trees if some classes dominate
-            \end{minipage}
-        };
-        \node[fancytitle, right=10pt] at (box.north west) {Decision Tree};
-    \end{tikzpicture}
 
     %---------------------------------
     % Convolutional Neural Networks
