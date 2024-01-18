@@ -566,13 +566,13 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                 
                 \nc{Example}
                 
-                \begin{tikzpicture}[grow=down, level distance=40pt]
-                    \tikzstyle{level 1}=[sibling distance=110pt]
-                    \tikzstyle{level 2}=[sibling distance=50pt]
+                \begin{tikzpicture}[grow=down, level distance=10pt]
+                    \tikzstyle{level 1}=[sibling distance=140pt]
+                    \tikzstyle{level 2}=[sibling distance=80pt]
                     
                     \node[rectangle,draw=black]{Pression > 91?}
-                    child{node[rectangle,draw=black]{C=3, I=2} edge from parent node[left, xshift=-0.5cm]{Oui}}
-                    child{node[rectangle,draw=black]{C=2, I=1} edge from parent node[right, xshift=0.5cm]{Non}};
+                    child{node[rectangle,draw=black]{C=3, I=2} edge from parent node[left, xshift=-0.5cm, yshift=0.5cm]{Oui}}
+                    child{node[rectangle,draw=black]{C=2, I=1} edge from parent node[right, xshift=0.5cm,yshift=0.5cm]{Non}};
                 \end{tikzpicture}\\
                 Première feuille:\\
                 $$ Gini = 1 - \left(\dfrac{3}{3+2}\right)^2 - \left(\dfrac{2}{3+2}\right)^2 = \dfrac{12}{25}$$
@@ -733,6 +733,30 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     
     %---------------------------------
+    % Recurrent Neural Networks
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                Handle sequential data. Each neuron in an RNN has a self-loop that allows information to persist.Maintains a hidden state that captures information about the sequence.\\
+                
+                \textbf{Applications}:
+                \begin{itemize}[noitemsep]
+                    \item Natural Language Processing (NLP)
+                    \item Speech Recognition
+                    \item Time Series Prediction
+                \end{itemize}
+                
+                (+) Can handle variable-length sequences, Can capture long-term dependencies\\
+                (-) Computationally intensive, Suffers from vanishing/exploding gradients, hard to lwarn long-term dependencies\\
+                
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Recurrent Neural Networks};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
     % PCA
     %---------------------------------
     \begin{tikzpicture}
@@ -760,17 +784,6 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \end{tikzpicture}
     %---------------------------------
     
-    %---------------------------------
-    % Recurrent Neural Networks
-    %---------------------------------
-    \begin{tikzpicture}
-        \node [mybox] (box){%
-            \begin{minipage}{0.247\textwidth}
-            \end{minipage}
-        };
-        \node[fancytitle, right=10pt] at (box.north west) {Recurrent Neural Networks};
-    \end{tikzpicture}
-    %---------------------------------
     
     %---------------------------------
     % Dimensionality Reduction
@@ -793,6 +806,37 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Reinforcement Learning};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % LSTM
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                Long Short-Term Memory NN are a type of RNN designed to remember information for long periods as part of the model's internal state.\\
+                
+                \textbf{Key Components}:
+                \begin{itemize}[noitemsep]
+                    \item Input, output, and forget gates to regulate the flow of information.
+                    \item Cell state for storing long-term information.
+                    \item Hidden state for short-term information.
+                \end{itemize}
+                
+                \textbf{Functioning}:
+                Gates selectively add or remove information to the cell state, allowing LSTMs to capture long-term dependencies and mitigate the vanishing gradient problem.\\
+                
+                (+) Better at capturing long-range dependencies than standard RNNs, More effective in learning from large sequences of data.\\
+                (-) More complex and computationally intensive to train than standard RNNs, May require more data to train effectively.\\
+                \nc{Number of Weights}
+                $4 x (N_{inputs} + N_{LSTMblocks} + bias) x N_{LSTMblocks}$\\
+                Weights for 32 LSTM units and 2-dim inputs: 4 x (2 + 32 + 1) x 32 = 4480
+                \nc{Applications}
+                feedforward NN, text and video classification, image captioning, sequence to sequence task, generative text model.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {LSTM};
     \end{tikzpicture}
     %---------------------------------
     
