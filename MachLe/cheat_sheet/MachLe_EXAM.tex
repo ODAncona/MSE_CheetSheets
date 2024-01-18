@@ -1,7 +1,7 @@
 %
 % Packages
 %
-\documentclass{article}
+\documentclass[10pt]{article} 
 \usepackage[landscape]{geometry}
 \usepackage{url}
 \usepackage{multicol}
@@ -75,9 +75,15 @@
 \advance\textwidth3in
 \advance\oddsidemargin-1.5in
 \advance\evensidemargin-1.5in
-\parindent0pt
-\parskip2pt
+\setlength{\parindent}{0pt} % No indentation at the start of a paragraph
+\setlength{\parskip}{6pt plus 2pt minus 1pt} % Space between paragraphs
+
+\baselineskip2pt
 \linespread{0.4}
+\setlength{\abovedisplayskip}{3pt}
+\setlength{\belowdisplayskip}{3pt}
+\setlength{\abovedisplayshortskip}{3pt}
+\setlength{\belowdisplayshortskip}{3pt}
 
 
 %
@@ -112,6 +118,8 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
 %                                         Document
 %
 %###############################################################################################
+
+
 
 \begin{document}
 
@@ -290,11 +298,12 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                $Pearson= R^{2} = 1 - \dfrac{\displaystyle\sum_{1}^{n}{\left(y_i - \hat{y_i}\right)^{2}}}{\displaystyle\sum_{1}^{n}{\left(y_i - \overline{y_i}\right)^{2}}}$\\
-                $Euclidian = \sqrt{\displaystyle\sum{\left(I_1 - I_2\right)^{2}}}$\\
-                $Manhattan = \displaystyle\sum{\abs{I_1 - I_2}}$\\
-                $MSE = \dfrac{1}{N}\displaystyle\sum_{1}^{n}{\left(y_i - \hat{y_i}\right)^{2}}$\\
-                $Cosine$ $similarity = \dfrac{A \cdot B}{\norm{A} \cdot \norm{B}}$\\
+                $\text{Pearson}= R^{2} = 1 - \dfrac{\displaystyle\sum_{1}^{n}{\left(y_i - \hat{y_i}\right)^{2}}}{\displaystyle\sum_{1}^{n}{\left(y_i - \overline{y_i}\right)^{2}}}$\\
+                $\text{Euclidean} = \sqrt{\displaystyle\sum{\left(I_1 - I_2\right)^{2}}}$\\
+                $\text{Manhattan} = \displaystyle\sum{\abs{I_1 - I_2}}$\\
+                $\text{MSE} = \dfrac{1}{N}\displaystyle\sum_{1}^{n}{\left(y_i - \hat{y_i}\right)^{2}}$\\
+                $\text{Cosine similarity} = \dfrac{A \cdot B}{\norm{A} \cdot \norm{B}}$\\
+                $\text{Purity} = \frac{1}{N} \sum_{k} \max_j |cluster_k \cap category_j|$\\
                 $WSS = \sum_{i=1}^k \sum_{x \in C_i} d(x, \mu_i)^2$
                 Within-cluster-sum (distortion) is the sum of the squared distances between each point in a cluster $x_j$ and its cluster center.
             \end{minipage}
@@ -393,6 +402,25 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     
     %---------------------------------
+    % DB-Scan
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \begin{enumerate}[noitemsep]
+                    \item Classify points as core, border, or noise based on density.
+                    \item Form clusters around core points.
+                    \item Assign border points to clusters or mark as noise.
+                \end{enumerate}
+                \textbf{(+)} Identifies clusters of varying shapes; robust to noise.\\
+                \textbf{(-)} Sensitive to parameters; struggles with varying density clusters.\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {DB-Scan};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
     % K-Means
     %---------------------------------
     \begin{tikzpicture}
@@ -410,25 +438,6 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {K-Means};
-    \end{tikzpicture}
-    %---------------------------------
-    
-    %---------------------------------
-    % DB-Scan
-    %---------------------------------
-    \begin{tikzpicture}
-        \node [mybox] (box){%
-            \begin{minipage}{0.247\textwidth}
-                \begin{enumerate}[noitemsep]
-                    \item Classify points as core, border, or noise based on density.
-                    \item Form clusters around core points.
-                    \item Assign border points to clusters or mark as noise.
-                \end{enumerate}
-                \textbf{(+)} Identifies clusters of varying shapes; robust to noise.\\
-                \textbf{(-)} Sensitive to parameters; struggles with varying density clusters.\\
-            \end{minipage}
-        };
-        \node[fancytitle, right=10pt] at (box.north west) {DB-Scan};
     \end{tikzpicture}
     %---------------------------------
     
@@ -787,16 +796,132 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     
     %---------------------------------
-    % PCA
+    % Principal Component Analysis
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                \nc{Kmeans}
-                \nc{Hierarchical clustering}
+                PCA is a statistical procedure that uses an orthogonal transformation to convert a set of observations of possibly correlated variables into a set of values of linearly uncorrelated variables called principal components. The first principal component has the largest possible variance.\\
+                
+                \nc{Steps}:
+                \begin{enumerate}[noitemsep]
+                    \item Before PCA, we standardize/ normalize data.
+                    \item Compute the covariance matrix.
+                    \item Compute eigen vectors of the covariance matrix.
+                    \item Sort eigenvalues and eigenvectors according to variance.
+                    \item Select a subset of the principal components.
+                    \item Transform the original data.
+                \end{enumerate}
+                
+                \textbf{Applications}:
+                Dimensionality reduction, exploratory data analyses, making predictive models more efficient.\\
+                
+                (+) Reduces complexity, removes noise, may improve model performance.\\
+                (-) Only allows linear projections, PCA restricts to orthogonal vectors in feature space that minimize reconstruction error (=> ICA), Assumes points are multivariate Gaussian\\
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Principal Component Analysis};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % t-SNE
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                Non-deterministic transformation of an observation set from high to low dimensionality. Can find non-linear structure (not like PCA). The similarity gives less importance to big distances.\\
+                
+                $ p_{j|i} = \frac{\exp(-\|x_i - x_j\|^2 / 2\sigma_i^2)}{\sum_{k \neq i} \exp(-\|x_i - x_k\|^2 / 2\sigma_i^2)} $
+                
+                (+) Sensitive to local structure, effective at creating map of clusters and patterns in high-dimensional space\\
+                (-) does not preserve distances between points, computationally intensive, non deterministic\\
+                \nc{perplexity}
+                $$ Perp(P_i) = 2^{H(P_i)} $$ where $H(P_i)$ is the Shannon entropy of the distribution $P_i$.
+                balance the attention between local and global aspects of the data.\\
+                \textbf{Steps}:
+                \begin{enumerate}[noitemsep]
+                    \item Compute pairwise affinities of points in high-dimensional space with a Gaussian distribution.
+                    \item Compute pairwise affinities in low-dimensional space with a Student-t distribution.
+                    \item Iteratively optimize the coordinates of the points in low-dimensional space.
+                    \item Compute the Kullback-Leibler divergence between the two distributions.
+                    \item Repeat steps 2-4 until convergence.
+                \end{enumerate}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {t-SNE};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    
+    %---------------------------------
+    % Computational Complexity of ML Algorithms
+    %---------------------------------
+    \vspace{3.3cm}
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.8\textwidth}
+                \resizebox{\textwidth}{!}{
+                    \begin{tabular}{|l|l|l|l|}
+                        \hline
+                        \textbf{Algorithm}  & \textbf{Assumption}                     & \textbf{Train Time/Space}                                   & \textbf{Inference Time/Space}                             \\
+                        \hline
+                        KNN (Brute Force)   & Similar things exist in close proximity & \(O(knd)\) / \(O(nd)\)                                      & \(O(knd)\) / \(O(nd)\)                                    \\
+                        \hline
+                        KNN (KD Tree)       & Similar things exist in close proximity & \(O(nd\log(n))\) / \(O(nd)\)                                & \(O(k\log(n)d)\) / \(O(nd)\)                              \\
+                        \hline
+                        Naive Bayes         & Features are conditionally independent  & \(O(ndc)\) / \(O(dc)\)                                      & \(O(dc)\) / \(O(dc)\)                                     \\
+                        \hline
+                        Logistic Regression & Classes are linearly separable          & \(O(nd)\) / \(O(nd)\)                                       & \(O(d)\) / \(O(d)\)                                       \\
+                        \hline
+                        Linear Regression   & Linear relationship between variables   & \(O(nd)\) / \(O(nd)\)                                       & \(O(d)\) / \(O(d)\)                                       \\
+                        \hline
+                        SVM                 & Classes are linearly separable          & \(O(n^2d^2)\) / \(O(nd)\)                                   & \(O(kd)\) / \(O(kd)\)                                     \\
+                        \hline
+                        Decision Tree       & Feature selection by information gain   & \(O(n\log(n)d)\) / \(O(\text{nodes})\)                      & \(O(\log(n))\) / \(O(\text{nodes})\)                      \\
+                        \hline
+                        Random Forest       & Low bias and variance trees             & \(O(kn\log(n)d)\) / \(O(\text{nodes} \times k)\)            & \(O(k\log(n))\) / \(O(\text{nodes} \times k)\)            \\
+                        \hline
+                        GBDT                & High bias, low variance trees           & \(O(Mn\log(n)d)\) / \(O(\text{nodes} \times M + \gamma_m)\) & \(O(M\log(n))\) / \(O(\text{nodes} \times M + \gamma_m)\) \\
+                        \hline
+                    \end{tabular}}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Computational Complexity of ML Algorithms};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % UMAP
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                Uniform Manifold Approximation and Projection (UMAP) is a dimensionality reduction technique that approximates a high-dimensional manifold using a graph representation, then finds a low-dimensional graph that maintains this structure.\\
+                
+                \nc{Process}:
+                \begin{itemize}[noitemsep]
+                    \item Builds a high-dimensional fuzzy graph by connecting close points.
+                    \item Low-dimensional graph constructed via gradient descent from random initialization.
+                \end{itemize}
+                
+                \nc{Parameters}:
+                \begin{itemize}[noitemsep]
+                    \item \textit{n\_neighbors}: Balances local versus global structure.
+                    \item \textit{min\_dist}: Controls how tightly points cluster together.
+                    \item \textit{n\_components}: The dimensionality of the reduced space.
+                    \item \textit{metric}: The distance metric used, e.g., euclidean, Manhattan.
+                \end{itemize}
+                
+                (+) Faster than t-sne, direct transformation from high dimensions, Not limited to 2D or 3D; more stable outputs across runs, Preserves more global structure, robust mathematical foundation.
+                
+                (-) Shapes, distances, and axes in the reduced space are not directly interpretable, May create shortcuts in the manifold if n\_neighbors is too large or data is noisy, Stochastic, Distance between clusters might not mean anything\\
+                
+                \textbf{Considerations}:
+                Normalization of attributes is generally necessary, except when essential correlation information would be lost. Reconstruction error should be considered when choosing the reduced dimensionality and identifying outliers.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {UMAP};
     \end{tikzpicture}
     %---------------------------------
     
@@ -806,24 +931,36 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                \nc{Kmeans}
-                \nc{Hierarchical clustering}
+                Autoencoders aim to reproduce their input data at the output. They learn a representation (encoding) for a set of data, typically for dimensionality reduction, by training the network to ignore insignificant data (“noise”).\\
+                
+                \nc{Structure}:
+                \begin{itemize}[noitemsep]
+                    \item Encoder: \( h = f(Wx + b) \)
+                    \item Decoder: \( \hat{x} = g(W'h + c) \)
+                \end{itemize}
+                
+                \nc{Characteristics}:
+                \begin{itemize}[noitemsep]
+                    \item Cost Function: Typically mean squared error between input and output.
+                    \item If linear activation functions are used and the loss is quadratic, an autoencoder can perform PCA.
+                \end{itemize}
+                
+                \nc{Variants}:
+                \begin{itemize}[noitemsep]
+                    \item Undercomplete: Hidden layer is smaller than input (forces the network to learn a compressed version of the input).
+                    \item Overcomplete: Hidden layer is larger than input (regularization techniques like sparsity are necessary).
+                    \item Regularization: Sparse, Contractive, Denoising (input is noised but output is clean).
+                    \item Variational Autoencoders (VAE): Have a probabilistic twist.
+                \end{itemize}
+                
+                \nc{Applications}:
+                Data denoising, dimensionality reduction, feature learning, generative models.\\
+                
+                (+)Effective in learning compressed representations, useful in unsupervised learning scenarios.\\
+                (-)May learn trivial solutions, requires careful design to avoid overfitting.
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Autoencoders};
-    \end{tikzpicture}
-    %---------------------------------
-    
-    
-    %---------------------------------
-    % Dimensionality Reduction
-    %---------------------------------
-    \begin{tikzpicture}
-        \node [mybox] (box){%
-            \begin{minipage}{0.247\textwidth}
-            \end{minipage}
-        };
-        \node[fancytitle, right=10pt] at (box.north west) {Dimensionality Reduction};
     \end{tikzpicture}
     %---------------------------------
     
@@ -833,6 +970,39 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
+                Reinforcement Learning (RL) is a type of machine learning where an agent learns to make decisions by performing actions in an environment to achieve some objectives. The agent receives rewards or penalties based on its actions and learns to maximize cumulative rewards over time.\\
+                
+                \nc{Key Concepts}:
+                \begin{itemize}[noitemsep]
+                    \item \textbf{Agent}: Learns from the environment to perform actions.
+                    \item \textbf{Environment}: Provides states and rewards to the agent.
+                    \item \textbf{Actions}: Set of possible moves or decisions by the agent.
+                    \item \textbf{States}: Representation of the environment.
+                    \item \textbf{Rewards}: Feedback from the environment based on actions.
+                \end{itemize}
+                
+                \nc{Learning Process}:
+                \begin{itemize}[noitemsep]
+                    \item Agent observes the state, performs actions, and receives rewards.
+                    \item Policy: Strategy that the agent employs to determine actions based on states.
+                    \item Value Function: Estimates the expected cumulative reward of states or state-action pairs.
+                \end{itemize}
+                
+                \nc{Types of RL}:
+                \begin{itemize}[noitemsep]
+                    \item \textbf{Model-based}: Agent builds a model of the environment.
+                    \item \textbf{Model-free}: Agent learns policies directly without a model of the environment.
+                \end{itemize}
+                
+                \nc{Applications}:
+                Gaming, autonomous vehicles, robotics, recommendation systems, etc.\\
+                
+                \nc{Challenges}:
+                \begin{itemize}[noitemsep]
+                    \item Balancing exploration and exploitation.
+                    \item High dimensionality of states and actions.
+                    \item Credit assignment problem (determining which actions lead to rewards).
+                \end{itemize}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Reinforcement Learning};
@@ -841,52 +1011,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 \end{multicols*}
-
-%---------------------------------
-% Computational Complexity of ML Algorithms
-%---------------------------------
-\begin{tikzpicture}
-    \node [mybox] (box){%
-        \begin{minipage}{0.95\textwidth}
-            \begin{tabular}{|l|l|l|l|}
-                \hline
-                \textbf{Algorithm}  & \textbf{Assumption}                     & \textbf{Train Time/Space}                                   & \textbf{Inference Time/Space}                             \\
-                \hline
-                KNN (Brute Force)   & Similar things exist in close proximity & \(O(knd)\) / \(O(nd)\)                                      & \(O(knd)\) / \(O(nd)\)                                    \\
-                \hline
-                KNN (KD Tree)       & Similar things exist in close proximity & \(O(nd\log(n))\) / \(O(nd)\)                                & \(O(k\log(n)d)\) / \(O(nd)\)                              \\
-                \hline
-                Naive Bayes         & Features are conditionally independent  & \(O(ndc)\) / \(O(dc)\)                                      & \(O(dc)\) / \(O(dc)\)                                     \\
-                \hline
-                Logistic Regression & Classes are linearly separable          & \(O(nd)\) / \(O(nd)\)                                       & \(O(d)\) / \(O(d)\)                                       \\
-                \hline
-                Linear Regression   & Linear relationship between variables   & \(O(nd)\) / \(O(nd)\)                                       & \(O(d)\) / \(O(d)\)                                       \\
-                \hline
-                SVM                 & Classes are linearly separable          & \(O(n^2d^2)\) / \(O(nd)\)                                   & \(O(kd)\) / \(O(kd)\)                                     \\
-                \hline
-                Decision Tree       & Feature selection by information gain   & \(O(n\log(n)d)\) / \(O(\text{nodes})\)                      & \(O(\log(n))\) / \(O(\text{nodes})\)                      \\
-                \hline
-                Random Forest       & Low bias and variance trees             & \(O(kn\log(n)d)\) / \(O(\text{nodes} \times k)\)            & \(O(k\log(n))\) / \(O(\text{nodes} \times k)\)            \\
-                \hline
-                GBDT                & High bias, low variance trees           & \(O(Mn\log(n)d)\) / \(O(\text{nodes} \times M + \gamma_m)\) & \(O(M\log(n))\) / \(O(\text{nodes} \times M + \gamma_m)\) \\
-                \hline
-            \end{tabular}
-        \end{minipage}
-    };
-    \node[fancytitle, right=10pt] at (box.north west) {Computational Complexity of ML Algorithms};
-\end{tikzpicture}
-%---------------------------------
 
 
 \end{document}
