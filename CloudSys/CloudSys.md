@@ -29,15 +29,33 @@ Cloud-Native applications (1 session)
 
 ## 1. Introduction to Cloud Computing
 
-- Definition and principles
-- Services and deployment models
-  - IaaS, PaaS, FaaS
+### Definition and Principles
+
+Cloud computing is a style of computing where massively scalable IT-related capabilities are provided as a service using internet technologies. This includes on-demand access to computing resources like applications, servers (both physical and virtual), data storage, development tools, networking capabilities, and more, which are hosted at remote data centers managed by cloud service providers (CSPs). CSPs make these resources available for a monthly subscription fee or bill them according to usage​​.
+
+### Services and Deployment Models
+
+Software as a Service (SaaS): Delivers software applications over the internet, on demand and typically on a subscription basis.
+Platform as a Service (PaaS): Provides a platform allowing customers to develop, run, and manage applications without the complexity of building and maintaining the infrastructure.
+Infrastructure as a Service (IaaS): Offers essential computing, storage, and networking resources on demand, over the internet, and on a pay-as-you-go basis.
+Function as a Service (FaaS): Also known as Server-less Computing, FaaS allows building and running applications and services without managing servers. It involves a high level of abstraction and is event-driven, starting the function when needed and shutting it down afterwards. Providers include AWS Lambda, Azure Functions, Cloud Functions, Manta, etc​​.
 
 ## 2. Infrastructure as a Service (IaaS)
 
-- Comparative study of different IaaS
-- Storage systems
-  - Block Storage, Solid State Drive, File System, Virtual Storage, Snapshot, Logical Volume Manager
+### Comparative study of different IaaS
+
+Amazon Web Services (AWS): Introduced in 2006/2007, AWS is a collection of remote infrastructure services, initially offering services in the IaaS category, but now also includes PaaS and SaaS categories. AWS's IaaS services primarily include compute, storage, database, and networking services, targeted towards operations engineers and developers​​.
+Amazon Elastic Compute Cloud (EC2): A web service providing resizable compute capacity in the cloud, allowing developers to rent virtual machines (EC2 instances) with many instance types available​​.
+Amazon Simple Storage Service (S3): A high-performance, highly-available, web-oriented storage service supporting very large files, allowing for unlimited storage of objects (files) ranging from 1 byte to 5 TB​​.
+OpenStack Storage Services: Includes Cinder (block storage component analogous to traditional disk drive access) and Swift (storage system for objects and files)​​.
+
+### Storage systems
+
+Block Storage: Amazon Elastic Block Store (EBS) provides persistent storage for EC2 instances, offering off-instance storage that persists independently from the lifecycle of an instance. EBS allows for the creation of point-in-time consistent snapshots of volumes, which are stored in S3 and replicated across multiple available zones. These snapshots can be used as the starting point for new EBS volumes, to protect data for long-term durability, and to be easily shared​​.
+Solid State Drive & File System: Not specifically covered in the provided lecture materials.
+Virtual Storage: AWS provides virtual disks that can be attached to virtual machines, including EBS Volumes (managed by the storage service, lifecycle independent of virtual machine) and Instance Store Volumes (allocated on the same server that hosts the virtual machine, deallocated when the virtual machine is deallocated, and rarely used nowadays)​​.
+Snapshot: EBS snapshots provide point-in-time, consistent backups of volumes, stored in S3 and replicated across multiple available zones for durability and accessibility​​.
+Logical Volume Manager: Not specifically covered in the provided lecture materials.
 
 ## 3. Platform as a Service (PaaS)
 
