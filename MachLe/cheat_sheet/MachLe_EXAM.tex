@@ -124,26 +124,26 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
 \vspace{-0.1cm}
 
 \begin{multicols*}{4}
-
+    
     %---------------------------------
     % Evaluation Metrics
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-            $Accuracy = \dfrac{TP + TN}{ TP + TN + FP + FN}$\\
-            $Precision = \dfrac{TP}{ TP + FP}$\\
-            $Recall = \dfrac{TP}{ TP + FN}$ \\
-            $Specificity = \dfrac{TP}{TN + FP}$\\
-            $Fscore = \dfrac{2\cdot Precision \cdot Recall}{ Precision + Recall}$\\
-            $error$ $rate$ $= 1 - accuracy$\\
-            $macro$ $average = \dfrac{1}{n} \sum_{i=1}^{n} avg_i$\\
-           \end{minipage}
+                $Accuracy = \dfrac{TP + TN}{ TP + TN + FP + FN}$\\
+                $Precision = \dfrac{TP}{ TP + FP}$\\
+                $Recall = \dfrac{TP}{ TP + FN}$ \\
+                $Specificity = \dfrac{TP}{TN + FP}$\\
+                $Fscore = \dfrac{2\cdot Precision \cdot Recall}{ Precision + Recall}$\\
+                $error$ $rate$ $= 1 - accuracy$\\
+                $macro$ $average = \dfrac{1}{n} \sum_{i=1}^{n} avg_i$\\
+            \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Evaluation Metrics};
     \end{tikzpicture}
     %---------------------------------
-
+    
     %---------------------------------
     % Activation Functions
     %---------------------------------
@@ -160,30 +160,85 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node[fancytitle, right=10pt] at (box.north west) {Activation Functions};
     \end{tikzpicture}
     %---------------------------------
-
+    
     %---------------------------------
-    % Linear Regression
+    % Normalization
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{\boxsize}
-                Soit un tableau de données: 
-
-                $x$ = Surface(g) , $y$ = Price(cm) , $x \cdot y$ , $x^2$	  
-
-                $$ X = [1, Surface] $$
-                $$ X^TX = \begin{bmatrix} n & \sum{x_i} \\ \sum{x_i} & \sum{x_i^2} \end{bmatrix} = \begin{bmatrix} 7 & 38.5 \\ 38.5 & 218.95 \end{bmatrix} $$
-                $$ X^Ty = \begin{bmatrix} \sum{y_i} \\ \sum{x_iy_i} \end{bmatrix} = \begin{bmatrix} 348 \\ 1975 \end{bmatrix} $$
-                $$ \hat{\theta} = (X^TX)^{-1}X^Ty = \begin{bmatrix} \theta_0 \\ \theta_1 \end{bmatrix} = \begin{bmatrix} -2.67 \\ 9.51 \end{bmatrix} $$
-                $$ \hat{y} = \theta_0 + \theta_1x $$
-                \nc{Matrix Inversion (2x2)}
-                $$ \begin{bmatrix} a & b \\ c & d \end{bmatrix}^{-1} = \dfrac{1}{ad-bc} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix} $$
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Min-max [0,1]}: $x' = \dfrac{\left(x-x_{min}\right)}{\left(x_{max}-x_{min}\right)}$\\
+                \textbf{Min-max [-1,1]}: $x' = 2 \cdot min\_max(x) -1$ \\
+                min-max doesn't handle outliers.\\
+                \textbf{Z-norm}: $x' = \dfrac{\left(x-\mu\right)}{\sigma}$\\
             \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {Linear Regression};
+        \node[fancytitle, right=10pt] at (box.north west) {Normalization};
     \end{tikzpicture}
     %---------------------------------
-
+    
+    %---------------------------------
+    % Logistic Regression
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                $$ h_\theta(x_n) = \sigma(x \theta^T) $$
+                \begin{itemize}[noitemsep]
+                    \item $h_\theta(x_n)$ : predicted value
+                    \item $\theta$ : model's parameters
+                    \item $X$ : input vector
+                \end{itemize}
+                
+                \textbf{Goal}: Find the $\theta$ that maximizes the likelihood of the data.\\
+                \textbf{Loss}:
+                $$
+                    \begin{aligned}
+                        J(\beta) & = -\frac{1}{n} \sum_{i=1}^{n} y_i \log(h_\theta(x_n)) + \\
+                                 & \qquad \qquad(1 - y_i) \log(1 - h_\theta(x_n))
+                    \end{aligned}
+                $$
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Logistic Regression};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Bayes
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                $$ P(C_k|x) = \frac{P(x|C_k) \cdot P(C_k)}{P(x)} $$                où
+                \begin{itemize}[noitemsep]
+                    \item $C_k$: Classe ciblée
+                    \item $x$: Évidence
+                    \item $P(C_k)$: Probabilité a priori de la classe $C_k$
+                    \item $P(x|C_k)$: probability of observing x given class j
+                    \item $P(C_k|x)$: Probabilité a posteriori de la classe $C_k$ après observation de $x$
+                    \item $P(x)$: Probabilité de l'évidence $x$
+                \end{itemize}
+                avec 
+                $$ P(x) = \sum_{\text{toutes classes } C_k} P(x|C_k) \cdot P(C_k) $$
+                
+                \nc{Classifier H/F:}
+                \begin{itemize}
+                    \item $P(C_f) = \frac{4}{70}, P(C_g) = \frac{66}{70}$
+                    \item $p(x|C_g) = 0.8, p(x|C_f) = 0.2$
+                    \item Calcul de $p(x)$:
+                          $$ p(x) = 0.2 \times \frac{4}{70} + 0.8 \times \frac{66}{70} $$
+                    \item Calcul de $P(C_f|x)$ et $P(C_g|x)$:
+                          $$ P(C_f|x) = \frac{0.2 \times \frac{4}{70}}{p(x)}, \quad P(C_g|x) = \frac{0.8 \times \frac{66}{70}}{p(x)} $$
+                \end{itemize}
+                
+                (+)Can deal with imbalanced dataset, prior can be changed
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Bayes};
+    \end{tikzpicture}
+    %---------------------------------
+    
     %---------------------------------
     % KNN
     %---------------------------------
@@ -205,85 +260,49 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node[fancytitle, right=10pt] at (box.north west) {KNN};
     \end{tikzpicture}
     %---------------------------------
-
+    
     %---------------------------------
-    % Bayes
+    % Linear Regression
     %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                Soit un tableau de données: 
+                
+                $x$ = Surface(g) , $y$ = Price(cm) , $x \cdot y$ , $x^2$
+                
+                $$ X = [1, Surface] $$
+                $$ X^TX = \begin{bmatrix} n & \sum{x_i} \\ \sum{x_i} & \sum{x_i^2} \end{bmatrix} = \begin{bmatrix} 7 & 38.5 \\ 38.5 & 218.95 \end{bmatrix} $$
+                $$ X^Ty = \begin{bmatrix} \sum{y_i} \\ \sum{x_iy_i} \end{bmatrix} = \begin{bmatrix} 348 \\ 1975 \end{bmatrix} $$
+                $$ \hat{\theta} = (X^TX)^{-1}X^Ty = \begin{bmatrix} \theta_0 \\ \theta_1 \end{bmatrix} = \begin{bmatrix} -2.67 \\ 9.51 \end{bmatrix} $$
+                $$ \hat{y} = \theta_0 + \theta_1x $$
+                \nc{Matrix Inversion (2x2)}
+                $$ \begin{bmatrix} a & b \\ c & d \end{bmatrix}^{-1} = \dfrac{1}{ad-bc} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix} $$
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Linear Regression};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %--------------------------
+    % Distance Measures
+    %--------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                $$ P(C_k|x) = \frac{P(x|C_k) \cdot P(C_k)}{P(x)} $$                où
-                \begin{itemize}[noitemsep]
-                    \item $C_k$: Classe ciblée
-                    \item $x$: Évidence
-                    \item $P(C_k)$: Probabilité a priori de la classe $C_k$
-                    \item $P(x|C_k)$: probability of observing x given class j
-                    \item $P(C_k|x)$: Probabilité a posteriori de la classe $C_k$ après observation de $x$
-                    \item $P(x)$: Probabilité de l'évidence $x$
-                \end{itemize}
-                avec 
-                $$ P(x) = \sum_{\text{toutes classes } C_k} P(x|C_k) \cdot P(C_k) $$
-
-                \nc{Classifier H/F:}
-                \begin{itemize}
-                    \item $P(C_f) = \frac{4}{70}, P(C_g) = \frac{66}{70}$
-                    \item $p(x|C_g) = 0.8, p(x|C_f) = 0.2$
-                    \item Calcul de $p(x)$: 
-                    $$ p(x) = 0.2 \times \frac{4}{70} + 0.8 \times \frac{66}{70} $$
-                    \item Calcul de $P(C_f|x)$ et $P(C_g|x)$:
-                    $$ P(C_f|x) = \frac{0.2 \times \frac{4}{70}}{p(x)}, \quad P(C_g|x) = \frac{0.8 \times \frac{66}{70}}{p(x)} $$
-                \end{itemize}
-
-                (+)Can deal with imbalanced dataset, prior can be changed
+                $Pearson= R^{2} = 1 - \dfrac{\displaystyle\sum_{1}^{n}{\left(y_i - \hat{y_i}\right)^{2}}}{\displaystyle\sum_{1}^{n}{\left(y_i - \overline{y_i}\right)^{2}}}$\\
+                $Euclidian = \sqrt{\displaystyle\sum{\left(I_1 - I_2\right)^{2}}}$\\
+                $Manhattan = \displaystyle\sum{\abs{I_1 - I_2}}$\\
+                $MSE = \dfrac{1}{N}\displaystyle\sum_{1}^{n}{\left(y_i - \hat{y_i}\right)^{2}}$\\
+                $Cosine$ $similarity = \dfrac{A \cdot B}{\norm{A} \cdot \norm{B}}$\\
+                $WSS = \sum_{i=1}^k \sum_{x \in C_i} d(x, \mu_i)^2$
+                Within-cluster-sum (distortion) is the sum of the squared distances between each point in a cluster $x_j$ and its cluster center.
             \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {Bayes};
+        \node[fancytitle, right=10pt] at (box.north west) {Similarity Measures};
     \end{tikzpicture}
     %---------------------------------
-
-    %---------------------------------
-    % Logistic Regression
-    %---------------------------------
-    \begin{tikzpicture}
-        \node [mybox] (box){%
-            \begin{minipage}{0.247\textwidth}
-                $$ h_\theta(x_n) = \sigma(x \theta^T) $$
-                \begin{itemize}[noitemsep]
-                    \item $h_\theta(x_n)$ : predicted value
-                    \item $\theta$ : model's parameters
-                    \item $X$ : input vector
-                \end{itemize}
-
-                \textbf{Goal}: Find the $\theta$ that maximizes the likelihood of the data.\\
-                \textbf{Loss}:
-                $$
-                \begin{aligned}
-                J(\beta) &= -\frac{1}{n} \sum_{i=1}^{n} y_i \log(h_\theta(x_n)) +\\
-                &\qquad \qquad(1 - y_i) \log(1 - h_\theta(x_n))
-                \end{aligned}
-                $$
-            \end{minipage}
-        };
-        \node[fancytitle, right=10pt] at (box.north west) {Logistic Regression};
-    \end{tikzpicture}
-    %---------------------------------
-
-    %---------------------------------
-    % Normalization
-    %---------------------------------
-    \begin{tikzpicture}
-        \node [mybox] (box){%
-         \begin{minipage}{0.247\textwidth}
-            \textbf{Min-max [0,1]}: $x' = \dfrac{\left(x-x_{min}\right)}{\left(x_{max}-x_{min}\right)}$\\
-            \textbf{Min-max [-1,1]}: $x' = 2 \cdot min\_max(x) -1$ \\
-            min-max doesn't handle outliers.\\
-            \textbf{Z-norm}: $x' = \dfrac{\left(x-\mu\right)}{\sigma}$\\
-         \end{minipage}
-        };
-        \node[fancytitle, right=10pt] at (box.north west) {Normalization};
-    \end{tikzpicture}
-    %---------------------------------
-
+    
     %---------------------------------
     % Support Vector Machine (SVM)
     %---------------------------------
@@ -292,9 +311,9 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
             \begin{minipage}{0.247\textwidth}
                 \textbf{Concept}: 
                 SVM finds the hyperplane that best separates different classes by maximizing the margin between the closest points of different classes (support vectors).\\
-
+                
                 hw(x) = sign(b + wx)
-
+                
                 \nc{Formulation}
                 $$ \max_{\omega, b} \frac{1}{\|\omega\|} \quad \text{s.t.} \quad y_i(\omega \cdot x_i + b) \geq 1 \, \forall i $$
                 where
@@ -303,57 +322,156 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                     \item $b$ : Bias term
                     \item $x_i, y_i$ : Training data points and labels
                 \end{itemize}
-
+                
                 \nc{Kernel Trick}
                 SVM can be extended to non-linearly separable data using kernel functions, which implicitly map input space to a higher-dimensional feature space.
-
+                
                 \nc{Common Kernels}
                 \begin{itemize}[noitemsep]
                     \item Linear: $\langle x, x'\rangle$
                     \item Polynomial: $(\gamma \langle x, x'\rangle + r)^d$
                     \item Gaussian (RBF): $e^{(-\gamma \|x - x'\|^2)}$
                 \end{itemize}
-
+                
                 (+) Effective in high-dimensional spaces, Memory efficient, Versatile (different kernel functions)\\
                 
                 (-) Sensitive to the choice of kernel and regularization parameters, Not suitable for very large datasets
-
+                
                 hinge loss: $max(0, 1-y_i(w \cdot x_i + b))$ (0 if correct classification)
                 (1 if falls on the hyperplane)
                 (>1 if misclassified)
-
-               \nc{Objective function to min}
-            $$ \min_{\omega, b} \quad \frac{1}{2} \|\omega\|^2 + C \sum_{i=1}^{n} \max(0, 1 - y_i(\omega \cdot x_i + b)) $$
-            where $C$ nutch the hinge loss term (how far are we predicting from ground truth) and regularization term (impeach big value, min w => maximize margin)
+                
+                \nc{Objective function to min}
+                $$ \min_{\omega, b} \quad \frac{1}{2} \|\omega\|^2 + C \sum_{i=1}^{n} \max(0, 1 - y_i(\omega \cdot x_i + b)) $$
+                where $C$ nutch the hinge loss term (how far are we predicting from ground truth) and regularization term (impeach big value, min w => maximize margin)
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Support Vector Machine};
     \end{tikzpicture}
     %---------------------------------
-
-%###############################################################################################
-%                                         Deuxième Page
-%###############################################################################################
-
-    %--------------------------
-    % Distance Measures
-    %--------------------------
+    
+    %###############################################################################################
+    %                                         Deuxième Page
+    %###############################################################################################
+    
+    %---------------------------------
+    % Clustering
+    %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-        \begin{minipage}{0.247\textwidth}
-        $Pearson= R^{2} = 1 - \dfrac{\displaystyle\sum_{1}^{n}{\left(y_i - \hat{y_i}\right)^{2}}}{\displaystyle\sum_{1}^{n}{\left(y_i - \overline{y_i}\right)^{2}}}$\\
-        $Euclidian = \sqrt{\displaystyle\sum{\left(I_1 - I_2\right)^{2}}}$\\
-        $Manhattan = \displaystyle\sum{\abs{I_1 - I_2}}$\\
-        $MSE = \dfrac{1}{N}\displaystyle\sum_{1}^{n}{\left(y_i - \hat{y_i}\right)^{2}}$\\
-        $cosine$ $similarity = \dfrac{A \cdot B}{\norm{A} \cdot \norm{B}}$\\
-        $WSS = \sum_{i=1}^k \sum_{x \in C_i} d(x, \mu_i)^2$
-        Within-cluster-sum (distortion) is the sum of the squared distances between each point in a cluster $x_j$ and its cluster center.
-        \end{minipage}
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Clustering} partitions data into clusters with high intra-class similarity and low inter-class similarity.\\
+                \textbf{Needs}: distance measure, criterion, algorithm.\\
+                \nc{Partitions}
+                \textbf{Distortion}: How close are we to a “centroid” defining the partition?\\
+                \textbf{Connectivity of points}: How close are points to each other?
+                \nc{Elbow Method}
+                Heuristic used in determining the number of clusters in a data set. It selects the value of $k$ that corresponds to the elbow of the curve (\#cluster, WSS).
+                
+                \nc{Silhouette Coefficient}
+                $$ s = \frac{b-a}{\max(a,b)}$$
+                \begin{itemize}[noitemsep]
+                    \item $a$ is the mean distance between a sample and all other points in the same class (cohesion)
+                    \item $b$ is the mean distance between a sample and all other points in the next nearest cluster (isolation)
+                \end{itemize}
+                
+                $s$ range is $[-1,1]$ . A high value indicates that the object is well matched to its own cluster and poorly matched to neighboring clusters.\\
+                
+                \nc{Davies-Bouldin Index}
+                $$ DB = \frac{1}{k} \sum_{i=1}^k \max_{j \neq i} \frac{R_i + R_j}{d(C_i, C_j)}$$
+                
+                \begin{itemize}[noitemsep]
+                    \item $R_i$ is the average distance between a point in cluster $C_i$ and all points in $C_i$ (cluster diameter))
+                    \item $d(C_i, C_j)$ is the distance between the centroids of $C_i$ and $C_j$
+                \end{itemize}
+                
+                zero is the lowest possible score. Values closer to zero indicate a better partition.
+            \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {Similarity Measures};
+        \node[fancytitle, right=10pt] at (box.north west) {Clustering};
     \end{tikzpicture}
     %---------------------------------
-
+    
+    %---------------------------------
+    % Gini Impurity
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Gini Set}:$G(X) = 1 - \sum_{i=1}^{n} p(x_i)^2 $
+                where
+                \begin{itemize}[noitemsep]
+                    \item $p(x_i)$ :  is the proportion of points in a set that belongs to a class $i$: $\dfrac{N_i}{N}$.
+                    \item G = 0.5 : maximum value of impurity, classes are balanced in the set.\\
+                    \item G = 0 : minimum value of impurity, all the values belong to a single class.\\
+                \end{itemize}
+                
+                \textbf{Gini Split}:$\displaystyle\sum_{i=1}^{n} \dfrac{N_i}{N} G(X_i) $\\
+                \textbf{Gini Gain}(big=good):$Gini_{set} - Gini_{split} $\\
+                \nc{Example}
+                \begin{tikzpicture}
+                    \begin{axis}[
+                            title={},
+                            xmin=0, xmax=5,
+                            ymin=0, ymax=4,
+                            grid style=dashed,
+                            legend style={at={(0.5,-0.1)},anchor=north}
+                            width=\textwidth,
+                            height=0.5\textwidth,
+                        ]
+                        
+                        % Add dashed line
+                        \addplot[
+                            color=brown,
+                            mark=none,
+                            style=dashed,
+                            domain=0:4
+                        ]
+                        coordinates {(2,0) (2,5)};
+                        
+                        % Add blue dots
+                        \addplot[
+                            only marks,
+                            color=blue,
+                            mark=*,
+                            mark options={fill=blue},
+                        ]
+                        coordinates {
+                                (1,3) (1,2) (1,1) (3,1) (3,2)
+                            };
+                        
+                        % Add red dots
+                        \addplot[
+                            only marks,
+                            color=red,
+                            mark=*,
+                            mark options={fill=red},
+                        ]
+                        coordinates {
+                                (4,3) (4,2) (4,1)
+                            };
+                        
+                    \end{axis}
+                \end{tikzpicture}
+                
+                \textbf{Gini set}:
+                $$ Gini = 1 - \left(\dfrac{\color{blue}5}{10}\right)^2 - \left(\dfrac{\color{red}5}{10}\right)^2 = \dfrac{1}{2}$$
+                \textbf{Left Set}:
+                $$ Gini = 1 - \left(\dfrac{\color{blue}3}{3}\right)^2 - \left(\dfrac{\color{red}0}{3}\right)^2 =0$$
+                \textbf{Right Set}:
+                $$ Gini = 1 - \left(\dfrac{\color{blue}2}{7}\right)^2 - \left(\dfrac{\color{red}5}{7}\right)^2 = \dfrac{20}{49}$$
+                \textbf{Gini Split}:
+                $$ Gini = \dfrac{3}{10} \times 0 + \dfrac{7}{10} \times \dfrac{20}{49} = \dfrac{2}{7}$$
+                \textbf{Gini Gain}:
+                $$ Gini = \dfrac{1}{2} - \dfrac{2}{7} = \dfrac{3}{14}$$
+                
+                
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Gini Impurity};
+    \end{tikzpicture}
+    %---------------------------------
+    
     %---------------------------------
     % K-Means
     %---------------------------------
@@ -374,26 +492,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node[fancytitle, right=10pt] at (box.north west) {K-Means};
     \end{tikzpicture}
     %---------------------------------
-
-    %---------------------------------
-    % Mean Shift Clustering
-    %---------------------------------
-    \begin{tikzpicture}
-        \node [mybox] (box){%
-            \begin{minipage}{0.247\textwidth}
-                \begin{enumerate}[noitemsep]
-                    \item Choose bandwidth and initialize centroids.
-                    \item Shift each centroid to the mean of points within the bandwidth.
-                    \item Repeat until centroids converge.
-                \end{enumerate}
-                \textbf{(+)} Can find clusters of arbitrary shape; robust to outliers.\\
-                \textbf{(-)} Computationally intensive; bandwidth parameter can be tricky to set.\\
-            \end{minipage}
-        };
-        \node[fancytitle, right=10pt] at (box.north west) {Mean Shift Clustering};
-    \end{tikzpicture}
-    %---------------------------------
-
+    
     %---------------------------------
     % DB-Scan
     %---------------------------------
@@ -412,7 +511,26 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node[fancytitle, right=10pt] at (box.north west) {DB-Scan};
     \end{tikzpicture}
     %---------------------------------
-
+    
+    %---------------------------------
+    % Mean Shift Clustering
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \begin{enumerate}[noitemsep]
+                    \item Choose bandwidth and initialize centroids.
+                    \item Shift each centroid to the mean of points within the bandwidth.
+                    \item Repeat until centroids converge.
+                \end{enumerate}
+                \textbf{(+)} Can find clusters of arbitrary shape; robust to outliers.\\
+                \textbf{(-)} Computationally intensive; bandwidth parameter can be tricky to set.\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Mean Shift Clustering};
+    \end{tikzpicture}
+    %---------------------------------
+    
     %---------------------------------
     % Hierarchical Clustering
     %---------------------------------
@@ -432,163 +550,46 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node[fancytitle, right=10pt] at (box.north west) {Hierarchical Clustering};
     \end{tikzpicture}
     %---------------------------------
-
-    %---------------------------------
-    % Clustering
-    %---------------------------------
-    \begin{tikzpicture}
-        \node [mybox] (box){%
-            \begin{minipage}{0.247\textwidth}
-                \textbf{Clustering} partitions data into clusters with high intra-class similarity and low inter-class similarity.\\
-                \textbf{Needs}: distance measure, criterion, algorithm.\\
-                \nc{Partitions}
-                \textbf{Distortion}: How close are we to a “centroid” defining the partition?\\
-                \textbf{Connectivity of points}: How close are points to each other?
-                \nc{Elbow Method}
-                Heuristic used in determining the number of clusters in a data set. It selects the value of $k$ that corresponds to the elbow of the curve (\#cluster, WSS).
-
-                \nc{Silhouette Coefficient}
-                $$ s = \frac{b-a}{\max(a,b)}$$
-                \begin{itemize}[noitemsep]
-                \item $a$ is the mean distance between a sample and all other points in the same class (cohesion)
-                \item $b$ is the mean distance between a sample and all other points in the next nearest cluster (isolation)
-                \end{itemize}
-                
-                $s$ range is $[-1,1]$ . A high value indicates that the object is well matched to its own cluster and poorly matched to neighboring clusters.\\
-
-                \nc{Davies-Bouldin Index}
-                $$ DB = \frac{1}{k} \sum_{i=1}^k \max_{j \neq i} \frac{R_i + R_j}{d(C_i, C_j)}$$
-                
-                \begin{itemize}[noitemsep]
-                    \item $R_i$ is the average distance between a point in cluster $C_i$ and all points in $C_i$ (cluster diameter))
-                    \item $d(C_i, C_j)$ is the distance between the centroids of $C_i$ and $C_j$
-                \end{itemize}
-                
-                zero is the lowest possible score. Values closer to zero indicate a better partition.
-            \end{minipage}
-        };
-        \node[fancytitle, right=10pt] at (box.north west) {Clustering};
-    \end{tikzpicture}
-    %---------------------------------
-
+    
+    
     %---------------------------------
     % Decision Tree
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-         \begin{minipage}{0.247\textwidth}
-            A flowchart-like structure in which each internal node represents a test on a feature. Each leaf node represents a class label(decision taken after computing all features).\\
-            \nc{Boosting}
-            Build additional trees while considering earlier trees to compensate for their weaknesses
-            \nc{Bagging}
-            Build a lot of trees using different parts of the data without looking at earlier ones. A very popular algorithm that is close to this approach is called “Random Forests”
-
-            \nc{Example}
-
-            \begin{tikzpicture}[grow=down, level distance=40pt]
-                \tikzstyle{level 1}=[sibling distance=110pt]
-                \tikzstyle{level 2}=[sibling distance=50pt]
+            \begin{minipage}{0.247\textwidth}
+                A flowchart-like structure in which each internal node represents a test on a feature. Each leaf node represents a class label(decision taken after computing all features).\\
+                \nc{Boosting}
+                Build additional trees while considering earlier trees to compensate for their weaknesses
+                \nc{Bagging}
+                Build a lot of trees using different parts of the data without looking at earlier ones. A very popular algorithm that is close to this approach is called “Random Forests”
                 
-                \node[rectangle,draw=black]{Pression > 91?}
-                  child{node[rectangle,draw=black]{C=3, I=2} edge from parent node[left, xshift=-0.5cm]{Oui}}
-                  child{node[rectangle,draw=black]{C=2, I=1} edge from parent node[right, xshift=0.5cm]{Non}};
-            \end{tikzpicture}\\
+                \nc{Example}
+                
+                \begin{tikzpicture}[grow=down, level distance=40pt]
+                    \tikzstyle{level 1}=[sibling distance=110pt]
+                    \tikzstyle{level 2}=[sibling distance=50pt]
+                    
+                    \node[rectangle,draw=black]{Pression > 91?}
+                    child{node[rectangle,draw=black]{C=3, I=2} edge from parent node[left, xshift=-0.5cm]{Oui}}
+                    child{node[rectangle,draw=black]{C=2, I=1} edge from parent node[right, xshift=0.5cm]{Non}};
+                \end{tikzpicture}\\
                 Première feuille:\\
                 $$ Gini = 1 - \left(\dfrac{3}{3+2}\right)^2 - \left(\dfrac{2}{3+2}\right)^2 = \dfrac{12}{25}$$
                 Deuxième feuille:\\
                 $$ Gini = 1 - \left(\dfrac{2}{2+1}\right)^2 - \left(\dfrac{1}{2+1}\right)^2 = \dfrac{4}{9}$$
-
-            \textbf{Pruning}: 
-            Removing sections of the tree that provide little power to classify instances.\\
-
-            (+)
-            
-            (-) 
+                
+                \textbf{Pruning}: 
+                Removing sections of the tree that provide little power to classify instances.\\
+                
+                (+)
+                
+                (-) 
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Decision Tree};
     \end{tikzpicture}
-
-    %---------------------------------
-    % Gini Impurity
-    %---------------------------------
-    \begin{tikzpicture}
-        \node [mybox] (box){%
-            \begin{minipage}{0.247\textwidth}
-                \textbf{Gini Set}:$G(X) = 1 - \sum_{i=1}^{n} p(x_i)^2 $
-                where
-                \begin{itemize}[noitemsep]
-                    \item $p(x_i)$ :  is the proportion of points in a set that belongs to a class $i$: $\dfrac{N_i}{N}$.
-                    \item G = 0.5 : maximum value of impurity, classes are balanced in the set.\\
-                    \item G = 0 : minimum value of impurity, all the values belong to a single class.\\
-                \end{itemize}
     
-                \textbf{Gini Split}:$\displaystyle\sum_{i=1}^{n} \dfrac{N_i}{N} G(X_i) $\\
-                \textbf{Gini Gain}(big=good):$Gini_{set} - Gini_{split} $\\
-                \nc{Example}
-                \begin{tikzpicture}
-                    \begin{axis}[
-                        title={},
-                        xmin=0, xmax=5,
-                        ymin=0, ymax=4,
-                        grid style=dashed,
-                        legend style={at={(0.5,-0.1)},anchor=north}
-                        width=\textwidth,
-                        height=0.5\textwidth,
-                        ]
-                        
-                        % Add dashed line
-                        \addplot[
-                        color=brown,
-                        mark=none,
-                        style=dashed,
-                        domain=0:4
-                        ]
-                        coordinates {(2,0) (2,5)};
-                        
-                        % Add blue dots
-                        \addplot[
-                        only marks,
-                        color=blue,
-                        mark=*,
-                        mark options={fill=blue},
-                        ]
-                        coordinates {
-                        (1,3) (1,2) (1,1) (3,1) (3,2)
-                        };
-                        
-                        % Add red dots
-                        \addplot[
-                        only marks,
-                        color=red,
-                        mark=*,
-                        mark options={fill=red},
-                        ]
-                        coordinates {
-                        (4,3) (4,2) (4,1)
-                        };
-                        
-                        \end{axis}
-                    \end{tikzpicture}
-    
-                    \textbf{Gini set}:
-                    $$ Gini = 1 - \left(\dfrac{\color{blue}5}{10}\right)^2 - \left(\dfrac{\color{red}5}{10}\right)^2 = \dfrac{1}{2}$$
-                    \textbf{Left Set}:
-                    $$ Gini = 1 - \left(\dfrac{\color{blue}3}{3}\right)^2 - \left(\dfrac{\color{red}0}{3}\right)^2 =0$$
-                    \textbf{Right Set}:
-                    $$ Gini = 1 - \left(\dfrac{\color{blue}2}{7}\right)^2 - \left(\dfrac{\color{red}5}{7}\right)^2 = \dfrac{20}{49}$$
-                    \textbf{Gini Split}:
-                    $$ Gini = \dfrac{3}{10} \times 0 + \dfrac{7}{10} \times \dfrac{20}{49} = \dfrac{2}{7}$$
-                    \textbf{Gini Gain}:
-                    $$ Gini = \dfrac{1}{2} - \dfrac{2}{7} = \dfrac{3}{14}$$
-    
-    
-            \end{minipage}
-        };
-        \node[fancytitle, right=10pt] at (box.north west) {Gini Impurity};
-    \end{tikzpicture}
-    %---------------------------------
-
     %---------------------------------
     % Entropy
     %---------------------------------
@@ -600,7 +601,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                 \begin{itemize}[noitemsep]
                     \item $p(x_i)$ : Probability of class $x_i$
                 \end{itemize}
-    
+                
                 \textbf{Information Gain}: 
                 $$ IG(X, Y) = H(X) - H(X|Y) $$
                 where
@@ -613,7 +614,48 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node[fancytitle, right=10pt] at (box.north west) {Entropy};
     \end{tikzpicture}
     %---------------------------------
-
+    
+    %---------------------------------
+    % Convolutional Neural Networks
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \nc{Features}
+                colors, terrain texture, size, presence of straight lines, border\\
+                1. Extracting localized low-level features\\
+                2. Incrementally allow the system to appropriately bind together features and their relationships \\
+                3. Gradually build-up overall spatial invariance \\
+                \nc{Pooling layer}
+                Maxpool after a convolution layer eliminates non maximal values : it is a form of non-linear down-sampling that reduces computation for upper layers and provides a "summary" of statistics of features in lower layers.
+                \nc{Convolution layer}
+                Different kernel sizes (3x3, 5x5, 7x7, etc) allows the identification of features at different scales and 			multiple layers of 3x3 kernels can implement other kernel sizes\\
+                The CONV layer’s parameters consist of a set of learnable filters. Every filter is small spatially (along width and height), but extends through the full depth of the input volume.
+                We can compute the spatial size of the output volume as a function of the input volume size (W), the receptive field size of the Conv Layer neurons (F),the stride with which they are applied (S), and the amount of zero padding used (P) on the border. \\
+                formula for calculating how many neurons “fit” is given by $\dfrac{W-F+2P}{S} + 1$
+                \nc{Input Volume}
+                \textbf{Size}: $W_1 \cdot H_1\cdot D_1$\\
+                
+                \nc{Hyperparameters}
+                \textbf{K}: Number of filters \\
+                \textbf{F}: Their spatial extent\\
+                \textbf{S}: Stride\\
+                \textbf{P}: The amount of zero padding\\
+                
+                \nc{Output Volume}
+                \textbf{Size}: $W_2 \cdot H_2\cdot D_2$\\
+                \textbf{H2}: $\dfrac{W_1-F+2P}{S} + 1$\\
+                \textbf{W2}: $\dfrac{H_1-F+2P}{S} + 1$\\
+                \textbf{D2}: K
+                
+                \nc{Parameters}
+                It introduces $(F \cdot F \cdot D_1) \cdot K$ weights plus $K$ biases.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Convolutional Neural Networks};
+    \end{tikzpicture}
+    %---------------------------------
+    
     %---------------------------------
     % XG-Boost
     %---------------------------------
@@ -632,8 +674,39 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node[fancytitle, right=10pt] at (box.north west) {XG-Boost};
     \end{tikzpicture}
     %---------------------------------
-
-
+    
+    %--------------------------
+    % Overfitting
+    %--------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Overfitting} occurs when a model learns the training data too well, including noise and outliers, resulting in poor generalization to new data.\\
+                
+                \textbf{Signs}:
+                \begin{itemize}[noitemsep]
+                    \item High accuracy on training data
+                    \item Poor performance on validation/test data
+                \end{itemize}
+                
+                \textbf{Techniques to Reduce Overfitting}:
+                \begin{itemize}[noitemsep]
+                    \item \textbf{Early Stopping}: Stop training when performance on validation data begins to degrade.
+                    \item \textbf{Regularization}: Add a penalty term to the loss function (L1, L2 regularization).
+                    \item \textbf{More Data}: Increase the size of the training dataset.
+                    \item \textbf{Data Augmentation}: Artificially increase the diversity of the training dataset by creating modified versions of the data.
+                    \item \textbf{Dropout}: Randomly omit a subset of features/neurons during training to prevent co-adaptation.
+                    \item \textbf{Simplifying the Model}: Reduce the complexity of the model (fewer layers or hidden units).
+                    \item \textbf{Cross-Validation}: Use cross-validation to ensure the model's ability to generalize.
+                    \item \textbf{Ensemble Methods}: Combine predictions from multiple models to reduce variance.
+                \end{itemize}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Overfitting};
+    \end{tikzpicture}
+    %--------------------------
+    
+    
     %---------------------------------
     % Neural Network
     %---------------------------------
@@ -646,19 +719,19 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                 \textbf{Weights}: $W$, Vector of weights
                 \nc{Learning algorithm}\\
                 \begin{enumerate}
-                \item Randomly initialize weights
-                \item Compute the neuron's output for a fiven input vector X
-                \item Update weights: $W_j(t+1) = W_j(t) + \eta\left(\hat{y_i}-y\right)x$ with $\eta$ the learning rate and $\hat{y_i}$ the desired output.
-                \item Repeat steps 2 and 3 for the number of epochs you need or until the error is smaller than a threshold.
+                    \item Randomly initialize weights
+                    \item Compute the neuron's output for a fiven input vector X
+                    \item Update weights: $W_j(t+1) = W_j(t) + \eta\left(\hat{y_i}-y\right)x$ with $\eta$ the learning rate and $\hat{y_i}$ the desired output.
+                    \item Repeat steps 2 and 3 for the number of epochs you need or until the error is smaller than a threshold.
                 \end{enumerate}
                 \nc{Regularization}
                 Regularization means providing constraints to limit the values of the parameters we are learning.
-           \end{minipage}
+            \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Neural Network};
     \end{tikzpicture}
     %---------------------------------
-
+    
     %---------------------------------
     % PCA
     %---------------------------------
@@ -672,7 +745,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node[fancytitle, right=10pt] at (box.north west) {Principal Component Analysis};
     \end{tikzpicture}
     %---------------------------------
-
+    
     %---------------------------------
     % Autoencoders
     %---------------------------------
@@ -686,19 +759,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node[fancytitle, right=10pt] at (box.north west) {Autoencoders};
     \end{tikzpicture}
     %---------------------------------
-
-    %---------------------------------
-    % Convolutional Neural Networks
-    %---------------------------------
-    \begin{tikzpicture}
-        \node [mybox] (box){%
-            \begin{minipage}{0.247\textwidth}
-            \end{minipage}
-        };
-        \node[fancytitle, right=10pt] at (box.north west) {Convolutional Neural Networks};
-    \end{tikzpicture}
-    %---------------------------------
-
+    
     %---------------------------------
     % Recurrent Neural Networks
     %---------------------------------
@@ -710,7 +771,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node[fancytitle, right=10pt] at (box.north west) {Recurrent Neural Networks};
     \end{tikzpicture}
     %---------------------------------
-
+    
     %---------------------------------
     % Dimensionality Reduction
     %---------------------------------
@@ -722,7 +783,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node[fancytitle, right=10pt] at (box.north west) {Dimensionality Reduction};
     \end{tikzpicture}
     %---------------------------------
-
+    
     %---------------------------------
     % Reinforcement Learning
     %---------------------------------
@@ -734,16 +795,16 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node[fancytitle, right=10pt] at (box.north west) {Reinforcement Learning};
     \end{tikzpicture}
     %---------------------------------
-
-
-
-
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 \end{multicols*}
 
@@ -755,25 +816,25 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \begin{minipage}{0.95\textwidth}
             \begin{tabular}{|l|l|l|l|}
                 \hline
-                \textbf{Algorithm} & \textbf{Assumption} & \textbf{Train Time/Space} & \textbf{Inference Time/Space} \\
+                \textbf{Algorithm}  & \textbf{Assumption}                     & \textbf{Train Time/Space}                                   & \textbf{Inference Time/Space}                             \\
                 \hline
-                KNN (Brute Force) & Similar things exist in close proximity & \(O(knd)\) / \(O(nd)\) & \(O(knd)\) / \(O(nd)\) \\
+                KNN (Brute Force)   & Similar things exist in close proximity & \(O(knd)\) / \(O(nd)\)                                      & \(O(knd)\) / \(O(nd)\)                                    \\
                 \hline
-                KNN (KD Tree) & Similar things exist in close proximity & \(O(nd\log(n))\) / \(O(nd)\) & \(O(k\log(n)d)\) / \(O(nd)\) \\
+                KNN (KD Tree)       & Similar things exist in close proximity & \(O(nd\log(n))\) / \(O(nd)\)                                & \(O(k\log(n)d)\) / \(O(nd)\)                              \\
                 \hline
-                Naive Bayes & Features are conditionally independent & \(O(ndc)\) / \(O(dc)\) & \(O(dc)\) / \(O(dc)\) \\
+                Naive Bayes         & Features are conditionally independent  & \(O(ndc)\) / \(O(dc)\)                                      & \(O(dc)\) / \(O(dc)\)                                     \\
                 \hline
-                Logistic Regression & Classes are linearly separable & \(O(nd)\) / \(O(nd)\) & \(O(d)\) / \(O(d)\) \\
+                Logistic Regression & Classes are linearly separable          & \(O(nd)\) / \(O(nd)\)                                       & \(O(d)\) / \(O(d)\)                                       \\
                 \hline
-                Linear Regression & Linear relationship between variables & \(O(nd)\) / \(O(nd)\) & \(O(d)\) / \(O(d)\) \\
+                Linear Regression   & Linear relationship between variables   & \(O(nd)\) / \(O(nd)\)                                       & \(O(d)\) / \(O(d)\)                                       \\
                 \hline
-                SVM & Classes are linearly separable & \(O(n^2d^2)\) / \(O(nd)\) & \(O(kd)\) / \(O(kd)\) \\
+                SVM                 & Classes are linearly separable          & \(O(n^2d^2)\) / \(O(nd)\)                                   & \(O(kd)\) / \(O(kd)\)                                     \\
                 \hline
-                Decision Tree & Feature selection by information gain & \(O(n\log(n)d)\) / \(O(\text{nodes})\) & \(O(\log(n))\) / \(O(\text{nodes})\) \\
+                Decision Tree       & Feature selection by information gain   & \(O(n\log(n)d)\) / \(O(\text{nodes})\)                      & \(O(\log(n))\) / \(O(\text{nodes})\)                      \\
                 \hline
-                Random Forest & Low bias and variance trees & \(O(kn\log(n)d)\) / \(O(\text{nodes} \times k)\) & \(O(k\log(n))\) / \(O(\text{nodes} \times k)\) \\
+                Random Forest       & Low bias and variance trees             & \(O(kn\log(n)d)\) / \(O(\text{nodes} \times k)\)            & \(O(k\log(n))\) / \(O(\text{nodes} \times k)\)            \\
                 \hline
-                GBDT & High bias, low variance trees & \(O(Mn\log(n)d)\) / \(O(\text{nodes} \times M + \gamma_m)\) & \(O(M\log(n))\) / \(O(\text{nodes} \times M + \gamma_m)\) \\
+                GBDT                & High bias, low variance trees           & \(O(Mn\log(n)d)\) / \(O(\text{nodes} \times M + \gamma_m)\) & \(O(M\log(n))\) / \(O(\text{nodes} \times M + \gamma_m)\) \\
                 \hline
             \end{tabular}
         \end{minipage}
@@ -782,5 +843,5 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
 \end{tikzpicture}
 %---------------------------------
 
-    
+
 \end{document}
