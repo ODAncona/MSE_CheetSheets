@@ -824,6 +824,36 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \end{tikzpicture}
     %---------------------------------
     
+    
+    %---------------------------------
+    % Encoding Data
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                PCA is a statistical procedure that uses an orthogonal transformation to convert a set of observations of possibly correlated variables into a set of values of linearly uncorrelated variables called principal components. The first principal component has the largest possible variance.\\
+                
+                \nc{Steps}:
+                \begin{enumerate}[noitemsep]
+                    \item Before PCA, we standardize/ normalize data.
+                    \item Compute the covariance matrix.
+                    \item Compute eigen vectors of the covariance matrix.
+                    \item Sort eigenvalues and eigenvectors according to variance.
+                    \item Select a subset of the principal components.
+                    \item Transform the original data.
+                \end{enumerate}
+                
+                \textbf{Applications}:
+                Dimensionality reduction, exploratory data analyses, making predictive models more efficient.\\
+                
+                (+) Reduces complexity, removes noise, may improve model performance.\\
+                (-) Only allows linear projections, PCA restricts to orthogonal vectors in feature space that minimize reconstruction error (=> ICA), Assumes points are multivariate Gaussian\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Encoding Data};
+    \end{tikzpicture}
+    %---------------------------------
+    
     %---------------------------------
     % t-SNE
     %---------------------------------
