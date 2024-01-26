@@ -45,11 +45,11 @@
 \newcommand{\M}{\mathcal{M}}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\N}{\mathcal{N}}
-\newcommand{\E}{{\rm E}}
+\newcommand{\E}{\mathrm{E}}
 \newcommand{\Hnull}{{\rm H}_{0}}
 \newcommand{\Hone}{{\rm H}_{1}}
-\newcommand{\Var}{{\rm Var}}
-\newcommand{\Cov}{{\rm Cov}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
 \newcommand{\sign}{{\rm sign}}
 \newcommand{\med}{{\rm med}}
 \newcommand{\tr}{{\rm tr}}
@@ -66,7 +66,7 @@
 %
 % Setup
 %
-\title{APV Résumé Olivier D'Ancona}
+\title{AnSeDa Résumé Olivier D'Ancona}
 \advance\topmargin-.8in
 \advance\textheight3in
 \advance\textwidth3in
@@ -114,7 +114,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
 % Title
 %---------------------------------
 \begin{center}
-    {\huge{\textbf{APV - Résumé Olivier D'Ancona}}}\\
+    {\huge{\textbf{AnSeDa - Résumé Olivier D'Ancona}}}\\
 \end{center}
 
 \begin{multicols*}{4}
@@ -125,18 +125,18 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node [mybox] (box){%
             \begin{minipage}{\boxsize}
                 Soit $X$ une variable aléatoire à valeurs dans $\Real$, on définit l'espérance de $X$ par: 
-
-                Cas discret: $\mathbb{E}[X] = \displaystyle\sum_{i=1}^{\infty}{x_i \cdot p_i}$
-
-                Cas continu: $\mathbb{E}[X] = \displaystyle\int_{-\infty}^{\infty} x \cdot f(x) \, dx $
+                
+                Cas discret: $ \E[X] = \displaystyle\sum_{i=1}^{\infty}{x_i \cdot p_i}$
+                
+                Cas continu: $\E[X] = \displaystyle\int_{-\infty}^{\infty} x \cdot f(x) \, dx $
                 où $f(x)$ est la densité de probabilité de $X$.
                 \nc{Propriétés}
                 \begin{itemize}
-                    \item $\mathbb{E}[X + Y] = \mathbb{E}[X] + \mathbb{E}[Y]$
-                    \item $\mathbb{E}[aX] = a \mathbb{E}[X]$
-                    \item $\mathbb{E}[X^2] = \mathbb{E}[X]^2 + \mathbb{V}[X]$
-                    \item $\mathbb{E}[XY] = \mathbb{E}[X]\cdot\mathbb{E}[Y]$ if $X$ and $Y$ are independent.
-                    \item $\mathbb{E}[c] = c$ \text{ if $c$ is a constant.}
+                    \item $ \E[X + Y] =  \E[X] +  \E[Y]$
+                    \item $ \E[aX] = a  \E[X]$
+                    \item $ [X^2] =  [X]^2 + \Var[X]$
+                    \item $ \E[XY] =  \E[X]\cdot \E[Y]$ if $X$ and $Y$ are independent.
+                    \item $ \E[c] = c$ \text{ if $c$ is a constant.}
                 \end{itemize}
             \end{minipage}
         };
@@ -150,53 +150,144 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{\boxsize}
-                Soit $X$ une variable aléatoire à valeurs dans $\Real$.Cas discret:
+                Soit $X$ une variable aléatoire à valeurs dans $\Real$. Cas discret // continu:
                 \vspace{-.2cm}
                 \begin{align*}
-                    \mathbb{V}[X] &= \sum_{i=1}^{\infty}{(x_i-\mathbb{E}[X])^2 \cdot p_i} \\
-                    &= \mathbb{E}[(X_i-\mu)^2]= \dfrac{1}{n} \sum_{i=1}^{n}(X_i-\bar{X})^2
+                    \Var[X] & = \sum_{i=1}^{\infty}{(x_i- \E[X])^2 \cdot p_i}                        \\
+                            & =  \E[(X_i-\mu)^2]= \dfrac{1}{n} \sum_{i=1}^{n}(X_i-\bar{X})^2         \\
+                    \Var[X] & = \displaystyle\int_{-\infty}^{\infty} (x- \E[X])^2 \cdot f(x) \, dx 
                 \end{align*}
-                Cas continu:
-                Cas discret:\\
-                $$\mathbb{V}[X] = \displaystyle\int_{-\infty}^{\infty} (x-\mathbb{E}[X])^2 \cdot f(x) \, dx $$
-                Lien entre écart-type et variance: $\mathbb{V}[X] = \sigma^2$\\
+                $\Var[X] = \sigma^2$\\
                 \nc{Propriétés}
                 \begin{itemize}
-                    \item $\mathbb{V}[X] = \mathbb{E}[(X - \mathbb{E}[X])^2] = \mathbb{E}[X^2] - \mathbb{E}[X]^2$
-                    \item $\mathbb{V}[X + Y] = \mathbb{V}[X] + \mathbb{V}[Y]$ \text{ if $X$ and $Y$ are independent.}
-                    \item $\mathbb{V}[aX] = a^2 \mathbb{V}[X]$
-                    \item $\mathbb{V}[XY] = \mathbb{V}[X]\cdot\mathbb{V}[Y] + \mathbb{V}[X]\cdot\mathbb{E}[Y]^2 + \mathbb{V}[Y]\cdot\mathbb{E}[X]^2$ \text{ if $X$ and $Y$ are independent.}
-                    \item $\mathbb{V}[c] = 0$ \text{ if $c$ is a constant.}
+                    \item $\Var[X] =  \E[(X -  \E[X])^2] =  \E[X^2] -  \E[X]^2$
+                    \item $\Var[aX] = a^2 \Var[X]$
+                    \item $\Var[XY] = \Var[X]\cdot\Var[Y] + \Var[X]\cdot \E[Y]^2 + \Var[Y]\cdot \E[X]^2$ \text{ if $X$ and $Y$ are independent.}
+                    \item $\Var[X + Y] = \Var[X] + \Var[Y]$ + $2\Cov[X, Y]$
+                    \item $\Var[c] = 0$ \text{ if $c$ is a constant.}
                 \end{itemize}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Variance};
     \end{tikzpicture}
     %---------------------------------
-
+    
+    
+    %---------------------------------
+    % Covariance
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                Soit $X$ et $Y$ deux variables aléatoires, la covariance entre $X$ et $Y$ est définie par:
+                \begin{align*}
+                    \Cov(X, Y) & =  \E[(X -\E[X])(Y -\E[Y])] \\
+                               & =  \E[XY] -\E[X] \E[Y]
+                \end{align*}
+                
+                \nc{Propriétés}
+                \begin{itemize}
+                    \item $\Cov(X, c) = 0$ si $c$ est une constante
+                    \item $\Cov(X, Y) = \Cov(Y, X)$
+                    \item $\Cov(X, X) = \text{Var}(X)$
+                    \item $\Cov(aX + b, cY + d) = ac \cdot \Cov(X, Y)$
+                    \item $\Cov(X+Y,Z) = \Cov(X, Z) + \Cov(Y, Z)$
+                    \item $\Cov(X, Y) = 0$ Si $X$ et $Y$ sont indépendants
+                \end{itemize}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Covariance};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    
+    %---------------------------------
+    % Correlation
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                Soit $X$ et $Y$ deux variables aléatoires, le coefficient de corrélation entre $X$ et $Y$ est défini par:
+                \begin{align*}
+                    \rho_{XY} & = \frac{\Cov(X, Y)}{\sqrt{\Var(X) \Var(Y)}}         = \frac{\Cov(X, Y)}{\sigma_X \sigma_Y}
+                \end{align*}
+                
+                \nc{Propriétés}
+                \begin{itemize}
+                    \item $\rho_{XY} = \rho_{YX}$
+                    \item $-1 \leq \rho_{XY} \leq 1$
+                    \item $\rho_{XY} = 1$ ou $-1$ indique une corrélation linéaire parfaite
+                    \item $\rho_{XY} = 0$ si $X$ et $Y$ sont indépendants linéairement
+                    \item Invariance des changements linéaires : $\rho_{aX+b, cY+d} = \rho_{XY}$ pour tout $a, b, c, d$ réels avec $ac \neq 0$
+                \end{itemize}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Corrélation};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Stationnarité
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                La stationnarité d'un processus aléatoire décrit comment ses propriétés statistiques restent constantes au fil du temps. Pour qu'une série temporelle soit stationnaire, elle doit présenter quatre propriétés constantes dans le temps :
+                \begin{enumerate}
+                    \item Moyenne constante
+                    \item Variance constante
+                    \item Structure d'autocorrélation constante
+                    \item Aucun composant périodique (saisonnalité)
+                \end{enumerate}
+                L'autocorrélation signifie que la mesure actuelle de la série temporelle est corrélée à une mesure passée.
+                
+                \nc{Stationnarité au sens strict} Un processus $\{X_i\}$ est strictement stationnaire si :
+                \begin{itemize}
+                    \item La distribution de $X_i$ est la même que celle de $X_j$ pour $i \neq j$.
+                    \item Les implications sont que $\E[X_i]$ et $\Var(X_i)$ sont constants et ne dépendent pas de $i$.
+                    \item La distribution conjointe de $(X_i, X_j)$ est la même que celle de $(X_{i+k}, X_{j+k})$.
+                    \item L'autocovariance $\Cov(X_i, X_{i+j})$ ne dépend que de $j$.
+                \end{itemize}
+                
+                \nc{Stationnarité au sens large} Un processus $\{X_i\}$ est largement stationnaire si :
+                \begin{itemize}
+                    \item $\E[X_i]$ et $\Var(X_i)$ sont constants et ne dépendent pas de $i$.
+                    \item L'autocovariance $\Cov(X_i, X_{i+j}) = \E[X_i X_{i+j}] - \E[X_i]\E[X_{i+j}]$ ne dépend que de $j$.
+                \end{itemize}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Stationnarité};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    
+    
     %---------------------------------
     % Loi de probabilité
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-        \begin{tabular}[width=0.4\boxsize]{|c|c|c|c|c|}
-            \hline
-            Loi & Param & $\mathbb{E}$ & $\mathbb{V}$ & Support \\
-            Bernoulli & $p$ & $p$ & $p(1-p)$ & ${0,1}$ \\
-            Binomiale & $n,p$ & $np$ & $np(1-p)$ & ${0,1}$ \\
-            Uniforme & $a,b$ & $\frac{a+b}{2}$ & $\frac{(b-a)^2}{12}$ & $[a,b]$ \\
-            Normale & $\mu,\sigma$ & $\mu$ & $\sigma^2$ & $R$ \\
-            Exponentielle & $\lambda$ & $\frac{1}{\lambda}$ & $\frac{1}{\lambda^2}$ & $[0,\infty)$ \\
-            Poisson & $\lambda$ & $\lambda$ & $\lambda$ & $[0,\infty)$ \\
-            Géométrique & $p$ & $\frac{1}{p}$ & $\frac{1}{p^2}$ & $[0,\infty)$ \\
-            \hline
-        \end{tabular}
+            \resizebox{\boxsize}{!}{%
+                \begin{tabular}{|c|c|c|c|c|}
+                    \hline
+                    Loi           & Param        & $ \E[X]$            & $\Var(X)$             & Support               \\
+                    Bernoulli     & $p$          & $p$                 & $p(1-p)$              & $\{0,1\}$             \\
+                    Binomiale     & $n,p$        & $np$                & $np(1-p)$             & $\{0, \ldots, n\}$    \\
+                    Uniforme      & $a,b$        & $\frac{a+b}{2}$     & $\frac{(b-a)^2}{12}$  & $[a,b]$               \\
+                    Normale       & $\mu,\sigma$ & $\mu$               & $\sigma^2$            & $\mathbb{R}$          \\
+                    Exponentielle & $\lambda$    & $\frac{1}{\lambda}$ & $\frac{1}{\lambda^2}$ & $[0,\infty)$          \\
+                    Poisson       & $\lambda$    & $\lambda$           & $\lambda$             & $\{0, 1, 2, \ldots\}$ \\
+                    Géométrique   & $p$          & $\frac{1}{p}$       & $\frac{1-p}{p^2}$     & $\{0, 1, 2, \ldots\}$ \\
+                    \hline
+                \end{tabular}
+            }
             \begin{minipage}{\boxsize}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Loi de probabilité};
     \end{tikzpicture}
     %---------------------------------
+    
     
     %---------------------------------
     % Likelihood
@@ -218,7 +309,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node[fancytitle, right=10pt] at (box.north west) {Likelihood};
     \end{tikzpicture}
     %---------------------------------
-
+    
     %---------------------------------
     % MLE
     %---------------------------------
@@ -235,21 +326,21 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                 
                 \nc{Procédure}
                 1. Définir la likelihood de $\theta$ $L(\theta)$.
-    
+                
                 2. On passe au logarithme de la likelihood. $l(\theta) = \log L(\theta)$
-
+                
                 3. On dérive la log-likelihood par rapport à $\theta$
-
+                
                 4. On cherche $\hat{\theta}$ tel que $\frac{\partial}{\partial \theta} l(\hat{\theta}) = 0$.
-
+                
                 5. On vérifie que $\frac{\partial^2}{\partial \theta^2}l(\hat{\theta}) < 0$
-
+                
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {MLE};
     \end{tikzpicture}
     %---------------------------------
-
+    
     %---------------------------------
     % Régression Linéaire
     %---------------------------------
@@ -257,22 +348,22 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node [mybox] (box){%
             \begin{minipage}{\boxsize}
                 Soit un tableau de données: 
-
-                $x$ = Soap(g) , $y$ = Height(cm) , $x \cdot y$ , $x^2$	  
-
+                
+                $x$ = Soap(g) , $y$ = Height(cm) , $x \cdot y$ , $x^2$
+                
                 $$ X = [1, Soap] $$
                 $$ X^TX = \begin{bmatrix} n & \sum{x_i} \\ \sum{x_i} & \sum{x_i^2} \end{bmatrix} = \begin{bmatrix} 7 & 38.5 \\ 38.5 & 218.95 \end{bmatrix} $$
                 $$ X^Ty = \begin{bmatrix} \sum{y_i} \\ \sum{x_iy_i} \end{bmatrix} = \begin{bmatrix} 348 \\ 1975 \end{bmatrix} $$
                 $$ \hat{\theta} = (X^TX)^{-1}X^Ty = \begin{bmatrix} -2.67 \\ 9.51 \end{bmatrix} $$
                 Inverse d'une matrice 2x2 :
-
+                
                 $$ \begin{bmatrix} a & b \\ c & d \end{bmatrix}^{-1} = \dfrac{1}{ad-bc} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix} $$
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Régression Linéaire};
     \end{tikzpicture}
     %---------------------------------
-
+    
     %---------------------------------
     % Normale
     %---------------------------------
@@ -289,12 +380,23 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node[fancytitle, right=10pt] at (box.north west) {Normale};
     \end{tikzpicture}
     %---------------------------------
-
-%###############################################################################################
-%                                         Deuxième Page
-%###############################################################################################
-
-
-\end{multicols*}
     
+    %---------------------------------
+    % TOPIC
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {TOPIC};
+    \end{tikzpicture}
+    %---------------------------------
+    %###############################################################################################
+    %                                         Deuxième Page
+    %###############################################################################################
+    
+    
+\end{multicols*}
+
 \end{document}
