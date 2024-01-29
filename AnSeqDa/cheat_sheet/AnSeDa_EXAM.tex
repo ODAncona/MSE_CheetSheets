@@ -134,7 +134,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                 \begin{itemize}
                     \item $ \E[X + Y] =  \E[X] +  \E[Y]$
                     \item $ \E[aX] = a  \E[X]$
-                    \item $ [X^2] =  [X]^2 + \Var[X]$
+                    \item $ \E[X^2] =  \Var[X] +\E[X]^2$
                     \item $ \E[XY] =  \E[X]\cdot \E[Y]$ if $X$ and $Y$ are independent.
                     \item $ \E[c] = c$ \text{ if $c$ is a constant.}
                 \end{itemize}
@@ -207,6 +207,9 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{\boxsize}
+                \nc{ fonction de corrélation}
+                $\E[XY]$\\
+                \nc{coefficient de corrélation}
                 Soit $X$ et $Y$ deux variables aléatoires, le coefficient de corrélation entre $X$ et $Y$ est défini par:
                 \begin{align*}
                     \rho_{XY} & = \frac{\Cov(X, Y)}{\sqrt{\Var(X) \Var(Y)}}         = \frac{\Cov(X, Y)}{\sigma_X \sigma_Y}
@@ -226,41 +229,28 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \end{tikzpicture}
     %---------------------------------
     
+    
+    
     %---------------------------------
-    % Stationnarité
+    % Autocovariance
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{\boxsize}
-                La stationnarité d'un processus aléatoire décrit comment ses propriétés statistiques restent constantes au fil du temps. Pour qu'une série temporelle soit stationnaire, elle doit présenter quatre propriétés constantes dans le temps :
-                \begin{enumerate}
-                    \item Moyenne constante
-                    \item Variance constante
-                    \item Structure d'autocorrélation constante
-                    \item Aucun composant périodique (saisonnalité)
-                \end{enumerate}
-                L'autocorrélation signifie que la mesure actuelle de la série temporelle est corrélée à une mesure passée.
+                The autocovariance function measures the linear dependency between different values of a stochastic process at different times. For a stationary time series $\{X_t\}$, the autocovariance function at lag $j$ is given by:
+                \begin{align*}
+                    \gamma(j) & = \Cov[X_t, X_{t+j}] \\ & = \E[(X_t - \mu)(X_{t+j} - \mu)]
+                \end{align*}
                 
-                \nc{Stationnarité au sens strict} Un processus $\{X_i\}$ est strictement stationnaire si :
-                \begin{itemize}
-                    \item La distribution de $X_i$ est la même que celle de $X_j$ pour $i \neq j$.
-                    \item Les implications sont que $\E[X_i]$ et $\Var(X_i)$ sont constants et ne dépendent pas de $i$.
-                    \item La distribution conjointe de $(X_i, X_j)$ est la même que celle de $(X_{i+k}, X_{j+k})$.
-                    \item L'autocovariance $\Cov(X_i, X_{i+j})$ ne dépend que de $j$.
-                \end{itemize}
-                
-                \nc{Stationnarité au sens large} Un processus $\{X_i\}$ est largement stationnaire si :
-                \begin{itemize}
-                    \item $\E[X_i]$ et $\Var(X_i)$ sont constants et ne dépendent pas de $i$.
-                    \item L'autocovariance $\Cov(X_i, X_{i+j}) = \E[X_i X_{i+j}] - \E[X_i]\E[X_{i+j}]$ ne dépend que de $j$.
-                \end{itemize}
+                It is only dependent on the lag $j$ and not on the specific time $t$, reflecting the stationarity of the process. For lags $j > 0$, the autocovariance is also known as the auto-correlation function (ACF) and is given by:
+                \begin{align*}
+                    \rho(j) & = \frac{\gamma(j)}{\gamma(0)}
+                \end{align*}
             \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {Stationnarité};
+        \node[fancytitle, right=10pt] at (box.north west) {Autocovariance};
     \end{tikzpicture}
     %---------------------------------
-    
-    
     
     %---------------------------------
     % Loi de probabilité
@@ -311,33 +301,56 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     
     %---------------------------------
-    % MLE
+    % Stationarité
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{\boxsize}
-                $\hat{\theta}_{MLE}$ est de $\theta$ est le paramètre qui maximise la likelihood de $\theta$.
+                La stationnarité d'un processus aléatoire décrit comment ses propriétés statistiques restent constantes au fil du temps. Pour qu'une série temporelle soit stationnaire, elle doit présenter quatre propriétés constantes dans le temps :
+                \begin{enumerate}
+                    \item Moyenne constante
+                    \item Variance constante
+                    \item Structure d'autocorrélation constante
+                    \item Aucun composant périodique (saisonnalité)
+                \end{enumerate}
+                L'autocorrélation signifie que la mesure actuelle de la série temporelle est corrélée à une mesure passée.
                 
-                Soit $\theta$ un paramètre d'une loi de probabilité, on définit le MLE de $\theta$ par:
+                \nc{Stationarité au sens strict} Un processus $\{X_i\}$ est strictement stationnaire si :
+                \begin{itemize}
+                    \item La distribution de $X_i$ est la même que celle de $X_j$ pour $i \neq j$.
+                    \item Les implications sont que $\E[X_i]$ et $\Var(X_i)$ sont constants et ne dépendent pas de $i$.
+                    \item La distribution conjointe de $(X_i, X_j)$ est la même que celle de $(X_{i+k}, X_{j+k})$.
+                    \item L'autocovariance $\Cov(X_i, X_{i+j})$ ne dépend que de $j$.
+                \end{itemize}
                 
-                $$\hat{\theta} = \arg\max_{\theta} L(\theta)$$
-                
-                où $L(\theta)$ est la likelihood de $\theta$.
-                
-                \nc{Procédure}
-                1. Définir la likelihood de $\theta$ $L(\theta)$.
-                
-                2. On passe au logarithme de la likelihood. $l(\theta) = \log L(\theta)$
-                
-                3. On dérive la log-likelihood par rapport à $\theta$
-                
-                4. On cherche $\hat{\theta}$ tel que $\frac{\partial}{\partial \theta} l(\hat{\theta}) = 0$.
-                
-                5. On vérifie que $\frac{\partial^2}{\partial \theta^2}l(\hat{\theta}) < 0$
-                
+                \nc{Weak Stationarity} Un processus $\{X_i\}$ est largement stationnaire si :
+                \begin{itemize}
+                    \item $\E[X_i]$ et $\Var(X_i)$ sont constants et ne dépendent pas de $i$.
+                    \item L'autocovariance $\Cov(X_i, X_{i+j}) = \E[X_i X_{i+j}] - \E[X_i]\E[X_{i+j}]$ ne dépend que de $j$.
+                \end{itemize}
             \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {MLE};
+        \node[fancytitle, right=10pt] at (box.north west) {Stationarité};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Modélisation
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                \nc{Analyse exploratoire:} Examiner les données pour comprendre les caractéristiques clés, telles que les tendances, la saisonnalité, et les anomalies.
+                \nc{Vérification de la stationnarité:} Tester la stationnarité de la série temporelle à l'aide de tests statistiques, tels que le test de Dickey-Fuller augmenté.
+                \nc{Transformation et différenciation:} Appliquer des transformations, telles que la différenciation ou le logarithme, pour stabiliser la variance et atteindre la stationnarité.
+                \nc{Identification du modèle:} Utiliser l'ACF et la PACF pour identifier les structures potentielles de modèle AR, MA, ou ARMA. Le choix du modèle doit être basé sur les caractéristiques des données.
+                \nc{Estimation et ajustement du modèle:} Estimer les paramètres du modèle choisi et ajuster le modèle aux données.
+                \nc{Diagnostic du modèle:} Analyser les résidus pour vérifier l'absence de structure autocorrélative et la normalité. Utiliser des graphiques tels que les QQ plots et les résidus ACF/PACF.
+                \nc{Validation et amélioration du modèle:} Valider le modèle à l'aide de données de test et ajuster le modèle au besoin en ajoutant ou en modifiant des termes.
+                \nc{Interprétation et utilisation:} Interpréter les résultats en contexte et les utiliser pour des prévisions ou des analyses plus poussées.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Modélisation};
     \end{tikzpicture}
     %---------------------------------
     
@@ -380,6 +393,235 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         \node[fancytitle, right=10pt] at (box.north west) {Normale};
     \end{tikzpicture}
     %---------------------------------
+    
+    %---------------------------------
+    % White Noise
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                A stationary time series or a stationary random process with zero autocorrelation.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {White Noise};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Backshift Operator
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                $BX_i = X_{i-1}$ has the effect of shifting the data back one period. For instance:
+                $B^2X_i = B(BX_i) = B(X_{i-1}) = X_{i-2}$.
+                \nc{différence d'ordre $d$}
+                $\Delta^d X_i = (1-B)^d X_i = X_i - X_{i-d}$
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Backshift Operator};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % MA
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                Let $\{X_t\}$ be a time series that follows an MA(q) process, defined by the equation:
+                \[
+                    X_t = \mu + \epsilon_t + \sum_{i=1}^{q} \theta_i \epsilon_{t-i}
+                \]
+                where
+                \begin{itemize}
+                    \item $\mu$ is the mean of the series,
+                    \item $\epsilon_t$ are white noise error terms with zero mean and constant variance $\sigma^2$,
+                    \item $\theta_1, \ldots, \theta_q$ are the parameters of the MA model.
+                \end{itemize}
+                The autocovariance function of the MA(q) process is given by:
+                \[
+                    \gamma(h) = \left\{
+                    \begin{array}{ll}
+                        \sigma^2 \sum_{i=0}^{q-j} \theta_i \theta_{i+j} & \text{for } h = 1,2,\ldots,q \\
+                        0                                               & \text{for } h > q
+                    \end{array}
+                    \right.
+                \]
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {MA};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Autoregressive Processes
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                An autoregressive model of order $p$, denoted as AR(p), posits that the current value of a series $X_i$ can be expressed as a linear combination of its $p$ past values and a white noise term $Z_i$ with zero mean and variance $\sigma^2$. The AR(p) model is represented by:
+                \[
+                    X_i = \lambda_1 X_{i-1} + \lambda_2 X_{i-2} + \ldots + \lambda_p X_{i-p} + Z_i
+                \]
+                Using the backshift operator $B$, where $B^k X_i = X_{i-k}$, the model can be succinctly written as:
+                \[
+                    \Phi(B)X_i = Z_i
+                \]
+                with the autoregressive operator $\Phi(B)$ defined as:
+                \[
+                    \Phi(B) = 1 - \lambda_1 B - \lambda_2 B^2 - \ldots - \lambda_p B^p
+                \]
+                The AR(p) model captures the dependence of $X_i$ on its own past values, and it is used for forecasting future values in time series analysis.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Autoregressive Processes};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    
+    %---------------------------------
+    % Ergodicity
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                Ergodicity for a stationary stochastic process $X = (X_n : n \in \mathbb{Z})$ with finite index set $-m \leq n \leq m$ occurs when:
+                \[
+                    \lim_{m \to \infty} \hat{\mu}_X(m) = E[X_n]
+                \]
+                where $\hat{\mu}_X(m)$ is the time average defined as:
+                \[
+                    \hat{\mu}_X(m) = \frac{1}{1 + 2m} \sum_{i=-m}^{m} X_i
+                \]
+                This signifies that long-term time averages equate to expected values as the sample size increases indefinitely.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Ergodicity};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    
+    %---------------------------------
+    % ARMA(p,q) Processes
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                An ARMA(p,q) model combines autoregressive (AR) and moving average (MA) models to describe a time series $X_n$. The current value of the series is explained by a linear function of $p$ past values (AR part) and $q$ past white noise terms (MA part), represented as:
+                \begin{align*}
+                    X_n & = \lambda_1 X_{n-1} + \lambda_2 X_{n-2} + \ldots + \lambda_p X_{n-p} + \\&Z_n + \theta_1 Z_{n-1} + \theta_2 Z_{n-2} + \ldots + \theta_q Z_{n-q} \\
+                        & = \sum_{i=1}^{p} \lambda_i X_{n-i} + \sum_{j=1}^{q} \theta_j Z_{n-j}
+                \end{align*}
+                Utilizing the backward shift operator $B$, the process can be written as:
+                \[
+                    \Phi(B)X_i = \Psi(B)Z_i
+                \]
+                where the AR operator $\Phi(B)$ and the MA operator $\Psi(B)$ are defined by:
+                \[
+                    \Phi(B) = 1 - \lambda_1 B - \lambda_2 B^2 - \ldots - \lambda_p B^p
+                \]
+                \[
+                    \Psi(B) = 1 + \theta_1 B + \theta_2 B^2 + \ldots + \theta_q B^q
+                \]
+                The ARMA model captures the dynamics of a time series by accounting for both the momentum (AR part) and shocks (MA part).
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {ARMA(p,q) Processes};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    
+    
+    %---------------------------------
+    % ARIMA Models
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                ARIMA (Autoregressive Integrated Moving Average) models extend ARMA models by incorporating differencing to handle non-stationary data. An ARIMA(p, d, q) model has three components:
+                \begin{itemize}
+                    \item AR: p = order of the autoregressive part.
+                    \item I: d = degree of differencing.
+                    \item MA: q = order of the moving average part.
+                \end{itemize}
+                A time series $X_i$ is ARIMA(p, d, q) if $Y_i = (1 - B)^d X_i$ follows an ARMA(p, q) model. The steps for ARIMA model identification are:
+                \begin{enumerate}
+                    \item Choose d based on time series trends and stationarity, typically d = 1 or 2.
+                    \item Determine p and q by plotting ACF and PACF of the $d^{th}$ order differenced data.
+                    \item Estimate the parameters, typically using statistical software.
+                    \item Perform residuals diagnostics to check for remaining trends or correlations, adjusting if necessary.
+                \end{enumerate}
+                ARIMA models are powerful tools for forecasting and analyzing time series that exhibit non-stationary behavior.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {ARIMA Models};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    
+    %---------------------------------
+    % Invertibility of MA Models
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                Invertibility of MA models allows us to express past white noise terms based on the observed time series. 
+                \nc{Conditions}
+                MA(1) : $-1 < \theta < 1$ \\
+                MA(2) : $-1 < \theta_2 < 1$, $\theta_1 + \theta_2 > -1$ and \\ $\theta_1 - \theta_2 < 1$\\
+                \nc{General Case}
+                MA(q) model, represented by $$X_i = (1 + \theta_1 B + \ldots + \theta_q B^q)Z_i$$
+                is invertible if the polynomial $$\Phi(B) = 1 + \theta_1 B + \ldots + \theta_q B^q$$ has roots outside the unit circle in the complex plane. The innovations (or white noise) $Z_i$ can be recovered by inverting the operator: $Z_i = \Phi(B)^{-1} X_i$. Invertibility ensures that the estimated white noise series is unique.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Invertibility of MA Models};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % MA and AR Link
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                Duality between AR and MA processes:
+                \nc{MA, AR link}
+                \begin{itemize}
+                    \item $MA(q)$ Invertible, $MA(q)\rightarrow AR(\infty)$
+                    \item $Ar(p)$ Stationary, $AR(p)\rightarrow MA(\infty)$
+                \end{itemize}
+                \nc{Observation}
+                For an AR(1) model:
+                \begin{itemize}
+                    \item $\lambda_1 = 0$ : $X_i$ is a white noise
+                    \item $\lambda_1 = 1$ : $X_i$ is a random walk
+                    \item $\lambda_1 = 1$ and $c \neq 0$ : $X_i$ is a random walk with drift
+                    \item $\lambda_1 < 1$ : $X_i$ tends to oscillate around the mean
+                \end{itemize}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {MA and AR Link};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % (PACF)
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                The Partial Autocorrelation Function (PACF) measures the correlation between observations in a time series separated by $k$ periods, removing the effect of intervening observations. PACF is particularly useful in identifying the order of an autoregressive (AR) process. It helps determine the number of AR terms to be included in an ARIMA model. PACF plots display the partial correlation coefficients for different lags. A significant spike at a specific lag in the PACF plot suggests the need for that number of AR terms in the model.
+                \nc{ACF}
+                $$\dfrac{\Cov(X_i,X_{i+j})}{\Cov(X_i,X_{i})}$$
+                \nc{PACF}
+                $$\dfrac{\Cov(X_i,X_{i+j}|X_{i+1},\ldots,X_{i+j-1})}{\Cov(X_i,X_{i}|X_{i+1},\ldots,X_{i+j-1})}$$
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {PACF};
+    \end{tikzpicture}
+    %---------------------------------
+    
     
     %---------------------------------
     % TOPIC
