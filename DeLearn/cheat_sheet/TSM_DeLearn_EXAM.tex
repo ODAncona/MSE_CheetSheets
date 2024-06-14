@@ -11,8 +11,6 @@
 \usepackage{amsfonts}
 \usepackage{xcolor}
 \usepackage{tikz}
-\usetikzlibrary{calc}
-\usetikzlibrary{decorations.pathmorphing}
 \usepackage{amsmath,amssymb}
 \usepackage{colortbl}
 \usepackage{xcolor}
@@ -26,6 +24,10 @@
 \usepackage[T1]{fontenc}
 \usepackage{mathrsfs}
 \usepackage{pgfplots}
+\usepackage{algorithm} % For writing pseudocode
+\usepackage{algpseudocode} % For pseudocode layout
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathmorphing}
 \usetikzlibrary{pgfplots.groupplots}
 \pgfplotsset{compat=1.17}
 \makeatletter
@@ -69,22 +71,29 @@
 %
 % Setup
 %
+\geometry{
+  top=5mm,    % Minimal top margin
+  %bottom=5mm, % Minimal bottom margin
+  left=5mm,   % Minimal left margin
+  right=5mm,   % Minimal right margin
+  textheight=220mm
+}
 \title{Deep Learning Cheat Sheet}
-\advance\topmargin-.8in
-\advance\textheight3in
-\advance\textwidth3in
-\advance\oddsidemargin-1.5in
-\advance\evensidemargin-1.5in
-\setlength{\parindent}{0pt} % No indentation at the start of a paragraph
-\setlength{\parskip}{6pt plus 2pt minus 1pt} % Space between paragraphs
 
-\baselineskip2pt
-\linespread{0.4}
+% Paragraph and column formatting
+\setlength{\parindent}{0pt}          % No indentation at the start of a paragraph
+\setlength{\parskip}{1pt plus 1pt minus 0.5pt}  % Moderate space between paragraphs
+\setlength{\columnsep}{10pt}         % Moderate space between columns
+
+% Line and baseline spacing
+\setlength{\baselineskip}{2pt}      % Adequate baseline skip
+\linespread{0.4}                     % Reset line spacing to normal
+
+% Space around displayed math
 \setlength{\abovedisplayskip}{3pt}
 \setlength{\belowdisplayskip}{3pt}
 \setlength{\abovedisplayshortskip}{3pt}
 \setlength{\belowdisplayshortskip}{3pt}
-
 
 %
 % Commands
@@ -132,22 +141,22 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
 \vspace{-0.1cm}
 
 \begin{multicols*}{4}
+    
     %---------------------------------
-    % Data Preparation
+    % Evaluation Metrics
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                \textbf{Min-max [0,1]}: $x' = \dfrac{\left(x-x_{min}\right)}{\left(x_{max}-x_{min}\right)}$\\
-                \textbf{Min-max [-1,1]}: $x' = 2 \cdot min\_max(x) -1$ \\
-                min-max doesn't handle outliers.\\
-                \textbf{Z-norm}: $x' = \dfrac{\left(x-\mu\right)}{\sigma}$\\
-                \textbf{Scaling \& Centering}\\
-                Scaling improves the numerical stability, the convergence speed and accuracy of the learning algorithms.
-                Centering improves the robustness of the learning algorithms
+                $Accuracy = \dfrac{TP + TN}{ TP + TN + FP + FN}$\\
+                $Precision = \dfrac{TP}{ TP + FP}$\\
+                $Recall = \dfrac{TP}{ TP + FN}$ \\
+                $Specificity = \dfrac{TP}{TN + FP}$\\
+                $Fscore = \dfrac{2\cdot Precision \cdot Recall}{ Precision + Recall}$\\
+                $macro$ $average = \dfrac{1}{n} \sum_{i=1}^{n} avg_i$\\
             \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {Data Preparation};
+        \node[fancytitle, right=10pt] at (box.north west) {Evaluation Metrics};
     \end{tikzpicture}
     %---------------------------------
     
@@ -181,14 +190,67 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     
     %---------------------------------
+    % Data Preparation
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Min-max [0,1]}: $x' = \dfrac{\left(x-x_{min}\right)}{\left(x_{max}-x_{min}\right)}$\\
+                \textbf{Min-max [-1,1]}: $x' = 2 \cdot min\_max(x) -1$ \\
+                min-max doesn't handle outliers.\\
+                \textbf{Z-norm}: $x' = \dfrac{\left(x-\mu\right)}{\sigma}$\\
+                \textbf{Scaling \& Centering}\\
+                Scaling improves the numerical stability, the convergence speed and accuracy of the learning algorithms. Centering improves the robustness of the learning algorithms
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Data Preparation};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    
+    
+    %---------------------------------
     % Gradient Descent
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                \textbf{MSE}\\
-                \textbf{Cross Entropy}\\
-                \textbf{Stochastic vs. Minibatch}\\
+                \begin{algorithmic}[1]
+                    \State Initialize parameter vector $\theta_0$
+                    \Repeat
+                    \State Compute the gradient of the cost function at current position $\theta_t$: $\nabla_{\theta} J(\theta_t)$
+                    \State Update the parameter vector by moving against the gradient:
+                    $
+                        \theta_{t+1} = \theta_t - \alpha \cdot \nabla_{\theta} J(\theta_t)
+                    $
+                    \State where $\alpha$ is the learning rate.
+                    \Until{change in $\theta$ is small}
+                \end{algorithmic}
+                \nc{MSE}\\
+                $$
+                    J_{MSE}(\theta) = \frac{1}{2m} \sum_{i=1}^m (\hat{y}(i) - y(i))^2
+                $$
+                where:
+                \begin{itemize}
+                    \item \( \hat{y}(i) = h_{\theta}(x(i)) \) is the prediction of the model,
+                    \item \( y(i) \) is the true outcome,
+                    \item \( m \) is the number of training examples.
+                \end{itemize}
+                \begin{multline*}
+                    \\\nabla_w J_{MSE}(w, b) =\\ \frac{1}{m} \sum_{i=1}^m \hat{y}(i) \cdot (1 - \hat{y}(i)) \cdot (\hat{y}(i) - y(i)) \cdot x(i)\\
+                    \nabla_b J_{MSE}(w, b) = \\\frac{1}{m} \sum_{i=1}^m \hat{y}(i) \cdot (1 - \hat{y}(i)) \cdot (\hat{y}(i) - y(i))
+                \end{multline*}
+                
+                \nc{Cross Entropy}
+                \begin{multline*}J_{CE}(\theta) = - \sum_{i=1}^m y(i) \cdot \log h_\theta(x(i)) + \\(1 - y(i)) \cdot \log (1 - h_\theta(x(i))) \end{multline*}
+                where:
+                \begin{itemize}
+                    \item \( p_\theta(y(i) \mid x(i)) \) is the probability model parameterized by \( \theta \), predicting the probability of the true class \( y(i) \) given the input \( x(i) \),
+                    \item \( m \) is the number of observations or data points in the dataset.
+                \end{itemize}
+                $\nabla_w J_{CE}(w, b) = \frac{1}{m} \sum_{i=1}^m (\hat{y}(i) - y(i)) \cdot x(i)$
+                
+                $\nabla_b J_{CE}(w, b) = \frac{1}{m} \sum_{i=1}^m (\hat{y}(i) - y(i))$
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Gradient Descent};
