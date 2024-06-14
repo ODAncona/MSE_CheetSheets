@@ -1,1 +1,6 @@
-# MSE_S1_CheetSheets
+# MSE_CheetSheets
+
+- AnSeqDa
+- CloudSys
+- MachLe
+- DeLearn
