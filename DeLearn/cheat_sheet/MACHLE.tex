@@ -1,0 +1,1047 @@
+%
+% Packages
+%
+\documentclass[10pt]{article} 
+\usepackage[landscape]{geometry}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{esint}
+\usepackage{bigints}
+\usepackage{amsfonts}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathmorphing}
+\usepackage{amsmath,amssymb}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{xhfill}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+\usepackage[T1]{fontenc}
+\usepackage{mathrsfs}
+\usepackage{pgfplots}
+\usetikzlibrary{pgfplots.groupplots}
+\pgfplotsset{compat=1.17}
+\makeatletter
+
+%
+% Math
+%
+\newcommand{\Real}{\mathbb R}
+\newcommand{\RPlus}{\Real^{+}}
+\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
+\newcommand{\abs}[1]{\left\vert#1\right\vert}
+\newcommand{\setn}[1]{\left\{#1\right\}_{\scriptscriptstyle n \ge 1}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\seq}[1]{\left<#1\right>}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\To}{\longrightarrow}
+\newcommand{\Prob}{\rm{P}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\h}{\mathcal{H}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\E}{{\rm E}}
+\newcommand{\Hnull}{{\rm H}_{0}}
+\newcommand{\Hone}{{\rm H}_{1}}
+\newcommand{\Var}{{\rm Var}}
+\newcommand{\Cov}{{\rm Cov}}
+\newcommand{\sign}{{\rm sign}}
+\newcommand{\med}{{\rm med}}
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\T}{{\text{\tiny \rm T}}}
+\newcommand{\minf}{- \, \infty}
+\newcommand{\intervalle}[4]{\mathopen{#1}#2\mathpunct{},#3\mathclose{#4}}
+\newcommand{\intervalleff}[2]{\intervalle{[}{#1}{#2}{]}}
+\newcommand{\intervalleof}[2]{\intervalle{]}{#1}{#2}{]}}
+\newcommand{\intervallefo}[2]{\intervalle{[}{#1}{#2}{[}}
+\newcommand{\intervalleoo}[2]{\intervalle{]}{#1}{#2}{[}}
+\newcommand*\conj[1]{\overline{#1}}
+\newcommand*\mean[1]{\overline{#1}}
+
+%
+% Setup
+%
+\title{MachLe - Olivier D'Ancona}
+\advance\topmargin-.8in
+\advance\textheight3in
+\advance\textwidth3in
+\advance\oddsidemargin-1.5in
+\advance\evensidemargin-1.5in
+\setlength{\parindent}{0pt} % No indentation at the start of a paragraph
+\setlength{\parskip}{6pt plus 2pt minus 1pt} % Space between paragraphs
+
+\baselineskip2pt
+\linespread{0.4}
+\setlength{\abovedisplayskip}{3pt}
+\setlength{\belowdisplayskip}{3pt}
+\setlength{\abovedisplayshortskip}{3pt}
+\setlength{\belowdisplayshortskip}{3pt}
+
+
+%
+% Commands
+%
+\newcommand*\bigcdot{\mathpalette\bigcdot@{.5}}
+\newcommand*\bigcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+\makeatother
+\newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
+%\colorbox[HTML]{e4e4e4}{\makebox[\textwidth-2\fboxsep][l]{texto}
+\newcommand{\nc}[2][]{%
+\vspace{-.16cm}
+\tikz \draw [draw=black, ultra thick, #1]
+    ($(current page.center)-(0.5\linewidth,0)$) --
+    ($(current page.center)+(0.5\linewidth,0)$)
+    node [midway, fill=white] {#2};
+}% tomado de https://tex.stackexchange.com/questions/179425/a-new-command-of-the-form-tex
+
+
+%
+% Styles
+%
+\tikzstyle{mybox} = [draw=black, fill=white, very thick,
+rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
+\tikzstyle{fancytitle} =[fill=black, text=white, font=\bfseries]
+
+\newlength{\boxsize}
+\setlength{\boxsize}{0.247\textwidth}
+\raggedcolumns
+%###############################################################################################
+%
+%                                         Document
+%
+%###############################################################################################
+
+
+
+\begin{document}
+
+%---------------------------------
+% Title
+%---------------------------------
+\begin{center}
+    {\huge{\textbf{MachLe - Olivier D'Ancona}}}\\
+\end{center}
+\vspace{-0.1cm}
+
+\begin{multicols*}{4}
+    
+    %---------------------------------
+    % Evaluation Metrics
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                $Accuracy = \dfrac{TP + TN}{ TP + TN + FP + FN}$\\
+                $Precision = \dfrac{TP}{ TP + FP}$\\
+                $Recall = \dfrac{TP}{ TP + FN}$ \\
+                $Specificity = \dfrac{TP}{TN + FP}$\\
+                $Fscore = \dfrac{2\cdot Precision \cdot Recall}{ Precision + Recall}$\\
+                $error$ $rate$ $= 1 - accuracy$\\
+                $macro$ $average = \dfrac{1}{n} \sum_{i=1}^{n} avg_i$\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Evaluation Metrics};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Activation Functions
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Sigmoid}: $\sigma(x)=\dfrac{1}{1 + e^{-x}}$\\
+                \textbf{Hyperbolic tangent}: $\frac {e^{x} - e^{-x}}{e^{x} + e^{-x}}$\\
+                \textbf{Relu}: $\begin{cases}0 & \text{si $x < 0$ } \\x & \text{si $x \ge 0$} \\\end{cases}$\\
+                \textbf{Gaussian}: $e^{-x^{2}}$\\
+                \textbf{Softmax}: $\dfrac{e^{z_j}}{ \sum_{k=1}^{K}{e^{z_k}}}$\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Activation Functions};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Normalization
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Min-max [0,1]}: $x' = \dfrac{\left(x-x_{min}\right)}{\left(x_{max}-x_{min}\right)}$\\
+                \textbf{Min-max [-1,1]}: $x' = 2 \cdot min\_max(x) -1$ \\
+                min-max doesn't handle outliers.\\
+                \textbf{Z-norm}: $x' = \dfrac{\left(x-\mu\right)}{\sigma}$\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Normalization};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Logistic Regression
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                $$ h_\theta(x_n) = \sigma(x \theta^T) $$
+                \begin{itemize}[noitemsep]
+                    \item $h_\theta(x_n)$ : predicted value
+                    \item $\theta$ : model's parameters
+                    \item $X$ : input vector
+                \end{itemize}
+                
+                \textbf{Goal}: Find the $\theta$ that maximizes the likelihood of the data.\\
+                \textbf{Loss}:
+                $$
+                    \begin{aligned}
+                        J(\beta) & = -\frac{1}{n} \sum_{i=1}^{n} y_i \log(h_\theta(x_n)) + \\
+                                 & \qquad \qquad(1 - y_i) \log(1 - h_\theta(x_n))
+                    \end{aligned}
+                $$
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Logistic Regression};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Bayes
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                $$ P(C_k|x) = \frac{P(x|C_k) \cdot P(C_k)}{P(x)} $$                où
+                \begin{itemize}[noitemsep]
+                    \item $C_k$: Classe ciblée
+                    \item $x$: Évidence
+                    \item $P(C_k)$: Probabilité a priori de la classe $C_k$
+                    \item $P(x|C_k)$: probability of observing x given class j
+                    \item $P(C_k|x)$: Probabilité a posteriori de la classe $C_k$ après observation de $x$
+                    \item $P(x)$: Probabilité de l'évidence $x$
+                \end{itemize}
+                avec 
+                $$ P(x) = \sum_{\text{toutes classes } C_k} P(x|C_k) \cdot P(C_k) $$
+                
+                \nc{Classifier H/F:}
+                \begin{itemize}
+                    \item $P(C_f) = \frac{4}{70}, P(C_g) = \frac{66}{70}$
+                    \item $p(x|C_g) = 0.8, p(x|C_f) = 0.2$
+                    \item Calcul de $p(x)$:
+                          $$ p(x) = 0.2 \times \frac{4}{70} + 0.8 \times \frac{66}{70} $$
+                    \item Calcul de $P(C_f|x)$ et $P(C_g|x)$:
+                          $$ P(C_f|x) = \frac{0.2 \times \frac{4}{70}}{p(x)}, \quad P(C_g|x) = \frac{0.8 \times \frac{66}{70}}{p(x)} $$
+                \end{itemize}
+                
+                (+)Can deal with imbalanced dataset, prior can be changed
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Bayes};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % KNN
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                Hyperparameters:\\
+                \begin{itemize}[noitemsep]
+                    \item Number of neighbours $k$
+                    \item Distance metric
+                    \item normalization type
+                    \item strategy if no majority
+                \end{itemize}
+                Big $k$:\\
+                (+) More confidence, probabilistic
+                (-) No locality, heavier
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {KNN};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Linear Regression
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{\boxsize}
+                Soit un tableau de données: 
+                
+                $x$ = Surface(g) , $y$ = Price(cm) , $x \cdot y$ , $x^2$
+                
+                $$ X = [1, Surface] $$
+                $$ X^TX = \begin{bmatrix} n & \sum{x_i} \\ \sum{x_i} & \sum{x_i^2} \end{bmatrix} = \begin{bmatrix} 7 & 38.5 \\ 38.5 & 218.95 \end{bmatrix} $$
+                $$ X^Ty = \begin{bmatrix} \sum{y_i} \\ \sum{x_iy_i} \end{bmatrix} = \begin{bmatrix} 348 \\ 1975 \end{bmatrix} $$
+                $$ \hat{\theta} = (X^TX)^{-1}X^Ty = \begin{bmatrix} \theta_0 \\ \theta_1 \end{bmatrix} = \begin{bmatrix} -2.67 \\ 9.51 \end{bmatrix} $$
+                $$ \hat{y} = \theta_0 + \theta_1x $$
+                \nc{Matrix Inversion (2x2)}
+                $$ \begin{bmatrix} a & b \\ c & d \end{bmatrix}^{-1} = \dfrac{1}{ad-bc} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix} $$
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Linear Regression};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %--------------------------
+    % Distance Measures
+    %--------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                $\text{Pearson}= R^{2} = 1 - \dfrac{\displaystyle\sum_{1}^{n}{\left(y_i - \hat{y_i}\right)^{2}}}{\displaystyle\sum_{1}^{n}{\left(y_i - \overline{y_i}\right)^{2}}}$\\
+                $\text{Euclidean} = \sqrt{\displaystyle\sum{\left(I_1 - I_2\right)^{2}}}$\\
+                $\text{Manhattan} = \displaystyle\sum{\abs{I_1 - I_2}}$\\
+                $\text{MSE} = \dfrac{1}{N}\displaystyle\sum_{1}^{n}{\left(y_i - \hat{y_i}\right)^{2}}$\\
+                $\text{Cosine similarity} = \dfrac{A \cdot B}{\norm{A} \cdot \norm{B}}$\\
+                $\text{Purity} = \frac{1}{N} \sum_{k} \max_j |cluster_k \cap category_j|$\\
+                $WSS = \sum_{i=1}^k \sum_{x \in C_i} d(x, \mu_i)^2$
+                Within-cluster-sum (distortion) is the sum of the squared distances between each point in a cluster $x_j$ and its cluster center.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Similarity Measures};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Support Vector Machine (SVM)
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Concept}: 
+                SVM finds the hyperplane that best separates different classes by maximizing the margin between the closest points of different classes (support vectors).\\
+                
+                hw(x) = sign(b + wx)
+                
+                \nc{Formulation}
+                $$ \max_{\omega, b} \frac{1}{\|\omega\|} \quad \text{s.t.} \quad y_i(\omega \cdot x_i + b) \geq 1 \, \forall i $$
+                where
+                \begin{itemize}[noitemsep]
+                    \item $\omega$ : Normal vector to the hyperplane
+                    \item $b$ : Bias term
+                    \item $x_i, y_i$ : Training data points and labels
+                \end{itemize}
+                
+                \nc{Kernel Trick}
+                SVM can be extended to non-linearly separable data using kernel functions, which implicitly map input space to a higher-dimensional feature space.
+                
+                \nc{Common Kernels}
+                \begin{itemize}[noitemsep]
+                    \item Linear: $\langle x, x'\rangle$
+                    \item Polynomial: $(\gamma \langle x, x'\rangle + r)^d$
+                    \item Gaussian (RBF): $e^{(-\gamma \|x - x'\|^2)}$
+                \end{itemize}
+                
+                (+) Effective in high-dimensional spaces, Memory efficient, Versatile (different kernel functions)\\
+                
+                (-) Sensitive to the choice of kernel and regularization parameters, Not suitable for very large datasets
+                
+                hinge loss: $max(0, 1-y_i(w \cdot x_i + b))$ (0 if correct classification)
+                (1 if falls on the hyperplane)
+                (>1 if misclassified)
+                
+                \nc{Objective function to min}
+                $$ \min_{\omega, b} \quad \frac{1}{2} \|\omega\|^2 + C \sum_{i=1}^{n} \max(0, 1 - y_i(\omega \cdot x_i + b)) $$
+                where $C$ nutch the hinge loss term (how far are we predicting from ground truth) and regularization term (impeach big value, min w => maximize margin)
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Support Vector Machine};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %###############################################################################################
+    %                                         Deuxième Page
+    %###############################################################################################
+    
+    %---------------------------------
+    % Clustering
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Clustering} partitions data into clusters with high intra-class similarity and low inter-class similarity.\\
+                \textbf{Needs}: distance measure, criterion, algorithm.\\
+                \nc{Partitions}
+                \textbf{Distortion}: How close are we to a “centroid” defining the partition?\\
+                \textbf{Connectivity of points}: How close are points to each other?
+                \nc{Elbow Method}
+                Heuristic used in determining the number of clusters in a data set. It selects the value of $k$ that corresponds to the elbow of the curve (\#cluster, WSS).
+                
+                \nc{Silhouette Coefficient}
+                $$ s = \frac{b-a}{\max(a,b)}$$
+                \begin{itemize}[noitemsep]
+                    \item $a$ is the mean distance between a sample and all other points in the same class (cohesion)
+                    \item $b$ is the mean distance between a sample and all other points in the next nearest cluster (isolation)
+                \end{itemize}
+                
+                $s$ range is $[-1,1]$ . A high value indicates that the object is well matched to its own cluster and poorly matched to neighboring clusters.\\
+                
+                \nc{Davies-Bouldin Index}
+                $$ DB = \frac{1}{k} \sum_{i=1}^k \max_{j \neq i} \frac{R_i + R_j}{d(C_i, C_j)}$$
+                
+                \begin{itemize}[noitemsep]
+                    \item $R_i$ is the average distance between a point in cluster $C_i$ and all points in $C_i$ (cluster diameter))
+                    \item $d(C_i, C_j)$ is the distance between the centroids of $C_i$ and $C_j$
+                \end{itemize}
+                
+                zero is the lowest possible score. Values closer to zero indicate a better partition.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Clustering};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % DB-Scan
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \begin{enumerate}[noitemsep]
+                    \item Classify points as core, border, or noise based on density.
+                    \item Form clusters around core points.
+                    \item Assign border points to clusters or mark as noise.
+                \end{enumerate}
+                \textbf{(+)} Identifies clusters of varying shapes; robust to noise.\\
+                \textbf{(-)} Sensitive to parameters; struggles with varying density clusters.\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {DB-Scan};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % K-Means
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \begin{enumerate}[noitemsep]
+                    \item Initialize $k$ centroids randomly.
+                    \item Assign each point to the nearest centroid.
+                    \item Recompute centroids as the mean of assigned points.
+                    \item Repeat steps 2-3 until convergence.
+                \end{enumerate}
+                minimize distortion: $J = \displaystyle\sum_{i=1}^{k}{d(x_n,\mu_c)}$\\
+                \textbf{(+)} Will converge\\
+                \textbf{(-)} Sensitive to initial conditions(size, density, distribution), Finds a local optimum\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {K-Means};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Mean Shift Clustering
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \begin{enumerate}[noitemsep]
+                    \item Choose bandwidth and initialize centroids.
+                    \item Shift each centroid to the mean of points within the bandwidth.
+                    \item Repeat until centroids converge.
+                \end{enumerate}
+                \textbf{(+)} Can find clusters of arbitrary shape; robust to outliers.\\
+                \textbf{(-)} Computationally intensive; bandwidth parameter can be tricky to set.\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Mean Shift Clustering};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Hierarchical Clustering
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Algorithm (Agglomerative)}:
+                \begin{enumerate}[noitemsep]
+                    \item Start with each point as a separate cluster.
+                    \item Merge the closest pair of clusters.
+                    \item Repeat step 2 until desired number of clusters is reached.
+                \end{enumerate}
+                \textbf{(+)} No need to specify the number of clusters; intuitive dendrogram representation.\\
+                \textbf{(-)} Computationally expensive for large datasets; sensitive to outliers.\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Hierarchical Clustering};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Entropy
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                $$ H(X) = - \sum_{i=1}^{n} p(x_i) \log_2 p(x_i) $$
+                where
+                \begin{itemize}[noitemsep]
+                    \item $p(x_i)$ : Probability of class $x_i$
+                \end{itemize}
+                
+                \textbf{Information Gain}: 
+                $$ IG(X, Y) = H(X) - H(X|Y) $$
+                where
+                \begin{itemize}[noitemsep]
+                    \item $H(X)$ : Entropy of the parent node
+                    \item $H(X|Y)$ : Entropy of the child node
+                \end{itemize}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Entropy};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Gini Impurity
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Gini Set}:$G(X) = 1 - \sum_{i=1}^{n} p(x_i)^2 $
+                where
+                \begin{itemize}[noitemsep]
+                    \item $p(x_i)$ :  is the proportion of points in a set that belongs to a class $i$: $\dfrac{N_i}{N}$.
+                    \item G = 0.5 : maximum value of impurity, classes are balanced in the set.\\
+                    \item G = 0 : minimum value of impurity, all the values belong to a single class.\\
+                \end{itemize}
+                
+                \textbf{Gini Split}:$\displaystyle\sum_{i=1}^{n} \dfrac{N_i}{N} G(X_i) $\\
+                \textbf{Gini Gain}(big=good):$Gini_{set} - Gini_{split} $\\
+                \nc{Example}
+                \begin{tikzpicture}
+                    \begin{axis}[
+                            title={},
+                            xmin=0, xmax=5,
+                            ymin=0, ymax=4,
+                            grid style=dashed,
+                            legend style={at={(0.5,-0.1)},anchor=north}
+                            width=\textwidth,
+                            height=0.5\textwidth,
+                        ]
+                        
+                        % Add dashed line
+                        \addplot[
+                            color=brown,
+                            mark=none,
+                            style=dashed,
+                            domain=0:4
+                        ]
+                        coordinates {(2,0) (2,5)};
+                        
+                        % Add blue dots
+                        \addplot[
+                            only marks,
+                            color=blue,
+                            mark=*,
+                            mark options={fill=blue},
+                        ]
+                        coordinates {
+                                (1,3) (1,2) (1,1) (3,1) (3,2)
+                            };
+                        
+                        % Add red dots
+                        \addplot[
+                            only marks,
+                            color=red,
+                            mark=*,
+                            mark options={fill=red},
+                        ]
+                        coordinates {
+                                (4,3) (4,2) (4,1)
+                            };
+                        
+                    \end{axis}
+                \end{tikzpicture}
+                
+                \textbf{Gini set}:
+                $ 1 - \left(\dfrac{\color{blue}5}{10}\right)^2 - \left(\dfrac{\color{red}5}{10}\right)^2 = \dfrac{1}{2}$\\
+                \textbf{Left Set}:
+                $ 1 - \left(\dfrac{\color{blue}3}{3}\right)^2 - \left(\dfrac{\color{red}0}{3}\right)^2 =0$\\
+                \textbf{Right Set}:
+                $ 1 - \left(\dfrac{\color{blue}2}{7}\right)^2 - \left(\dfrac{\color{red}5}{7}\right)^2 = \dfrac{20}{49}$\\
+                \textbf{Gini Split}:
+                $ \dfrac{3}{10} \times 0 + \dfrac{7}{10} \times \dfrac{20}{49} = \dfrac{2}{7}$\\
+                \textbf{Gini Gain}:
+                $ \dfrac{1}{2} - \dfrac{2}{7} = \dfrac{3}{14}$
+                \nc{Example2}
+                
+                \begin{tikzpicture}[grow=down, level distance=10pt]
+                    \tikzstyle{level 1}=[sibling distance=140pt]
+                    \tikzstyle{level 2}=[sibling distance=80pt]
+                    
+                    \node[rectangle,draw=black]{Pression > 91?}
+                    child{node[rectangle,draw=black]{C=3, I=2} edge from parent node[left, xshift=-0.5cm, yshift=0.5cm]{Oui}}
+                    child{node[rectangle,draw=black]{C=2, I=1} edge from parent node[right, xshift=0.5cm,yshift=0.5cm]{Non}};
+                \end{tikzpicture}\\
+                Première feuille:\\
+                $$ Gini = 1 - \left(\dfrac{3}{3+2}\right)^2 - \left(\dfrac{2}{3+2}\right)^2 = \dfrac{12}{25}$$
+                Deuxième feuille:\\
+                $$ Gini = 1 - \left(\dfrac{2}{2+1}\right)^2 - \left(\dfrac{1}{2+1}\right)^2 = \dfrac{4}{9}$$
+                
+                
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Gini Impurity};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    
+    %---------------------------------
+    % Decision Tree
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                A flowchart-like structure in which each internal node represents a test on a feature. Each leaf node represents a class label(decision taken after computing all features).\\
+                \nc{Boosting}
+                Build additional trees while considering earlier trees to compensate for their weaknesses
+                \nc{Bagging}
+                Build a lot of trees using different parts of the data without looking at earlier ones. A very popular algorithm that is close to this approach is called “Random Forests”
+                
+                \textbf{Pruning}: 
+                Removing sections of the tree that provide little power to classify instances.\\
+                
+                (+)
+                
+                (-) 
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Decision Tree};
+    \end{tikzpicture}
+    
+    
+    %--------------------------
+    % Overfitting
+    %--------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Overfitting} occurs when a model learns the training data too well, including noise and outliers, resulting in poor generalization to new data.\\
+                
+                \textbf{Signs}:
+                \begin{itemize}[noitemsep]
+                    \item High accuracy on training data
+                    \item Poor performance on validation/test data
+                \end{itemize}
+                
+                \textbf{Techniques to Reduce Overfitting}:
+                \begin{itemize}[noitemsep]
+                    \item \textbf{Early Stopping}: Stop training when performance on validation data begins to degrade.
+                    \item \textbf{Regularization}: Add a penalty term to the loss function (L1, L2 regularization).
+                    \item \textbf{More Data}: Increase the size of the training dataset.
+                    \item \textbf{Data Augmentation}: Artificially increase the diversity of the training dataset by creating modified versions of the data.
+                    \item \textbf{Dropout}: Randomly omit a subset of features/neurons during training to prevent co-adaptation.
+                    \item \textbf{Simplifying the Model}: Reduce the complexity of the model (fewer layers or hidden units).
+                    \item \textbf{Cross-Validation}: Use cross-validation to ensure the model's ability to generalize.
+                    \item \textbf{Ensemble Methods}: Combine predictions from multiple models to reduce variance.
+                \end{itemize}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Overfitting};
+    \end{tikzpicture}
+    %--------------------------
+    
+    %---------------------------------
+    % Convolutional Neural Networks
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \nc{Features}
+                colors, terrain texture, size, presence of straight lines, border\\
+                1. Extracting localized low-level features\\
+                2. Incrementally allow the system to appropriately bind together features and their relationships \\
+                3. Gradually build-up overall spatial invariance \\
+                \nc{Pooling layer}
+                Maxpool after a convolution layer eliminates non maximal values : it is a form of non-linear down-sampling that reduces computation for upper layers and provides a "summary" of statistics of features in lower layers.
+                \nc{Convolution layer}
+                Different kernel sizes (3x3, 5x5, 7x7, etc) allows the identification of features at different scales and 			multiple layers of 3x3 kernels can implement other kernel sizes\\
+                The CONV layer’s parameters consist of a set of learnable filters. Every filter is small spatially (along width and height), but extends through the full depth of the input volume.
+                We can compute the spatial size of the output volume as a function of the input volume size (W), the receptive field size of the Conv Layer neurons (F),the stride with which they are applied (S), and the amount of zero padding used (P) on the border. \\
+                formula for calculating how many neurons “fit” is given by $\dfrac{W-F+2P}{S} + 1$
+                \nc{Input Volume}
+                \textbf{Size}: $W_1 \cdot H_1\cdot D_1$\\
+                
+                \nc{Hyperparameters}
+                \textbf{K}: Number of filters \\
+                \textbf{F}: Their spatial extent\\
+                \textbf{S}: Stride\\
+                \textbf{P}: The amount of zero padding\\
+                
+                \nc{Output Volume}
+                \textbf{Size}: $W_2 \cdot H_2\cdot D_2$\\
+                \textbf{H2}: $\dfrac{W_1-F+2P}{S} + 1$\\
+                \textbf{W2}: $\dfrac{H_1-F+2P}{S} + 1$\\
+                \textbf{D2}: K
+                
+                \nc{Parameters}
+                It introduces $(F \cdot F \cdot D_1) \cdot K$ weights plus $K$ biases.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Convolutional Neural Networks};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % XG-Boost
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                Instead of yes/no leaf outputs, we have
+                real-valued weights.\\
+                If $\sigma(w_i) > 0.5$ then output yes, else no\\
+                Use a loss function that considers the output errors and adapt the weights\\
+                New trees are built with the aim of incrementally reducing the error (boosting)\\
+                we use an iterative optimization approach: in every boosting iteration we choose a tree $f_k$ that will get us one step closer to the minimum cost.\\
+                XGBoost, in short, uses several trees that contribute in an additive manner to compute a nal weight value for each leaf by minimising a loss function that measures the difference between the true labels y and the ensemble's prediction
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {XG-Boost};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Neural Network
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \nc{Structure}\\
+                \textbf{Biais}: $b$, An extra weight that can be learned using a learning algorithm. The purpose is to replace threshold.\\
+                \textbf{Input}: $I$, Input vector
+                \textbf{Weights}: $W$, Vector of weights
+                \nc{Learning algorithm}\\
+                \begin{enumerate}
+                    \item Randomly initialize weights
+                    \item Compute the neuron's output for a fiven input vector X
+                    \item Update weights: $W_j(t+1) = W_j(t) + \eta\left(\hat{y_i}-y\right)x$ with $\eta$ the learning rate and $\hat{y_i}$ the desired output.
+                    \item Repeat steps 2 and 3 for the number of epochs you need or until the error is smaller than a threshold.
+                \end{enumerate}
+                \nc{Regularization}
+                Regularization means providing constraints to limit the values of the parameters we are learning.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Neural Network};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % LSTM
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                Long Short-Term Memory NN are a type of RNN designed to remember information for long periods as part of the model's internal state.\\
+                
+                \textbf{Key Components}:
+                \begin{itemize}[noitemsep]
+                    \item Input, output, and forget gates to regulate the flow of information.
+                    \item Cell state for storing long-term information.
+                    \item Hidden state for short-term information.
+                \end{itemize}
+                
+                \textbf{Functioning}:
+                Gates selectively add or remove information to the cell state, allowing LSTMs to capture long-term dependencies and mitigate the vanishing gradient problem.\\
+                
+                (+) Better at capturing long-range dependencies than standard RNNs, More effective in learning from large sequences of data.\\
+                (-) More complex and computationally intensive to train than standard RNNs, May require more data to train effectively.\\
+                \nc{Number of Weights}
+                $4 x (N_{inputs} + N_{LSTMblocks} + bias) x N_{LSTMblocks}$\\
+                Weights for 32 LSTM units and 2-dim inputs: 4 x (2 + 32 + 1) x 32 = 4480
+                \nc{Applications}
+                feedforward NN, text and video classification, image captioning, sequence to sequence task, generative text model.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {LSTM};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Recurrent Neural Networks
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                Handle sequential data. Each neuron in an RNN has a self-loop that allows information to persist.Maintains a hidden state that captures information about the sequence.\\
+                
+                \textbf{Applications}:
+                \begin{itemize}[noitemsep]
+                    \item Natural Language Processing (NLP)
+                    \item Speech Recognition
+                    \item Time Series Prediction
+                \end{itemize}
+                
+                (+) Can handle variable-length sequences, Can capture long-term dependencies\\
+                (-) Computationally intensive, Suffers from vanishing/exploding gradients, hard to lwarn long-term dependencies\\
+                
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Recurrent Neural Networks};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Principal Component Analysis
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                PCA is a statistical procedure that uses an orthogonal transformation to convert a set of observations of possibly correlated variables into a set of values of linearly uncorrelated variables called principal components. The first principal component has the largest possible variance.\\
+                
+                \nc{Steps}:
+                \begin{enumerate}[noitemsep]
+                    \item Before PCA, we standardize/ normalize data.
+                    \item Compute the covariance matrix.
+                    \item Compute eigen vectors of the covariance matrix.
+                    \item Sort eigenvalues and eigenvectors according to variance.
+                    \item Select a subset of the principal components.
+                    \item Transform the original data.
+                \end{enumerate}
+                
+                \textbf{Applications}:
+                Dimensionality reduction, exploratory data analyses, making predictive models more efficient.\\
+                
+                (+) Reduces complexity, removes noise, may improve model performance.\\
+                (-) Only allows linear projections, PCA restricts to orthogonal vectors in feature space that minimize reconstruction error (=> ICA), Assumes points are multivariate Gaussian\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Principal Component Analysis};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    
+    %---------------------------------
+    % Encoding Data
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                PCA is a statistical procedure that uses an orthogonal transformation to convert a set of observations of possibly correlated variables into a set of values of linearly uncorrelated variables called principal components. The first principal component has the largest possible variance.\\
+                
+                \nc{Steps}:
+                \begin{enumerate}[noitemsep]
+                    \item Before PCA, we standardize/ normalize data.
+                    \item Compute the covariance matrix.
+                    \item Compute eigen vectors of the covariance matrix.
+                    \item Sort eigenvalues and eigenvectors according to variance.
+                    \item Select a subset of the principal components.
+                    \item Transform the original data.
+                \end{enumerate}
+                
+                \textbf{Applications}:
+                Dimensionality reduction, exploratory data analyses, making predictive models more efficient.\\
+                
+                (+) Reduces complexity, removes noise, may improve model performance.\\
+                (-) Only allows linear projections, PCA restricts to orthogonal vectors in feature space that minimize reconstruction error (=> ICA), Assumes points are multivariate Gaussian\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Encoding Data};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % t-SNE
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                Non-deterministic transformation of an observation set from high to low dimensionality. Can find non-linear structure (not like PCA). The similarity gives less importance to big distances.\\
+                
+                $ p_{j|i} = \frac{\exp(-\|x_i - x_j\|^2 / 2\sigma_i^2)}{\sum_{k \neq i} \exp(-\|x_i - x_k\|^2 / 2\sigma_i^2)} $
+                
+                (+) Sensitive to local structure, effective at creating map of clusters and patterns in high-dimensional space\\
+                (-) does not preserve distances between points, computationally intensive, non deterministic\\
+                \nc{perplexity}
+                $$ Perp(P_i) = 2^{H(P_i)} $$ where $H(P_i)$ is the Shannon entropy of the distribution $P_i$.
+                balance the attention between local and global aspects of the data.\\
+                \textbf{Steps}:
+                \begin{enumerate}[noitemsep]
+                    \item Compute pairwise affinities of points in high-dimensional space with a Gaussian distribution.
+                    \item Compute pairwise affinities in low-dimensional space with a Student-t distribution.
+                    \item Iteratively optimize the coordinates of the points in low-dimensional space.
+                    \item Compute the Kullback-Leibler divergence between the two distributions.
+                    \item Repeat steps 2-4 until convergence.
+                \end{enumerate}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {t-SNE};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    
+    %---------------------------------
+    % Computational Complexity of ML Algorithms
+    %---------------------------------
+    \vspace{3.3cm}
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.8\textwidth}
+                \resizebox{\textwidth}{!}{
+                    \begin{tabular}{|l|l|l|l|}
+                        \hline
+                        \textbf{Algorithm}  & \textbf{Assumption}                     & \textbf{Train Time/Space}                                   & \textbf{Inference Time/Space}                             \\
+                        \hline
+                        KNN (Brute Force)   & Similar things exist in close proximity & \(O(knd)\) / \(O(nd)\)                                      & \(O(knd)\) / \(O(nd)\)                                    \\
+                        \hline
+                        KNN (KD Tree)       & Similar things exist in close proximity & \(O(nd\log(n))\) / \(O(nd)\)                                & \(O(k\log(n)d)\) / \(O(nd)\)                              \\
+                        \hline
+                        Naive Bayes         & Features are conditionally independent  & \(O(ndc)\) / \(O(dc)\)                                      & \(O(dc)\) / \(O(dc)\)                                     \\
+                        \hline
+                        Logistic Regression & Classes are linearly separable          & \(O(nd)\) / \(O(nd)\)                                       & \(O(d)\) / \(O(d)\)                                       \\
+                        \hline
+                        Linear Regression   & Linear relationship between variables   & \(O(nd)\) / \(O(nd)\)                                       & \(O(d)\) / \(O(d)\)                                       \\
+                        \hline
+                        SVM                 & Classes are linearly separable          & \(O(n^2d^2)\) / \(O(nd)\)                                   & \(O(kd)\) / \(O(kd)\)                                     \\
+                        \hline
+                        Decision Tree       & Feature selection by information gain   & \(O(n\log(n)d)\) / \(O(\text{nodes})\)                      & \(O(\log(n))\) / \(O(\text{nodes})\)                      \\
+                        \hline
+                        Random Forest       & Low bias and variance trees             & \(O(kn\log(n)d)\) / \(O(\text{nodes} \times k)\)            & \(O(k\log(n))\) / \(O(\text{nodes} \times k)\)            \\
+                        \hline
+                        GBDT                & High bias, low variance trees           & \(O(Mn\log(n)d)\) / \(O(\text{nodes} \times M + \gamma_m)\) & \(O(M\log(n))\) / \(O(\text{nodes} \times M + \gamma_m)\) \\
+                        \hline
+                    \end{tabular}}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Computational Complexity of ML Algorithms};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % UMAP
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                Uniform Manifold Approximation and Projection (UMAP) is a dimensionality reduction technique that approximates a high-dimensional manifold using a graph representation, then finds a low-dimensional graph that maintains this structure.\\
+                
+                \nc{Process}:
+                \begin{itemize}[noitemsep]
+                    \item Builds a high-dimensional fuzzy graph by connecting close points.
+                    \item Low-dimensional graph constructed via gradient descent from random initialization.
+                \end{itemize}
+                
+                \nc{Parameters}:
+                \begin{itemize}[noitemsep]
+                    \item \textit{n\_neighbors}: Balances local versus global structure.
+                    \item \textit{min\_dist}: Controls how tightly points cluster together.
+                    \item \textit{n\_components}: The dimensionality of the reduced space.
+                    \item \textit{metric}: The distance metric used, e.g., euclidean, Manhattan.
+                \end{itemize}
+                
+                (+) Faster than t-sne, direct transformation from high dimensions, Not limited to 2D or 3D; more stable outputs across runs, Preserves more global structure, robust mathematical foundation.
+                
+                (-) Shapes, distances, and axes in the reduced space are not directly interpretable, May create shortcuts in the manifold if n\_neighbors is too large or data is noisy, Stochastic, Distance between clusters might not mean anything\\
+                
+                \textbf{Considerations}:
+                Normalization of attributes is generally necessary, except when essential correlation information would be lost. Reconstruction error should be considered when choosing the reduced dimensionality and identifying outliers.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {UMAP};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Autoencoders
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                Autoencoders aim to reproduce their input data at the output. They learn a representation (encoding) for a set of data, typically for dimensionality reduction, by training the network to ignore insignificant data (“noise”).\\
+                
+                \nc{Structure}:
+                \begin{itemize}[noitemsep]
+                    \item Encoder: \( h = f(Wx + b) \)
+                    \item Decoder: \( \hat{x} = g(W'h + c) \)
+                \end{itemize}
+                
+                \nc{Characteristics}:
+                \begin{itemize}[noitemsep]
+                    \item Cost Function: Typically mean squared error between input and output.
+                    \item If linear activation functions are used and the loss is quadratic, an autoencoder can perform PCA.
+                \end{itemize}
+                
+                \nc{Variants}:
+                \begin{itemize}[noitemsep]
+                    \item Undercomplete: Hidden layer is smaller than input (forces the network to learn a compressed version of the input).
+                    \item Overcomplete: Hidden layer is larger than input (regularization techniques like sparsity are necessary).
+                    \item Regularization: Sparse, Contractive, Denoising (input is noised but output is clean).
+                    \item Variational Autoencoders (VAE): Have a probabilistic twist.
+                \end{itemize}
+                
+                \nc{Applications}:
+                Data denoising, dimensionality reduction, feature learning, generative models.\\
+                
+                (+)Effective in learning compressed representations, useful in unsupervised learning scenarios.\\
+                (-)May learn trivial solutions, requires careful design to avoid overfitting.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Autoencoders};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Reinforcement Learning
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                Reinforcement Learning (RL) is a type of machine learning where an agent learns to make decisions by performing actions in an environment to achieve some objectives. The agent receives rewards or penalties based on its actions and learns to maximize cumulative rewards over time.\\
+                
+                \nc{Key Concepts}:
+                \begin{itemize}[noitemsep]
+                    \item \textbf{Agent}: Learns from the environment to perform actions.
+                    \item \textbf{Environment}: Provides states and rewards to the agent.
+                    \item \textbf{Actions}: Set of possible moves or decisions by the agent.
+                    \item \textbf{States}: Representation of the environment.
+                    \item \textbf{Rewards}: Feedback from the environment based on actions.
+                \end{itemize}
+                
+                \nc{Learning Process}:
+                \begin{itemize}[noitemsep]
+                    \item Agent observes the state, performs actions, and receives rewards.
+                    \item Policy: Strategy that the agent employs to determine actions based on states.
+                    \item Value Function: Estimates the expected cumulative reward of states or state-action pairs.
+                \end{itemize}
+                
+                \nc{Types of RL}:
+                \begin{itemize}[noitemsep]
+                    \item \textbf{Model-based}: Agent builds a model of the environment.
+                    \item \textbf{Model-free}: Agent learns policies directly without a model of the environment.
+                \end{itemize}
+                
+                \nc{Applications}:
+                Gaming, autonomous vehicles, robotics, recommendation systems, etc.\\
+                
+                \nc{Challenges}:
+                \begin{itemize}[noitemsep]
+                    \item Balancing exploration and exploitation.
+                    \item High dimensionality of states and actions.
+                    \item Credit assignment problem (determining which actions lead to rewards).
+                \end{itemize}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Reinforcement Learning};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    
+    
+\end{multicols*}
+
+
+\end{document}

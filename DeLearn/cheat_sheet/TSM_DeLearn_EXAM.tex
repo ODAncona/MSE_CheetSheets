@@ -1,0 +1,562 @@
+%
+% Packages
+%
+\documentclass[10pt]{article} 
+\usepackage[landscape]{geometry}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{esint}
+\usepackage{bigints}
+\usepackage{amsfonts}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathmorphing}
+\usepackage{amsmath,amssymb}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{xhfill}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+\usepackage[T1]{fontenc}
+\usepackage{mathrsfs}
+\usepackage{pgfplots}
+\usetikzlibrary{pgfplots.groupplots}
+\pgfplotsset{compat=1.17}
+\makeatletter
+
+%
+% Math
+%
+\newcommand{\Real}{\mathbb R}
+\newcommand{\RPlus}{\Real^{+}}
+\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
+\newcommand{\abs}[1]{\left\vert#1\right\vert}
+\newcommand{\setn}[1]{\left\{#1\right\}_{\scriptscriptstyle n \ge 1}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\seq}[1]{\left<#1\right>}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\To}{\longrightarrow}
+\newcommand{\Prob}{\rm{P}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\h}{\mathcal{H}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\E}{{\rm E}}
+\newcommand{\Hnull}{{\rm H}_{0}}
+\newcommand{\Hone}{{\rm H}_{1}}
+\newcommand{\Var}{{\rm Var}}
+\newcommand{\Cov}{{\rm Cov}}
+\newcommand{\sign}{{\rm sign}}
+\newcommand{\med}{{\rm med}}
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\T}{{\text{\tiny \rm T}}}
+\newcommand{\minf}{- \, \infty}
+\newcommand{\intervalle}[4]{\mathopen{#1}#2\mathpunct{},#3\mathclose{#4}}
+\newcommand{\intervalleff}[2]{\intervalle{[}{#1}{#2}{]}}
+\newcommand{\intervalleof}[2]{\intervalle{]}{#1}{#2}{]}}
+\newcommand{\intervallefo}[2]{\intervalle{[}{#1}{#2}{[}}
+\newcommand{\intervalleoo}[2]{\intervalle{]}{#1}{#2}{[}}
+\newcommand*\conj[1]{\overline{#1}}
+\newcommand*\mean[1]{\overline{#1}}
+
+%
+% Setup
+%
+\title{Deep Learning Cheat Sheet}
+\advance\topmargin-.8in
+\advance\textheight3in
+\advance\textwidth3in
+\advance\oddsidemargin-1.5in
+\advance\evensidemargin-1.5in
+\setlength{\parindent}{0pt} % No indentation at the start of a paragraph
+\setlength{\parskip}{6pt plus 2pt minus 1pt} % Space between paragraphs
+
+\baselineskip2pt
+\linespread{0.4}
+\setlength{\abovedisplayskip}{3pt}
+\setlength{\belowdisplayskip}{3pt}
+\setlength{\abovedisplayshortskip}{3pt}
+\setlength{\belowdisplayshortskip}{3pt}
+
+
+%
+% Commands
+%
+\newcommand*\bigcdot{\mathpalette\bigcdot@{.5}}
+\newcommand*\bigcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+\makeatother
+\newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
+%\colorbox[HTML]{e4e4e4}{\makebox[\textwidth-2\fboxsep][l]{texto}
+\newcommand{\nc}[2][]{%
+\vspace{-.16cm}
+\tikz \draw [draw=black, ultra thick, #1]
+    ($(current page.center)-(0.5\linewidth,0)$) --
+    ($(current page.center)+(0.5\linewidth,0)$)
+    node [midway, fill=white] {#2};
+}% tomado de https://tex.stackexchange.com/questions/179425/a-new-command-of-the-form-tex
+
+
+%
+% Styles
+%
+\tikzstyle{mybox} = [draw=black, fill=white, very thick,
+rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
+\tikzstyle{fancytitle} =[fill=black, text=white, font=\bfseries]
+
+\newlength{\boxsize}
+\setlength{\boxsize}{0.247\textwidth}
+\raggedcolumns
+%###############################################################################################
+%
+%                                         Document
+%
+%###############################################################################################
+
+
+
+\begin{document}
+
+%---------------------------------
+% Title
+%---------------------------------
+\begin{center}
+    {\huge{\textbf{Deep Learning Cheat Sheet}}}\\
+\end{center}
+\vspace{-0.1cm}
+
+\begin{multicols*}{4}
+    %---------------------------------
+    % Data Preparation
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Min-max [0,1]}: $x' = \dfrac{\left(x-x_{min}\right)}{\left(x_{max}-x_{min}\right)}$\\
+                \textbf{Min-max [-1,1]}: $x' = 2 \cdot min\_max(x) -1$ \\
+                min-max doesn't handle outliers.\\
+                \textbf{Z-norm}: $x' = \dfrac{\left(x-\mu\right)}{\sigma}$\\
+                \textbf{Scaling \& Centering}\\
+                Scaling improves the numerical stability, the convergence speed and accuracy of the learning algorithms.
+                Centering improves the robustness of the learning algorithms
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Data Preparation};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Activation Functions
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Sigmoid} : $f(z) = \frac{1}{1 + e^{-z}}$ --- Smooth and differentiable. Used in output layers for binary classification.\\
+                \textbf{Hyperbolic Tangent (tanh)}
+                : $f(z) = \tanh(z)$ --- Smooth, differentiable, output centered around 0. Used in LSTM.\\
+                
+                \textbf{Rectified Linear Unit (ReLU)}
+                : $f(z) = \max(0, z)$ --- Non-linear, used as a standard, but has dying units problem for $z<0$.\\
+                
+                \textbf{Leaky ReLU}
+                : $f(z) = \begin{cases} z & \text{if } z \geq 0 \\ \alpha z & \text{if } z < 0 \end{cases}$ --- Addresses dying units problem with a small $\alpha$ (typical $\alpha = 0.01$).\\
+                
+                
+                \textbf{Exponential Linear Unit (ELU)}
+                : $f(z) = \begin{cases} z & \text{if } z \geq 0 \\ \alpha(e^z - 1) & \text{if } z < 0 \end{cases}$ --- Similar to Leaky ReLU but more computationally expensive.\\
+                
+                
+                \textbf{Softmax}
+                : $f(z_i) = \frac{e^{z_i}}{\sum_{j=0}^{K-1} e^{z_j}}$ --- Used in the last layer for multi-class classification, outputs a probability distribution.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Activation Functions};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Gradient Descent
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{MSE}\\
+                \textbf{Cross Entropy}\\
+                \textbf{Stochastic vs. Minibatch}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Gradient Descent};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Performance Measures
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Matrice de Confusion}\\
+                \textbf{Confusion Table}\\
+                \textbf{ROC}\\
+                \textbf{Precision}\\
+                \textbf{Recall}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Performance Measures};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Bias & Variance
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Model Selection}\\
+                \textbf{Bias}\\
+                \textbf{Variance}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Bias \& Variance};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Theory
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Compute Graph}\\
+                \textbf{Universal Approximation Theorem}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Theory};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Curse of Dimensionality
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Curse of Dimensionality};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Backpropagation
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{MLP Layer}\\
+                \textbf{Matrix Notation}\\
+                \textbf{Full Batch}\\
+                \textbf{Batch Normalization}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Backpropagation};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Vanishing Exploding Gradient
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Saturation}\\
+                \textbf{Variance Change}\\
+                \textbf{Xavier \& Heu Initialization}\\
+                \textbf{Batch Normalization}\\
+                \textbf{Non Saturating Activation Function}\\
+                \textbf{Gradient Clipping}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Vanishing Exploding Gradient};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Optimizers
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Momentum}\\
+                \textbf{AdaGrad}\\
+                \textbf{RMS Prop}\\
+                \textbf{Adam}\\
+                \textbf{Scheduler}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Optimizers};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Regularization
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Weight Penalty}\\
+                \textbf{Dropout}\\
+                \textbf{Early Stopping}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Regularization};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % CNN
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Convolutional Layer}\\
+                \textbf{Pooling Layer}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {CNN};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Unbalanced Dataset
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Bayesian Approach}\\
+                \textbf{Discrete}\\
+                \textbf{Continuous}\\
+                \textbf{Medical Test}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Unbalanced Dataset};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % DeepCNN
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Conf2D Params}\\
+                \textbf{MaxPooling}\\
+                \textbf{LeNet5}\\
+                \textbf{AlexNet}\\
+                \textbf{VGGnet}\\
+                \textbf{GoogleNet}\\
+                \textbf{ResNet}\\
+                \textbf{Pattern}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {DeepCNN};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Feature Visualization
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Data Preparation}\\
+                \textbf{Network}\\
+                \textbf{Compile}\\
+                \textbf{Evaluate}\\
+                \textbf{Activation Map}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Feature Visualization};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Data Augmentation
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Principle}\\
+                \textbf{Types}\\
+                \textbf{Strategies}\\
+                \textbf{Keras}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Data Augmentation};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Functional API
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Sequential vs Functionals}\\
+                \textbf{Architecture 1}\\
+                \textbf{Architecture 2}\\
+                \textbf{Architecture 3}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Functional API};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Transfer Learning
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Principle}\\
+                \textbf{Keras Code}\\
+                \textbf{MobileNet}\\
+                \textbf{Strategies}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Transfer Learning};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % RNN
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Use Case}\\
+                \textbf{Model Category}\\
+                \textbf{Recurrence Net}\\
+                \textbf{Single Layer}\\
+                \textbf{Many to Many}\\
+                \textbf{Un exemple par catégorie}\\
+                \textbf{Stacked RNN}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {RNN};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % LSTM
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Long Term Memory Unit Cell}\\
+                \textbf{Gates}\\
+                \textbf{Backprop}\\
+                \textbf{Keras}\\
+                \textbf{GRE}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {LSTM};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Word Embedding
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Word}\\
+                \textbf{Training}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Word Embedding};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Sentiment Classification
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Strategy}\\
+                \textbf{Architecture}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Sentiment Classification};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Autoencoder
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Definition}\\
+                \textbf{Use Case}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Autoencoder};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % GenRNN
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Many to Many}\\
+                \textbf{Many to One}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {GenRNN};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Attention
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Sequence to Sequence}\\
+                \textbf{Attention}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Attention};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Transformer
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{High-Level Architecture}\\
+                \textbf{Self-Attention}\\
+                \textbf{Full Architecture}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Transformer};
+    \end{tikzpicture}
+    %---------------------------------
+    
+\end{multicols*}
+
+\end{document}
+
