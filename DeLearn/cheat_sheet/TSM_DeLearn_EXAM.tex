@@ -408,12 +408,22 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                \textbf{Saturation}\\
-                \textbf{Variance Change}\\
-                \textbf{Xavier \& Heu Initialization}\\
-                \textbf{Batch Normalization}\\
-                \textbf{Non Saturating Activation Function}\\
-                \textbf{Gradient Clipping}\\
+                \nc{Xavier \& Heu Initialization}\\
+                Sets the initial weights of a layer to values drawn from a uniform distribution with a range that depends on the number of input and output units in the layer. Specifically, the range is set to $[-r, r]$, where $r = \sqrt{\frac{6}{n_{in} + n_{out}}}$, and $n_{in}$ is the number of input units and $n_{out}$ is the number of output units. This range was chosen because it ensures that the variance of the outputs of each layer remains constant, which helps to prevent the vanishing or exploding gradient problem.\\
+                \nc{Batch Normalization}
+                We calculate the average $\mu_r$ and standard deviation $\sigma_r$ over the $m$ column vectors $z_r$ of the mini-batch according to:
+                \begin{align*}
+                    \mu_r    & = \frac{1}{m} \sum_{i=1}^m z_r^{[l](i)}                     \\
+                    \sigma_r & = \sqrt{\frac{1}{m} \sum_{i=1}^m (z_r^{[l](i)} - \mu_r)^2}
+                \end{align*}
+                Now, the actual normalization of the logit matrix is as follows:
+                $$\hat{Z}_r^{[l]} = \frac{Z_r^{[l]} - \mu_r}{\sigma_r + \epsilon}$$
+                Finally, two addition parameter vectors are introduced that rescale the logits according to :
+                $$\tilde{Z}_r^{[l]} = \gamma^{[l]} \cdot \hat{Z}_r^{[l]} + \beta^{[l]}$$
+                \nc{Non Saturating Activation Function}\\
+                To alleviate the saturation of sigmoid and tanh, we can use the ReLU activation function. It still suffer from dying units problem (when the input is negative, the gradient is 0).\\
+                \nc{Gradient Clipping}\\
+                If gradients values exceed a certain threshold, they are "clipped" or rescaled to a smaller value. This prevents the gradients from becoming too large and helps to stabilize the training process.
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Vanishing Exploding Gradient};
