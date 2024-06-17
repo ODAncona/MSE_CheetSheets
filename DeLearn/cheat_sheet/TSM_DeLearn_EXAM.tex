@@ -143,17 +143,23 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
 \begin{multicols*}{4}
     
     %---------------------------------
-    % Evaluation Metrics
+    % Perforamnce Measures
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                $Accuracy = \dfrac{TP + TN}{ TP + TN + FP + FN}$\\
-                $Precision = \dfrac{TP}{ TP + FP}$\\
-                $Recall = \dfrac{TP}{ TP + FN}$ \\
-                $Specificity = \dfrac{TP}{TN + FP}$\\
-                $Fscore = \dfrac{2\cdot Precision \cdot Recall}{ Precision + Recall}$\\
-                $macro$ $average = \dfrac{1}{n} \sum_{i=1}^{n} avg_i$\\
+                Accuracy = $\dfrac{TP + TN}{ TP + TN + FP + FN}$\\
+                Error Rate = $1 - accuracy$\\
+                Precision = $\dfrac{TP}{ TP + FP}$\\
+                TPR = Recall = $\dfrac{TP}{TP + FN}$\\
+                F1-score = $\dfrac{2\cdot Precision \cdot Recall}{ Precision + Recall}$\\
+                Specificity = $\dfrac{TP}{TN + FP}$\\
+                TNR = $\dfrac{TN}{TN + FP}$\\
+                FPR = $\dfrac{FP}{FP + TN}$\\
+                FNR = $\dfrac{FN}{FN + TP}$\\
+                AUC = $\displaystyle\int_{0}^{1} TPR \cdot dFPR$\\
+                Macro Average = $\dfrac{1}{n} \sum_{i=1}^{n} avg_i$\\
+                Micro Average = $\dfrac{\sum_{i=1}^{n} TP_i}{\sum_{i=1}^{n} TP_i + \sum_{i=1}^{n} FP_i}$
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Evaluation Metrics};
@@ -207,8 +213,6 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \end{tikzpicture}
     %---------------------------------
     
-    
-    
     %---------------------------------
     % Gradient Descent
     %---------------------------------
@@ -255,24 +259,21 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
         };
         \node[fancytitle, right=10pt] at (box.north west) {Gradient Descent};
     \end{tikzpicture}
-    %---------------------------------
+    %--------------------------------
     
     %---------------------------------
-    % Performance Measures
+    % Gradient Descent Variants
     %---------------------------------
     \begin{tikzpicture}
-        \node [mybox] (box){%
+        \node [mybox] (box){
             \begin{minipage}{0.247\textwidth}
-                \textbf{Matrice de Confusion}\\
-                \textbf{Confusion Table}\\
-                \textbf{ROC}\\
-                \textbf{Precision}\\
-                \textbf{Recall}\\
+                \nc{BGD}: Smooth, not wiggling, strictly decreasing cost, many epochs needed, choose larger learning rate, no out-of-core support - all data in RAM (~m), easy to parallelise.
+                \nc{SGD}: Wiggling, needs smoothing, wiggles around minimum, not necessarily decreasing cost, few epochs needed, choose smaller learning rate, out-of-core support - not all data to be kept in RAM of a single machine, not easy to parallelise.
+                \nc{MBGD}: Slightly wiggling, wiggles around minimum, typically decreasing cost, less epochs than BGD, more than SGD needed, choose medium learning rate (dependent on model), out-of-core support - not all data to be kept in RAM of a single machine, easy to parallelise.
             \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {Performance Measures};
+        \node[fancytitle, right=10pt] at (box.north west) {Gradient Descent Variants};
     \end{tikzpicture}
-    %---------------------------------
     
     %---------------------------------
     % Bias & Variance
@@ -280,9 +281,13 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                \textbf{Model Selection}\\
-                \textbf{Bias}\\
-                \textbf{Variance}\\
+                \textbf{Bias}$(h_\theta) = \mathbb{E}[h_\theta, D] - f$\\
+                \textbf{Var}$(h_\theta) = \mathbb{E}[(h_\theta, D - \mathbb{E}[h_\theta, D])^2]$\\
+                \textbf{MSE} = $\text{Bias}(h_\theta)^2 + \text{Var}(h_\theta) + \sigma^2$\\
+                $$
+                    \underbrace{\text{Underfitting}}_{\text{high bias, low variance}} \qquad \underbrace{\text{Overfitting}}_{\text{low bias, high variance}}
+                $$
+                
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Bias \& Variance};
@@ -309,7 +314,10 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                
+                when the dimensionality increases, the volume of the space increases so fast that the
+                available data become sparse. This sparsity is problematic for any method that requires sta-
+                tistical significance. In order to obtain a statistically sound and reliable result, the amount of
+                data needed to support the result often grows exponentially with the dimensionality
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Curse of Dimensionality};
@@ -322,30 +330,22 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                \textbf{MLP Layer}\\
-                \textbf{Matrix Notation}\\
-                \textbf{Full Batch}\\
+                \nc{MLP Layer}
+                $\textbf{a}^{[l]} = \sigma^{[l]}(\textbf{z}^{[l]})    $                                                                            \\
+                $\textbf{z}^{[l]} = \textbf{W}^{[l]} \cdot \textbf{a}^{[l-1]} + \textbf{b}^{[l]} \quad \text{with } \textbf{a}^{[0]} = \textbf{x}$
+                \nc{Matrix Notation}
+                
+                $\frac{\partial L}{\partial \textbf{z}^{[l]}}   = \frac{\partial L}{\partial \textbf{a}^{[l]}} * \frac{d\sigma^{[l]}(\textbf{z}^{[l]})}{dz}$                    \\
+                $\frac{\partial L}{\partial \textbf{W}^{[l]}}   = \frac{\partial L}{\partial \textbf{z}^{[l]}} \cdot \left(\textbf{a}^{[l-1]}\right)^T $                        \\
+                $\frac{\partial L}{\partial \textbf{b}^{[l]}}   = \frac{\partial L}{\partial \textbf{z}^{[l]}}$                                                                 \\
+                $\frac{\partial L}{\partial \textbf{a}^{[l-1]}} = \left(\textbf{W}^{[l]}                          \right)^T \cdot \frac{\partial L}{\partial \textbf{z}^{[l]}}$ \\
+                
+                \nc{Full Batch}
+                $\frac{\partial L}{\partial \textbf{Z}^{[l]}}   = \frac{\partial L}{\partial \textbf{A}^{[l]}} * \frac{d\sigma^{[l]}(\textbf{Z}^{[l]})}{dz}$                                \\
+                $\frac{\partial L}{\partial \textbf{W}^{[l]}}   = \frac{\partial L}{\partial \textbf{Z}^{[l]}} \cdot \left(\textbf{A}^{[l-1]}\right)^T$                                     \\
+                $\frac{\partial L}{\partial \textbf{b}^{[l]}}   = \frac{1}{m}\cdot\frac{\partial L}{\partial \textbf{Z}^{[l]}}\cdot    \begin{pmatrix} \vdots \\ 1 \\ \vdots \end{pmatrix}$ \\
+                $\frac{\partial L}{\partial \textbf{A}^{[l-1]}} = \left(\textbf{W}^{[l]}                          \right)^T \cdot \frac{\partial L}{\partial \textbf{Z}^{[l]}}$             \\
                 \textbf{Batch Normalization}\\
-                \resizebox{\textwidth}{!}{
-                    \begin{tabular}{|c|c|c|}
-                        \hline
-                        \textbf{BGD}                                           & \textbf{SGD}                                                              & \textbf{MBGD}                                                            \\
-                        \hline Smooth                                          & Wiggling, needs smoothing                                                 & Slightly wiggling                                                        \\
-                        \hline
-                        Not wiggling                                           & Wiggles around minimum                                                    & Wiggles around minimum                                                   \\
-                        \hline
-                        Strictly decreasing cost                               & Not necessarily decreasing cost                                           & Typically decreasing cost                                                \\
-                        \hline
-                        Many epochs needed                                     & Few epochs needed                                                         & Less epochs than BGD, more than SGD needed                               \\
-                        \hline
-                        Choose larger learning rate                            & Choose smaller learning rate                                              & Choose medium learning rate (dependent on model)                         \\
-                        \hline
-                        No out-of-core support – all data in RAM (\(\sim m\)). & Out-of-core support - not all data to be kept in RAM of a single machine. & Out-of-core support - not all data to be kept in RAM of a single machine \\
-                        \hline
-                        Easy to parallelise                                    & Not easy to parallelise                                                   & Easy to parallelise                                                      \\
-                        \hline
-                    \end{tabular}
-                }
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Backpropagation};
