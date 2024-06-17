@@ -151,15 +151,17 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                 Accuracy = $\dfrac{TP + TN}{ TP + TN + FP + FN}$\\
                 Error Rate = $1 - accuracy$\\
                 Precision = $\dfrac{TP}{ TP + FP}$\\
-                TPR = Recall = $\dfrac{TP}{TP + FN}$\\
-                F1-score = $\dfrac{2\cdot Precision \cdot Recall}{ Precision + Recall}$\\
+                \begin{multicols*}{2}
+                    TPR = $\dfrac{TP}{TP + FN}$\\
+                    TNR = $\dfrac{TN}{TN + FP}$\\
+                    FPR = $\dfrac{FP}{FP + TN}$\\
+                    FNR = $\dfrac{FN}{FN + TP}$\\
+                \end{multicols*}
+                F1-score = $\dfrac{2\cdot Precision \cdot TPR}{ Precision + TPR}$\\
                 Specificity = $\dfrac{TP}{TN + FP}$\\
-                TNR = $\dfrac{TN}{TN + FP}$\\
-                FPR = $\dfrac{FP}{FP + TN}$\\
-                FNR = $\dfrac{FN}{FN + TP}$\\
                 AUC = $\displaystyle\int_{0}^{1} TPR \cdot dFPR$\\
-                Macro Average = $\dfrac{1}{n} \sum_{i=1}^{n} avg_i$\\
-                Micro Average = $\dfrac{\sum_{i=1}^{n} TP_i}{\sum_{i=1}^{n} TP_i + \sum_{i=1}^{n} FP_i}$
+                Macro Average = $\dfrac{1}{n} \displaystyle\sum_{i=1}^{n} avg_i$\\
+                Micro Average = $\dfrac{\displaystyle\sum_{i=1}^{n} TP_i}{\displaystyle\sum_{i=1}^{n} TP_i + \displaystyle\sum_{i=1}^{n} FP_i}$
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Evaluation Metrics};
@@ -167,31 +169,21 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     
     %---------------------------------
-    % Activation Functions
+    % Bias & Variance
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                \textbf{Sigmoid} : $f(z) = \frac{1}{1 + e^{-z}}$ --- Smooth and differentiable. Used in output layers for binary classification.\\
-                \textbf{Hyperbolic Tangent (tanh)}
-                : $f(z) = \tanh(z)$ --- Smooth, differentiable, output centered around 0. Used in LSTM.\\
+                \textbf{Bias}$(h_\theta) = \mathbb{E}[h_\theta, D] - f$\\
+                \textbf{Var}$(h_\theta) = \mathbb{E}[(h_\theta, D - \mathbb{E}[h_\theta, D])^2]$\\
+                \textbf{MSE} = $\text{Bias}(h_\theta)^2 + \text{Var}(h_\theta) + \sigma^2$\\
+                $$
+                    \underbrace{\text{Underfitting}}_{\text{high bias, low variance}} \qquad \underbrace{\text{Overfitting}}_{\text{low bias, high variance}}
+                $$
                 
-                \textbf{Rectified Linear Unit (ReLU)}
-                : $f(z) = \max(0, z)$ --- Non-linear, used as a standard, but has dying units problem for $z<0$.\\
-                
-                \textbf{Leaky ReLU}
-                : $f(z) = \begin{cases} z & \text{if } z \geq 0 \\ \alpha z & \text{if } z < 0 \end{cases}$ --- Addresses dying units problem with a small $\alpha$ (typical $\alpha = 0.01$).\\
-                
-                
-                \textbf{Exponential Linear Unit (ELU)}
-                : $f(z) = \begin{cases} z & \text{if } z \geq 0 \\ \alpha(e^z - 1) & \text{if } z < 0 \end{cases}$ --- Similar to Leaky ReLU but more computationally expensive.\\
-                
-                
-                \textbf{Softmax}
-                : $f(z_i) = \frac{e^{z_i}}{\sum_{j=0}^{K-1} e^{z_j}}$ --- Used in the last layer for multi-class classification, outputs a probability distribution.
             \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {Activation Functions};
+        \node[fancytitle, right=10pt] at (box.north west) {Bias \& Variance};
     \end{tikzpicture}
     %---------------------------------
     
@@ -210,6 +202,65 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Data Preparation};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Activation Functions
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \nc{Sigmoid} $\sigma(z) = \frac{1}{1 + e^{-z}}$ --- Smooth and differentiable. Used in output layers for binary classification.\\
+                \nc{Hyperbolic Tangent (tanh)}
+                $f(z) = \tanh(z)$ --- Smooth, differentiable, output centered around 0. Used in LSTM.\\
+                
+                \nc{Rectified Linear Unit (ReLU)}
+                $f(z) = \max(0, z)$ --- Non-linear, used as a standard, but has dying units problem for $z<0$.\\
+                
+                \nc{Leaky ReLU}
+                $f(z) = \begin{cases} z & \text{if } z \geq 0 \\ \alpha z & \text{if } z < 0 \end{cases}$ --- Addresses dying units problem with a small $\alpha$ (typical $\alpha = 0.01$).\\
+                
+                
+                \nc{Exponential Linear Unit (ELU)}
+                $f(z) = \begin{cases} z & \text{if } z \geq 0 \\ \alpha(e^z - 1) & \text{if } z < 0 \end{cases}$ --- Similar to Leaky ReLU but more computationally expensive.\\
+                
+                
+                \nc{Softmax}
+                $f(z_i) = \frac{e^{z_i}}{\sum_{j=0}^{K-1} e^{z_j}}$ --- Used in the last layer for multi-class classification, outputs a probability distribution.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Activation Functions};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Universal Approximation Theorem
+    %---------------------------------
+    
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                A feedforward network with a linear output layer and at least one hidden layer with a non-linear activation function (e.g. sigmoid) can approximate a large class of functions 
+                $f:\mathbb{R}^n \rightarrow \mathbb{R}^m$ with arbitrary accuracy, provided that the network is given enough hidden units.
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Universal Approximation Theorem};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Curse of Dimensionality
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                when the dimensionality increases, the volume of the space increases so fast that the
+                available data become sparse. This sparsity is problematic for any method that requires statistical significance. In order to obtain a statistically sound and reliable result, the amount of
+                data needed to support the result often grows exponentially with the dimensionality
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Curse of Dimensionality};
     \end{tikzpicture}
     %---------------------------------
     
@@ -276,51 +327,45 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \end{tikzpicture}
     
     %---------------------------------
-    % Bias & Variance
+    % Compute Graph
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                \textbf{Bias}$(h_\theta) = \mathbb{E}[h_\theta, D] - f$\\
-                \textbf{Var}$(h_\theta) = \mathbb{E}[(h_\theta, D - \mathbb{E}[h_\theta, D])^2]$\\
-                \textbf{MSE} = $\text{Bias}(h_\theta)^2 + \text{Var}(h_\theta) + \sigma^2$\\
-                $$
-                    \underbrace{\text{Underfitting}}_{\text{high bias, low variance}} \qquad \underbrace{\text{Overfitting}}_{\text{low bias, high variance}}
-                $$
+                \begin{tikzpicture}[node distance=1cm]
+                    \node (input) at (0,0) {$a^{[l-1]}$};
+                    \node (weights) at (1,1) {$\textbf{W}^{[l]}$};
+                    \node (bias) at (1,-1) {$\textbf{b}^{[l]}$};
+                    \node (layer) at (3,0) {$Layer\ l$};
+                    \node (output) at (5,0) {$a^{[l]}$}; 
+                    \draw[-latex] (input) -- (layer);
+                    \draw[-latex] (weights) -- (layer);
+                    \draw[-latex] (bias) -- (layer);
+                    \draw[-latex] (layer) -- (output);
+                \end{tikzpicture}
+                \begin{align*}
+                    \mathbf{W}^{[l]} & = \begin{pmatrix}
+                                             w_{11}       & \cdots & w_{1n^{[l-1]}}        \\
+                                             \vdots       & \ddots & \vdots                \\
+                                             w_{n^{[l]}1} & \cdots & w_{n^{[l]}n^{[l-1]}}
+                                         \end{pmatrix} \\
+                    \mathbf{a}^{[l]} & = \begin{pmatrix}
+                                             a_{1}  \\
+                                             \vdots \\
+                                             a_{n^{[l]}}
+                                         \end{pmatrix}                                                                      \\
+                    \mathbf{b}^{[l]} & = \begin{pmatrix}
+                                             b_{1}  \\
+                                             \vdots \\
+                                             b_{n^{[l]}}
+                                         \end{pmatrix}
+                \end{align*}
                 
+                $\textbf{a}^{[l]} = \sigma^{[l]}(\textbf{z}^{[l]})    $                                                                            \\
+                $\textbf{z}^{[l]} = \textbf{W}^{[l]} \cdot \textbf{a}^{[l-1]} + \textbf{b}^{[l]} \quad \text{with } \textbf{a}^{[0]} = \textbf{x}$
             \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {Bias \& Variance};
-    \end{tikzpicture}
-    %---------------------------------
-    
-    %---------------------------------
-    % Theory
-    %---------------------------------
-    \begin{tikzpicture}
-        \node [mybox] (box){%
-            \begin{minipage}{0.247\textwidth}
-                \textbf{Compute Graph}\\
-                \textbf{Universal Approximation Theorem}\\
-            \end{minipage}
-        };
-        \node[fancytitle, right=10pt] at (box.north west) {Theory};
-    \end{tikzpicture}
-    %---------------------------------
-    
-    %---------------------------------
-    % Curse of Dimensionality
-    %---------------------------------
-    \begin{tikzpicture}
-        \node [mybox] (box){%
-            \begin{minipage}{0.247\textwidth}
-                when the dimensionality increases, the volume of the space increases so fast that the
-                available data become sparse. This sparsity is problematic for any method that requires sta-
-                tistical significance. In order to obtain a statistically sound and reliable result, the amount of
-                data needed to support the result often grows exponentially with the dimensionality
-            \end{minipage}
-        };
-        \node[fancytitle, right=10pt] at (box.north west) {Curse of Dimensionality};
+        \node[fancytitle, right=10pt] at (box.north west) {Compute Graph};
     \end{tikzpicture}
     %---------------------------------
     
@@ -330,22 +375,27 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                \nc{MLP Layer}
-                $\textbf{a}^{[l]} = \sigma^{[l]}(\textbf{z}^{[l]})    $                                                                            \\
-                $\textbf{z}^{[l]} = \textbf{W}^{[l]} \cdot \textbf{a}^{[l-1]} + \textbf{b}^{[l]} \quad \text{with } \textbf{a}^{[0]} = \textbf{x}$
                 \nc{Matrix Notation}
-                
-                $\frac{\partial L}{\partial \textbf{z}^{[l]}}   = \frac{\partial L}{\partial \textbf{a}^{[l]}} * \frac{d\sigma^{[l]}(\textbf{z}^{[l]})}{dz}$                    \\
-                $\frac{\partial L}{\partial \textbf{W}^{[l]}}   = \frac{\partial L}{\partial \textbf{z}^{[l]}} \cdot \left(\textbf{a}^{[l-1]}\right)^T $                        \\
-                $\frac{\partial L}{\partial \textbf{b}^{[l]}}   = \frac{\partial L}{\partial \textbf{z}^{[l]}}$                                                                 \\
-                $\frac{\partial L}{\partial \textbf{a}^{[l-1]}} = \left(\textbf{W}^{[l]}                          \right)^T \cdot \frac{\partial L}{\partial \textbf{z}^{[l]}}$ \\
-                
+                \begin{align*}
+                    \frac{\partial L}{\partial \textbf{z}^{[l]}}   & = \frac{\partial L}{\partial \textbf{a}^{[l]}} * \frac{d\sigma^{[l]}(\textbf{z}^{[l]})}{dz}                    \\
+                    \frac{\partial L}{\partial \textbf{W}^{[l]}}   & = \frac{\partial L}{\partial \textbf{z}^{[l]}} \cdot \left(\textbf{a}^{[l-1]}\right)^T                         \\
+                    \frac{\partial L}{\partial \textbf{b}^{[l]}}   & = \frac{\partial L}{\partial \textbf{z}^{[l]}}                                                                 \\
+                    \frac{\partial L}{\partial \textbf{a}^{[l-1]}} & = \left(\textbf{W}^{[l]}                          \right)^T \cdot \frac{\partial L}{\partial \textbf{z}^{[l]}} \\
+                \end{align*}
                 \nc{Full Batch}
-                $\frac{\partial L}{\partial \textbf{Z}^{[l]}}   = \frac{\partial L}{\partial \textbf{A}^{[l]}} * \frac{d\sigma^{[l]}(\textbf{Z}^{[l]})}{dz}$                                \\
-                $\frac{\partial L}{\partial \textbf{W}^{[l]}}   = \frac{\partial L}{\partial \textbf{Z}^{[l]}} \cdot \left(\textbf{A}^{[l-1]}\right)^T$                                     \\
-                $\frac{\partial L}{\partial \textbf{b}^{[l]}}   = \frac{1}{m}\cdot\frac{\partial L}{\partial \textbf{Z}^{[l]}}\cdot    \begin{pmatrix} \vdots \\ 1 \\ \vdots \end{pmatrix}$ \\
-                $\frac{\partial L}{\partial \textbf{A}^{[l-1]}} = \left(\textbf{W}^{[l]}                          \right)^T \cdot \frac{\partial L}{\partial \textbf{Z}^{[l]}}$             \\
-                \textbf{Batch Normalization}\\
+                \begin{align*}
+                    \frac{\partial L}{\partial \textbf{Z}^{[l]}}   & = \frac{\partial L}{\partial \textbf{A}^{[l]}} * \frac{d\sigma^{[l]}(\textbf{Z}^{[l]})}{dz}                                \\
+                    \frac{\partial L}{\partial \textbf{W}^{[l]}}   & = \frac{\partial L}{\partial \textbf{Z}^{[l]}} \cdot \left(\textbf{A}^{[l-1]}\right)^T                                     \\
+                    \frac{\partial L}{\partial \textbf{b}^{[l]}}   & = \frac{1}{m}\cdot\frac{\partial L}{\partial \textbf{Z}^{[l]}}\cdot    \begin{pmatrix} \vdots \\ 1 \\ \vdots \end{pmatrix} \\
+                    \frac{\partial L}{\partial \textbf{A}^{[l-1]}} & = \left(\textbf{W}^{[l]}                          \right)^T \cdot \frac{\partial L}{\partial \textbf{Z}^{[l]}}             \\
+                \end{align*}
+                \nc{Batch Normalization}
+                \begin{align*}
+                    \frac{\partial L}{\partial \gamma} & = \frac{1}{m}\cdot\sum_{i=1}^{m} \frac{\partial L}{\partial \hat{a}^{(i)}} \cdot \frac{\partial \hat{a}^{(i)}}{\partial \gamma} \\
+                                                       & = \frac{1}{m}\cdot\sum_{i=1}^{m} \frac{\partial L}{\partial \hat{a}^{(i)}} \cdot \hat{a}^{(i)}                                  \\
+                    \frac{\partial L}{\partial \beta}  & = \sum_{i=1}^{m} \frac{\partial L}{\partial \hat{a}^{(i)}} \cdot \frac{\partial \hat{a}^{(i)}}{\partial \beta}                  \\
+                                                       & = \sum_{i=1}^{m} \frac{\partial L}{\partial \hat{a}^{(i)}}
+                \end{align*}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Backpropagation};
