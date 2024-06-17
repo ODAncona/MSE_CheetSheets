@@ -326,6 +326,26 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                 \textbf{Matrix Notation}\\
                 \textbf{Full Batch}\\
                 \textbf{Batch Normalization}\\
+                \resizebox{\textwidth}{!}{
+                    \begin{tabular}{|c|c|c|}
+                        \hline
+                        \textbf{BGD}                                           & \textbf{SGD}                                                              & \textbf{MBGD}                                                            \\
+                        \hline Smooth                                          & Wiggling, needs smoothing                                                 & Slightly wiggling                                                        \\
+                        \hline
+                        Not wiggling                                           & Wiggles around minimum                                                    & Wiggles around minimum                                                   \\
+                        \hline
+                        Strictly decreasing cost                               & Not necessarily decreasing cost                                           & Typically decreasing cost                                                \\
+                        \hline
+                        Many epochs needed                                     & Few epochs needed                                                         & Less epochs than BGD, more than SGD needed                               \\
+                        \hline
+                        Choose larger learning rate                            & Choose smaller learning rate                                              & Choose medium learning rate (dependent on model)                         \\
+                        \hline
+                        No out-of-core support – all data in RAM (\(\sim m\)). & Out-of-core support - not all data to be kept in RAM of a single machine. & Out-of-core support - not all data to be kept in RAM of a single machine \\
+                        \hline
+                        Easy to parallelise                                    & Not easy to parallelise                                                   & Easy to parallelise                                                      \\
+                        \hline
+                    \end{tabular}
+                }
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Backpropagation};
