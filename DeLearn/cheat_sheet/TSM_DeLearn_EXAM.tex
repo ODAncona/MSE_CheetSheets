@@ -482,22 +482,44 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \end{tikzpicture}
     %---------------------------------
     
-    
-    
     %---------------------------------
     % Regularization
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                \textbf{Weight Penalty}\\
-                \textbf{Dropout}\\
-                \textbf{Early Stopping}\\
+                \nc{Weight Penalty}\\
+                Modify the loss function to include a penalty to big weights:
+                \[
+                    J(\theta) = J_0(\theta) + \lambda \cdot \Omega(W)
+                \]
+                where \(\Omega(W)\) is the penalty term:
+                \begin{itemize}[noitemsep]
+                    \item \textbf{L1:} \(\Omega(W) = \|W\|_1 = \sum|W_{ji}|\)
+                    \item \textbf{L2:} \(\Omega(W) = \frac{1}{2} \|W\|_2^2 = \frac{1}{2} \sum(W_{ji}^2)\)
+                \end{itemize}
+                
+                \nc{Dropout}\\
+                Randomly drop neurons during training:
+                \begin{itemize}[noitemsep]
+                    \item Each neuron has probability \(p\) of being dropped.
+                    \item Typical \(p\): 50% for hidden, 20% for input neurons.
+                    \item During testing, scale weights by \(1 - p\).
+                \end{itemize}
+                
+                \nc{Early Stopping}\\
+                Stop training when validation error increases:
+                \begin{itemize}[noitemsep]
+                    \item Track validation error during training.
+                    \item Save model parameters when validation error improves.
+                    \item Stop if no improvement for a set number of steps.
+                \end{itemize}
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Regularization};
     \end{tikzpicture}
     %---------------------------------
+    
     
     %---------------------------------
     % CNN
