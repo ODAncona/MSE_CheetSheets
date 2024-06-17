@@ -435,17 +435,54 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
-            \begin{minipage}{0.247\textwidth}
-                \textbf{Momentum}\\
-                \textbf{AdaGrad}\\
-                \textbf{RMS Prop}\\
-                \textbf{Adam}\\
-                \textbf{Scheduler}\\
+            \begin{minipage}{0.24\textwidth}
+                \nc{Momentum} Uses a running average of gradients to smooth the optimization path.
+                    {\small
+                        \begin{align*}
+                            m_t      & \leftarrow \beta m_{t-1} + \alpha \nabla_{\theta} J(\theta) \\
+                            \theta_t & \leftarrow \theta_{t-1} - m_t
+                        \end{align*}
+                        Nesterov variant:
+                        \begin{align*}
+                            m_t      & \leftarrow \beta m_{t-1} + \alpha \nabla_{\theta} J(\theta_{t-1} - \beta m_{t-1}) \\
+                            \theta_t & \leftarrow \theta_{t-1} - m_t
+                        \end{align*}
+                    }
+                \nc{AdaGrad} Scaling down the gradient vector along the steepest dimensions.
+                    {\small
+                        \begin{align*}
+                            s_t      & \leftarrow s_{t-1} + \nabla_{\theta} J(\theta_{t-1}) \cdot \nabla_{\theta} J(\theta_{t-1})            \\
+                            \theta_t & \leftarrow \theta_{t-1} - \frac{\alpha}{\sqrt{s_t} + \epsilon} \cdot \nabla_{\theta} J(\theta_{t-1})
+                        \end{align*}
+                    }
+                \nc{RMS Prop} A variant of AdaGrad using an exponentially decaying average of squared gradients.
+                    {\small
+                        \begin{align*}
+                            s_t      & \leftarrow \beta s_{t-1} + (1 - \beta) \nabla_{\theta} J(\theta_{t-1}) \cdot \nabla_{\theta} J(\theta_{t-1}) \\
+                            \theta_t & \leftarrow \theta_{t-1} - \frac{\alpha}{\sqrt{s_t} + \epsilon} \cdot \nabla_{\theta} J(\theta_{t-1})
+                        \end{align*}
+                    }
+                \nc{Adam} Combines momentum and RMSProp to adapt the learning rate for each parameter.
+                    {\small
+                        \begin{align*}
+                            m_t       & \leftarrow \beta_1 m_{t-1} + (1 - \beta_1) \nabla_{\theta} J(\theta_{t-1})                                       \\
+                            s_t       & \leftarrow \beta_2 s_{t-1} + (1 - \beta_2) \nabla_{\theta} J(\theta_{t-1}) \cdot \nabla_{\theta} J(\theta_{t-1}) \\
+                            \hat{m}_t & \leftarrow \frac{m_t}{1 - \beta_1^t}                                                                             \\
+                            \hat{s}_t & \leftarrow \frac{s_t}{1 - \beta_2^t}                                                                             \\
+                            \theta_t  & \leftarrow \theta_{t-1} - \frac{\alpha}{\sqrt{\hat{s}_t} + \epsilon} \cdot \hat{m}_t
+                        \end{align*}
+                    }
+                \nc{Scheduler} Strategies to adjust the learning rate during training:
+                \textbf{Performance scheduling}\\
+                \textbf{Exponential scheduling:} $\alpha(t) = \alpha_0 \cdot 10^{-t/T}$\\
+                \textbf{Power scheduling:} $\alpha(t) = \alpha_0 \cdot \left(1 + \frac{t}{T}\right)^{-c}$, where $c$ is typically set to 1.
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Optimizers};
     \end{tikzpicture}
     %---------------------------------
+    
+    
     
     %---------------------------------
     % Regularization
