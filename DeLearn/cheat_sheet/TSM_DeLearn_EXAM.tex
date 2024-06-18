@@ -520,20 +520,46 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \end{tikzpicture}
     %---------------------------------
     
-    
     %---------------------------------
-    % CNN
+    % Convolutional Neural Networks
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                \textbf{Convolutional Layer}\\
-                \textbf{Pooling Layer}\\
+                \nc{Features}
+                colors, terrain texture, size, presence of straight lines, border\\
+                1. Extracting localized low-level features\\
+                2. Incrementally allowing the system to appropriately bind together features and their relationships\\
+                3. Gradually building up overall spatial invariance\\
+                \nc{Pooling layer}
+                Maxpooling after a convolution layer eliminates non-maximal values: it is a form of non-linear down-sampling that reduces computation for upper layers and provides a "summary" of the statistics of features in lower layers.\\
+                \nc{Convolution layer}
+                Different kernel sizes (3x3, 5x5, 7x7, etc.) allow the identification of features at different scales. Multiple layers of 3x3 kernels can implement other kernel sizes.\\
+                The CONV layer’s parameters consist of a set of learnable filters. Every filter is small spatially (along width and height) but extends through the full depth of the input volume.\\
+                We can compute the spatial size of the output volume as a function of the input volume size ($W$), the receptive field size of the Conv Layer neurons ($F$), the stride with which they are applied ($S$), and the amount of zero padding used ($P$) on the border.\\
+                \nc{Input Volume}
+                \textbf{Size}: $W_1 \times H_1 \times D_1$\\
+                
+                \nc{Hyperparameters}
+                \textbf{K}: Number of conv filters\\
+                \textbf{F}: Filter size (spatial extent)\\
+                \textbf{S}: Stride\\
+                \textbf{P}: The amount of zero padding\\
+                
+                \nc{Output Volume}
+                \textbf{W2}: $\left\lfloor \frac{W_1 - F + 2P}{S} \right\rfloor + 1$\\
+                \textbf{H2}: $\left\lfloor \frac{H_1 - F + 2P}{S} \right\rfloor + 1$\\
+                \textbf{Size}: $W_2 \times H_2 \times K$\\
+                
+                \nc{Parameters}
+                It introduces $\left(F \times F \times D_1\right) \times K$ weights plus $K$ biases.
             \end{minipage}
         };
-        \node[fancytitle, right=10pt] at (box.north west) {CNN};
+        \node[fancytitle, right=10pt] at (box.north west) {Convolutional Neural Networks};
     \end{tikzpicture}
     %---------------------------------
+    
+    
     
     %---------------------------------
     % Unbalanced Dataset
