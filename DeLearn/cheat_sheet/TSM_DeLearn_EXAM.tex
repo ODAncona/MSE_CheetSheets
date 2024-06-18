@@ -839,22 +839,42 @@ model.fit(X_train, y_train, batch_size=128, epochs=50)
     \end{tikzpicture}
     
     
+    
     %---------------------------------
     % LSTM
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                \textbf{Long Term Memory Unit Cell}\\
-                \textbf{Gates}\\
-                \textbf{Backprop}\\
-                \textbf{Keras}\\
-                \textbf{GRE}\\
+                \begin{center}
+                    \includegraphics[width=\textwidth]{images/lstm_cell.png}
+                \end{center}
+                
+                \textbf{Key Components}:
+                \begin{itemize}[noitemsep]
+                    \item (1) Forget Gate
+                    \item (2) Input Gate
+                    \item (3) output State
+                    \item Cell state for storing long-term information.
+                    \item Hidden state for short-term information.
+                \end{itemize}
+                
+                \nc{Functioning}:
+                \begin{center}
+                    \includegraphics[width=\textwidth]{images/lstm_compute_graph.png}
+                \end{center}
+                Super-Highway for Backprop
+                (+) Better at capturing long-range dependencies than standard RNNs, More effective in learning from large sequences of data.\\
+                (-) More complex and computationally intensive to train than standard RNNs, May require more data to train effectively.\\
+                \nc{Number of Weights}
+                $4 x (N_{inputs} + N_{LSTMblocks} + bias) x N_{LSTMblocks}$\\
+                Weights for 32 LSTM units and 2-dim inputs: 4 x (2 + 32 + 1) x 32 = 4480
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {LSTM};
     \end{tikzpicture}
     %---------------------------------
+    
     
     %---------------------------------
     % Word Embedding
@@ -954,6 +974,41 @@ model.fit(X_train, y_train, batch_size=128, epochs=50)
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Unbalanced Dataset};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Bayes
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                $$ P(C_k|x) = \frac{P(x|C_k) \cdot P(C_k)}{P(x)} $$                où
+                \begin{itemize}[noitemsep]
+                    \item $C_k$: Classe ciblée
+                    \item $x$: Évidence
+                    \item $P(C_k)$: Probabilité a priori de la classe $C_k$
+                    \item $P(x|C_k)$: probability of observing x given class j
+                    \item $P(C_k|x)$: Probabilité a posteriori de la classe $C_k$ après observation de $x$
+                    \item $P(x)$: Probabilité de l'évidence $x$
+                \end{itemize}
+                avec 
+                $$ P(x) = \sum_{\text{toutes classes } C_k} P(x|C_k) \cdot P(C_k) $$
+                
+                \nc{Classifier H/F:}
+                \begin{itemize}
+                    \item $P(C_f) = \frac{4}{70}, P(C_g) = \frac{66}{70}$
+                    \item $p(x|C_g) = 0.8, p(x|C_f) = 0.2$
+                    \item Calcul de $p(x)$:
+                          $$ p(x) = 0.2 \times \frac{4}{70} + 0.8 \times \frac{66}{70} $$
+                    \item Calcul de $P(C_f|x)$ et $P(C_g|x)$:
+                          $ P(C_f|x) = \frac{0.2 \times \frac{4}{70}}{p(x)}, \quad P(C_g|x) = \frac{0.8 \times \frac{66}{70}}{p(x)} $
+                \end{itemize}
+                
+                (+)Can deal with imbalanced dataset, prior can be changed
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Bayes};
     \end{tikzpicture}
     %---------------------------------
     
