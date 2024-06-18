@@ -598,23 +598,6 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     %---------------------------------
     
     
-    
-    %---------------------------------
-    % Unbalanced Dataset
-    %---------------------------------
-    \begin{tikzpicture}
-        \node [mybox] (box){%
-            \begin{minipage}{0.247\textwidth}
-                \textbf{Bayesian Approach}\\
-                \textbf{Discrete}\\
-                \textbf{Continuous}\\
-                \textbf{Medical Test}\\
-            \end{minipage}
-        };
-        \node[fancytitle, right=10pt] at (box.north west) {Unbalanced Dataset};
-    \end{tikzpicture}
-    %---------------------------------
-    
     %---------------------------------
     % DeepCNN
     %---------------------------------
@@ -650,6 +633,40 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \end{tikzpicture}
     %---------------------------------
     
+    %---------------------------------
+    % Data Augmentation
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Strategies}\\
+                pre-Augmentation, online augmentation\\
+                \textbf{Methods}\\
+                shear, zoom, color, rotation, flip, translation
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Data Augmentation};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Transfer Learning
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Principle}\\
+                using knowledge learned
+                from tasks for which a lot of labelled data is available in
+                settings where only little labelled data is available.
+                \textbf{Keras Code}\\
+                \textbf{MobileNet}\\
+                \textbf{Strategies}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Transfer Learning};
+    \end{tikzpicture}
+    %---------------------------------
     
     %---------------------------------
     % Keras CNN
@@ -720,55 +737,107 @@ history = clf.fit(
     %---------------------------------
     
     %---------------------------------
-    % Data Augmentation
-    %---------------------------------
-    \begin{tikzpicture}
-        \node [mybox] (box){%
-            \begin{minipage}{0.247\textwidth}
-                \textbf{Principle}\\
-                \textbf{Types}\\
-                \textbf{Strategies}\\
-                \textbf{Keras}\\
-            \end{minipage}
-        };
-        \node[fancytitle, right=10pt] at (box.north west) {Data Augmentation};
-    \end{tikzpicture}
-    %---------------------------------
-    
-    %---------------------------------
-    % Transfer Learning
-    %---------------------------------
-    \begin{tikzpicture}
-        \node [mybox] (box){%
-            \begin{minipage}{0.247\textwidth}
-                \textbf{Principle}\\
-                \textbf{Keras Code}\\
-                \textbf{MobileNet}\\
-                \textbf{Strategies}\\
-            \end{minipage}
-        };
-        \node[fancytitle, right=10pt] at (box.north west) {Transfer Learning};
-    \end{tikzpicture}
-    %---------------------------------
-    
-    %---------------------------------
     % RNN
     %---------------------------------
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                \textbf{Use Case}\\
-                \textbf{Model Category}\\
-                \textbf{Recurrence Net}\\
-                \textbf{Single Layer}\\
-                \textbf{Many to Many}\\
-                \textbf{Un exemple par catégorie}\\
-                \textbf{Stacked RNN}\\
+                \nc{Use Cases}
+                \vspace{-0.2cm}
+                
+                - Sentiment Classification\\
+                - Speech Recognition\\
+                - Machine Translation\\
+                - Captioning/Subtitling\\
+                - Named Entity Recognition (NER)\\
+                - Time Series Modelling, Prediction\\
+                - Chatbots\\
+                - Question/Answering\\
+                - Sequence Generation\\
+                
+                \nc{Model Categories}
+                \textbf{One-to-Many}\\
+                - Image Captioning: Image -> Sequence of Words\\
+                
+                \textbf{Many-to-One}\\
+                - Sentiment Classification: Sequence of Words -> Sentiment\\
+                
+                \textbf{Many-to-Many (1:1)}\\
+                - Named Entity Recognition: Sequence of Words -> Sequence of Entity Classes\\
+                
+                \textbf{Many-to-Many (n:m)}\\
+                - Machine Translation: Sequence of Words -> Sequence of Words\\
+                - Speech Recognition: Sequence of Audio -> Sequence of Words\\
+                - Chatbots: Sequence of Words -> Sequence of Words\\
+                
+                \textbf{Recurrent Cells}\\
+                
+                $\textbf{h}_t = f(\textbf{h}_{t-1}, \textbf{x}_{t})$\\
+                $\textbf{z}_t = \textbf{W}_x \textbf{x}_t + \textbf{W}_h \textbf{h}_{t-1} + \textbf{b}_h$\\
+                
+                
+                
+                \textbf{Many-to-Many Example}\\
+                \begin{center}
+                    \includegraphics[width=0.9\textwidth]{images/rnn_many2many.png}
+                \end{center}
+                
+                - Name classification with sequence lengths of up to ~18 characters works well with SimpleRNN.\\
+                - Activity recognition with sequence lengths of up to ~128 steps has not worked well with SimpleRNN. Probably too long!\\
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {RNN};
     \end{tikzpicture}
     %---------------------------------
+    
+    %---------------------------------
+    % RNN Keras
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \nc{Name Classification}\\
+                \vspace{-0.5cm}
+                \begin{lstlisting}[language=Python]
+# Model with multiple layers
+model_multi_rnn = Sequential()
+model_multi_rnn.add(SimpleRNN(units=64, input_shape=(maxlen, len_alphabet), return_sequences=True))
+model_multi_rnn.add(SimpleRNN(units=32, return_sequences=False))
+model_multi_rnn.add(Dense(len(languages), activation='softmax'))
+
+model_multi_rnn.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+model_multi_rnn.summary()
+
+# Train the model
+log_multi_rnn = model_multi_rnn.fit(
+    x=X_train,
+    y=Y_train,
+    batch_size=batch_size,
+    epochs=nepochs,
+    validation_data=(X_test, Y_test)
+)
+                \end{lstlisting}
+                
+                \nc{Activity Recognition (TS Classification)}\\
+                \vspace{-0.5cm}
+                \begin{lstlisting}[language=Python]
+def build_RNN(input_shape, num_classes):
+    model = Sequential()
+    model.add(InputLayer(shape=input_shape))
+    model.add(SimpleRNN(units=64, return_sequences=True))
+    model.add(SimpleRNN(units=32))
+    model.add(Dense(num_classes, activation='softmax'))
+    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+    return model
+
+model = build_RNN(input_shape=(128, 9), num_classes=6)
+model.fit(X_train, y_train, batch_size=128, epochs=50)
+            \end{lstlisting}
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {RNN Keras};
+    \end{tikzpicture}
+    
     
     %---------------------------------
     % LSTM
@@ -869,6 +938,22 @@ history = clf.fit(
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {Transformer};
+    \end{tikzpicture}
+    %---------------------------------
+    
+    %---------------------------------
+    % Unbalanced Dataset
+    %---------------------------------
+    \begin{tikzpicture}
+        \node [mybox] (box){%
+            \begin{minipage}{0.247\textwidth}
+                \textbf{Bayesian Approach}\\
+                \textbf{Discrete}\\
+                \textbf{Continuous}\\
+                \textbf{Medical Test}\\
+            \end{minipage}
+        };
+        \node[fancytitle, right=10pt] at (box.north west) {Unbalanced Dataset};
     \end{tikzpicture}
     %---------------------------------
     
