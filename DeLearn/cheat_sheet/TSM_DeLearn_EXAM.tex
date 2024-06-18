@@ -381,6 +381,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                     \frac{\partial L}{\partial \textbf{W}^{[l]}}   & = \frac{\partial L}{\partial \textbf{z}^{[l]}} \cdot \left(\textbf{a}^{[l-1]}\right)^T                         \\
                     \frac{\partial L}{\partial \textbf{b}^{[l]}}   & = \frac{\partial L}{\partial \textbf{z}^{[l]}}                                                                 \\
                     \frac{\partial L}{\partial \textbf{a}^{[l-1]}} & = \left(\textbf{W}^{[l]}                          \right)^T \cdot \frac{\partial L}{\partial \textbf{z}^{[l]}} \\
+                    \frac{\partial L}{\partial \textbf{z}^{[l]}}   & = \hat{\textbf{y}} - \textbf{y}                                                                                \\
                 \end{align*}
                 \nc{Full Batch}
                 \begin{align*}
@@ -388,6 +389,7 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
                     \frac{\partial L}{\partial \textbf{W}^{[l]}}   & = \frac{\partial L}{\partial \textbf{Z}^{[l]}} \cdot \left(\textbf{A}^{[l-1]}\right)^T                                     \\
                     \frac{\partial L}{\partial \textbf{b}^{[l]}}   & = \frac{1}{m}\cdot\frac{\partial L}{\partial \textbf{Z}^{[l]}}\cdot    \begin{pmatrix} \vdots \\ 1 \\ \vdots \end{pmatrix} \\
                     \frac{\partial L}{\partial \textbf{A}^{[l-1]}} & = \left(\textbf{W}^{[l]}                          \right)^T \cdot \frac{\partial L}{\partial \textbf{Z}^{[l]}}             \\
+                    \frac{\partial L}{\partial \textbf{Z}^{[l]}}   & = \hat{\textbf{Y}} - \textbf{Y}                                                                                            \\
                 \end{align*}
                 \nc{Batch Normalization}
                 \begin{align*}
@@ -583,19 +585,35 @@ rectangle, rounded corners, inner sep=2pt, inner ysep=7pt]
     \begin{tikzpicture}
         \node [mybox] (box){%
             \begin{minipage}{0.247\textwidth}
-                \textbf{Conf2D Params}\\
-                \textbf{MaxPooling}\\
-                \textbf{LeNet5}\\
-                \textbf{AlexNet}\\
-                \textbf{VGGnet}\\
-                \textbf{GoogleNet}\\
-                \textbf{ResNet}\\
-                \textbf{Pattern}\\
+                \nc{LeNet5}\\
+                - Premier CNN utilisé avec succès pour la reconnaissance des chiffres manuscrits (MNIST).\\
+                - Utilisation de couches de convolution suivies de couches de sous-échantillonnage (pooling).\\
+                \nc{AlexNet}\\
+                - Introduction des CNN profonds avec huit couches apprises.\\
+                - Utilisation de ReLU \\
+                - Utilisation de Dropout\\
+                - Utilisation de Data Augmentation\\
+                \nc{VGGnet}\\
+                - Profondeur accrue avec 16 à 19 couches.\\
+                - Introduction de l'utilisation de petits filtres 3x3 dans toutes les couches de convolution.\\
+                \nc{GoogleNet}\\
+                - Introduction des Inceptions Modules: plusieurs tailles de filtres dans chaque couche.\\
+                - Réduction des paramètres grâce à des couches 1x1 convolutions (depth projection)\\
+                - injection of gradient at early stages
+                \nc{ResNet}\\
+                - Introduction des residual connections pour assurer la rétropropagation du gradient (gradient highway)\\
+                - Résolution du problème de gradient vanishing dans les réseaux très profonds.\\
+                - Batch Normalization\\
+                - Xavier He Initialization\\
+                - Bottleneck layers 1x1x64\\
+                \nc{Pattern}\\
+                - [Ajouter ici une brève description de l'innovation ou du concept clé lié au réseau "Pattern"].\\
             \end{minipage}
         };
         \node[fancytitle, right=10pt] at (box.north west) {DeepCNN};
     \end{tikzpicture}
     %---------------------------------
+    
     
     %---------------------------------
     % Feature Visualization
